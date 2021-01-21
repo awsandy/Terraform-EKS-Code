@@ -1,4 +1,4 @@
-resource "kubernetes_service_account" "default__iam-test" {
+resource "kubernetes_service_account" "iam-test" {
 automount_service_account_token = false
 
 metadata {

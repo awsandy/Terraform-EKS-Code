@@ -1,6 +1,6 @@
 # attach cluster trust policy  to role
 resource "aws_iam_role" "irsa-s3-test" {
-  #assume_role_policy = data.aws_iam_policy_document.cluster_trust_policy.json
+  assume_role_policy = data.aws_iam_policy_document.cluster_trust_policy.json
   name               = "irsa-s3-test"
 }
 
