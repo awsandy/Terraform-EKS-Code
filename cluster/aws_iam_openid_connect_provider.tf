@@ -33,3 +33,7 @@ resource "aws_iam_role" "cluster" {
   assume_role_policy = data.aws_iam_policy_document.cluster_assume_role_policy.json
   name               = format("irsa-%s-aws-node", aws_eks_cluster.mycluster1.name)
 }
+
+output oidc_provider_arn {
+  value=aws_iam_openid_connect_provider.cluster.arn
+}
