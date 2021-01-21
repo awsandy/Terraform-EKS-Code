@@ -10,3 +10,9 @@ https://oidc.eks.eu-west-1.amazonaws.com/id/0157FC61B583C27158E830022C58BD68
 
 no iDP at this point
 
+
+* pod assoc with a service account
+  * service account associated with a role
+    * role has trust policy for idp and attached policies (for pod to use)
+      * idp created per cluster
+
