@@ -10,7 +10,7 @@ resource "kubernetes_job" "default__eks-iam-test-s3" {
   }
 
   spec {
-    backoff_limit   = 6
+    backoff_limit   = 2
     completions     = 1
     manual_selector = false
     parallelism     = 1
