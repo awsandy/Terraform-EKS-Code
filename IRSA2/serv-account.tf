@@ -5,8 +5,8 @@ metadata {
 annotations = {
 "eks.amazonaws.com/role-arn" = aws_iam_role.irsa-s3-test.arn
 }
-name = "iam-test"
-namespace = "default"
+name = var.sa-name
+namespace = var.namespace
 }
 
 }
