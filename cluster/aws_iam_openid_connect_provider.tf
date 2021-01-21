@@ -10,7 +10,7 @@ resource "aws_iam_openid_connect_provider" "cluster" {
 }
 
 
-### Enabling IAM Roles for Service Accounts
+### Enabling IAM Roles for Service Accounts  for aws-node pod
 data "aws_iam_policy_document" "cluster_assume_role_policy" {
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
@@ -31,5 +31,5 @@ data "aws_iam_policy_document" "cluster_assume_role_policy" {
 
 resource "aws_iam_role" "cluster" {
   assume_role_policy = data.aws_iam_policy_document.cluster_assume_role_policy.json
-  name               = "cluster"
+  name               = format("irsa-%s-aws-node", aws_eks_cluster.mycluster1.name)
 }
