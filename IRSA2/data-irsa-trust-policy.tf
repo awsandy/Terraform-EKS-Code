@@ -15,7 +15,7 @@ data "aws_iam_policy_document" "cluster_trust_policy" {
 
     principals {
       # this has to be an output from the oidc provider create (no data resource in TF)
-      identifiers = [aws_iam_openid_connect_provider.cluster.arn]
+      identifiers = [data.terraform_remote_state.cluster.outputs.oidc_provider_arn]
       type        = "Federated"
     }
   }
