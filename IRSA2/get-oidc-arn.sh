@@ -14,5 +14,6 @@ idp=$(aws iam get-open-id-connect-provider --open-id-connect-provider-arn $i | j
 #echo "clurl=$clurl  URL=$idp"
 if [ "$clurl" == "$idp" ];then
 echo $i
+break
 fi
 done
