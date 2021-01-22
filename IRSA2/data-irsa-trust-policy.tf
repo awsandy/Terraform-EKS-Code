@@ -7,7 +7,7 @@ data "aws_iam_policy_document" "cluster_trust_policy" {
     condition {
       test     = "StringEquals"
       # cluster issuer is iodc url
-      variable = "${replace(data.aws_eks_cluster.mycluster1.identity.0.oidc.0.issuer,"https://", "")}:sub"
+      variable = "${replace(data.aws_eks_cluster.eks_cluster.identity.0.oidc.0.issuer,"https://", "")}:sub"
       #variable = "${replace(aws_iam_openid_connect_provider.cluster.url, "https://", "")}:sub"
       #values   = ["system:serviceaccount:kube-system:aws-node"]
       values   = [format("system:serviceaccount:%s:%s",var.namespace,var.sa-name)]
