@@ -7,5 +7,5 @@ resource "aws_iam_role" "irsa-s3-test" {
 # attach ReadOnly policy to role
 resource "aws_iam_role_policy_attachment" "irsa-s3-test-attach" {
   role       = aws_iam_role.irsa-s3-test.name
-  policy_arn = "arn:aws:iam::aws:policy/ReadOnlyAccess"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
 }
