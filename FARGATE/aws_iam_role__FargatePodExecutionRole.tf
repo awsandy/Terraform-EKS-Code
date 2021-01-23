@@ -23,6 +23,6 @@ resource "aws_iam_role" "FargatePodExecutionRole" {
   name                  = "FargatePodExecutionRole"
   path                  = "/"
   tags = {
-    "Name" = "ateksf1-cluster/FargatePodExecutionRole"
+    "Name" = format("%s-cluster/FargatePodExecutionRole",data.aws_eks_cluster.eks_cluster.name)
   }
 }
