@@ -29,5 +29,4 @@ provider "aws" {
 }
 provider "null" {}
 provider "external" {}
-provider "kubernetes {}"
-
+provider "kubernetes" {}
