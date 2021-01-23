@@ -6,14 +6,16 @@ resource "aws_eks_fargate_profile" "fargate-profile" {
   #depends_on             = [aws_eks_cluster.ateksf1]
   pod_execution_role_arn = aws_iam_role.FargatePodExecutionRole.arn
   subnet_ids = [
-    data.aws_subnet.i1.id,
-    data.aws_subnet.i2.id,
-    data.aws_subnet.i3.id,
+    data.terraform_remote_state.net.outputs.sub-priv1,
+    data.terraform_remote_state.net.outputs.sub-priv2,
+    data.terraform_remote_state.net.outputs.sub-priv3,
+    #data.aws_subnet.i1.id,
+    #data.aws_subnet.i2.id,
+    #data.aws_subnet.i3.id,
   ]
   tags = {}
 
   selector {
-    labels    = {}
     namespace = "game-2048"
   }
 
