@@ -36,7 +36,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: aws-logging
-  namespace: namespace: aws-observability
+  namespace: aws-observability
 data:
   output.conf: |
     [OUTPUT]
