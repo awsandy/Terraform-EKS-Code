@@ -1,7 +1,7 @@
 variable "c9label" { 
 description="Cloud9 IDE Name Label"
 type=string
-default="eks-terraform"
+default="cloud9-eks-terraform"
 }
 
 output c9lab {
@@ -10,15 +10,9 @@ output c9lab {
 
 
 data "aws_instance" "c9inst" {
-  #instance_id = "i-instanceid"
-
-  #filter {
-  #  name   = "image-id"
-  #  values = ["ami-xxxxxxxx"]
-  #}
 
   filter {
-    name   = "tag:workshop"
+    name   = "tag:Name"
     values = ["*${var.c9label}*"]
   }
 }
