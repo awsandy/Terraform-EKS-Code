@@ -13,7 +13,7 @@ resource "kubernetes_deployment" "game-2048__deployment-2048" {
   }
 
   spec {
-    replicas = 4
+    replicas = 2
     selector {
       match_labels = {
         "app.kubernetes.io/name" = "app-2048"
