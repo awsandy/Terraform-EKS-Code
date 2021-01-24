@@ -9,6 +9,6 @@ exit
 else
 echo "OK Found Instance profile eksworkshop-admin - proceed with the workshop"
 fi
-aws sts get-caller-identity --query Arn | grep eksworkshop-admin -q && echo "IAM role valid - eksworkshop-admin" || echo "IAM role NOT valid"
+aws sts get-caller-identity --query Arn | grep eksworkshop-admin -q && echo "IAM role valid - eksworkshop-admin" || echo "IAM role not valid - DO NOT PROCEED"
 iname=$(aws ec2 describe-tags --filters "Name=resource-type,Values=instance" "Name=resource-id,Values=$instid" | jq -r '.Tags[] | select(.Key=="Name").Value')
 echo $iname| grep eks-terraform -q && echo "Cloud9 IDE name is valid - contains eks-terraform" || echo "Cloud9 IDE name invalid! - DO NOT PROCEED"
