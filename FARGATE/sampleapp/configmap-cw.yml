@@ -2,7 +2,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: aws-logging
-  namespace: game-2048
+  namespace: aws-observability
 data:
   output.conf: |
     [OUTPUT]
@@ -15,19 +15,3 @@ data:
         sts_endpoint https://sts.eu-west-1.amazonaws.com
         endpoint https://logs.eu-west-1.amazonaws.com  
 
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: aws-logging
-  namespace: kube-system
-data:
-  output.conf: |
-    [OUTPUT]
-        Name cloudwatch
-        Match   *
-        region eu-west-1
-        log_group_name fluent-bit-cloudwatch
-        log_stream_prefix from-fluent-bit-1-
-        auto_create_group On
-        sts_endpoint https://sts.eu-west-1.amazonaws.com
-        endpoint https://logs.eu-west-1.amazonaws.com
