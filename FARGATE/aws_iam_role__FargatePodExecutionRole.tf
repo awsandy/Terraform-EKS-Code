@@ -20,7 +20,7 @@ resource "aws_iam_role" "FargatePodExecutionRole" {
   )
   force_detach_policies = false
   max_session_duration  = 3600
-  name                  = "FargatePodExecutionRole"
+  name                  = format("%s-eks-FargatePodExecutionRole",data.aws_eks_cluster.eks_cluster.name)
   path                  = "/"
   tags = {
     "Name" = format("%s-cluster/FargatePodExecutionRole",data.aws_eks_cluster.eks_cluster.name)
