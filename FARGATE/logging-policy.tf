@@ -3,6 +3,6 @@ resource "aws_iam_policy" "eks-fargate-logging-policy" {
   path        = "/"
   description = "eks-fargate-logging-policy"
 
-  policy = file("logging-policy.json")
+  policy = file("logging-permissions.json")
   
 }
