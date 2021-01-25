@@ -4,3 +4,11 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSFargatePodExecutionRolePolic
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy"
   role       = aws_iam_role.FargatePodExecutionRole.id
 }
+
+## attach logging policy
+resource "aws_iam_role_policy_attachment" "eks-fargate-logging-policy" {
+  policy_arn = aws_iam_policy.eks-fargate-logging-policy.arn
+  role       = aws_iam_role.FargatePodExecutionRole.id
+}
+
+
