@@ -9,7 +9,7 @@ resource "aws_vpc" "cluster" {
   enable_dns_support               = true
   instance_tenancy                 = "default"
   tags = {
-    "Name"                                        = format("%s-cluster",var.cluster_name)
+    "Name"                                        = format("eks-%s-cluster",var.cluster-name)
     "eksctl.cluster.k8s.io/v1alpha1/cluster-name" = var.cluster-name
   }
 }
