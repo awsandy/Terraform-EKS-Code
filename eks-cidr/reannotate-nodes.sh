@@ -1,3 +1,5 @@
+test -n "$1" && echo CLUSTER is "$1" || "echo CLUSTER is not set && exit"
+CLUSTER=$(echo $1)
 comm=`printf "kubectl get node --selector='eks.amazonaws.com/nodegroup==ng1-%s' -o json" $CLUSTER`
 allnodes=`eval $comm`
 len=`eval $comm | jq '.items | length-1'`
