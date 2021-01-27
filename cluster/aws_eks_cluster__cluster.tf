@@ -8,7 +8,7 @@ resource "aws_eks_cluster" "cluster" {
     "controllerManager",
     "scheduler",
   ]
-  name       = var.cluster_name
+  name       = var.cluster-name
   
   role_arn   = data.terraform_remote_state.iam.outputs.cluster_service_role_arn
   tags       = {}
