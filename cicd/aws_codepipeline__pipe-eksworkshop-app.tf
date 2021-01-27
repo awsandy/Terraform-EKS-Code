@@ -29,7 +29,7 @@ resource "aws_codepipeline" "pipe-eksworkshop-app" {
       ]
       owner     = "AWS"
       provider  = "CodeCommit"
-      region    = "eu-west-1"
+      region    = data.aws_region.current.name
       run_order = 1
       version   = "1"
     }
@@ -52,7 +52,7 @@ resource "aws_codepipeline" "pipe-eksworkshop-app" {
       ]
       owner     = "AWS"
       provider  = "CodeBuild"
-      region    = "eu-west-1"
+      region    = data.aws_region.current.name
       run_order = 1
       version   = "1"
     }
