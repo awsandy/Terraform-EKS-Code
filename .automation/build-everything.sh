@@ -9,7 +9,7 @@ for i in $dirs; do
     echo "**** Building in $i ****"
     tobuild=$(grep 'data\|resource' *.tf | grep '"' | grep  '{' | grep -v '#' |  wc -l)
     rm -rf .terraform
-    terraform init -no-color
+    terraform init -no-color > /dev/null
     rc=0
     terraform state list 2> /dev/null | grep aws_ > /dev/null
     if [ $? -eq 0 ]; then
