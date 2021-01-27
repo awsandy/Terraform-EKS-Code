@@ -10,7 +10,6 @@ resource "aws_vpc" "cluster" {
   instance_tenancy                 = "default"
   tags = {
     "Name"                                        = format("eks-%s-cluster",var.cluster-name)
-    "eksctl.cluster.k8s.io/v1alpha1/cluster-name" = var.cluster-name
   }
 }
 
