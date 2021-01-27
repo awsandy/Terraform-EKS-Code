@@ -34,7 +34,8 @@ resource "aws_iam_policy" "CodeBuildVpcPolicy-eks-cicd-build-app" {
             }
           }
           Effect   = "Allow"
-          Resource = "arn:aws:ec2:eu-west-1:566972129213:network-interface/*"
+          Resource = format("arn:aws:ec2:%s:%s:network-interface/*",data.aws_caller_identity.current.account_id, data.aws_region.current.name),
+          #Resource = "arn:aws:ec2:eu-west-1:566972129213:network-interface/*"
         },
       ]
       Version = "2012-10-17"
