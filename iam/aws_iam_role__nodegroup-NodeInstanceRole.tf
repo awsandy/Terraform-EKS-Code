@@ -21,11 +21,11 @@ resource "aws_iam_role" "eksctl-mycluster1-nodegroup-ng-ma-NodeInstanceRole-1GFK
   path                  = "/"
   tags = {
     "Name"                                        = "eksctl-mycluster1-nodegroup-ng-maneksami2/NodeInstanceRole"
-    "alpha.eksctl.io/cluster-name"                = "mycluster1"
-    "alpha.eksctl.io/eksctl-version"              = "0.29.2"
-    "alpha.eksctl.io/nodegroup-name"              = "ng-maneksami2"
-    "alpha.eksctl.io/nodegroup-type"              = "managed"
-    "eksctl.cluster.k8s.io/v1alpha1/cluster-name" = "mycluster1"
+  #  "alpha.eksctl.io/eksctl-version"              = "0.29.2"
+  #  "alpha.eksctl.io/cluster-name"                = "mycluster1"
+  #  "alpha.eksctl.io/nodegroup-name"              = "ng-maneksami2"
+  #  "alpha.eksctl.io/nodegroup-type"              = "managed"
+  #  "eksctl.cluster.k8s.io/v1alpha1/cluster-name" = "mycluster1"
   }
 }
 

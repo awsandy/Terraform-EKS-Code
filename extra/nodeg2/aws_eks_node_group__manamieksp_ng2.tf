@@ -26,7 +26,7 @@ resource "aws_eks_node_group" "ng2" {
     "eksctl.cluster.k8s.io/v1alpha1/cluster-name" = data.aws_eks_cluster.eks_cluster.name
     "eksnet" = "net-main"
   }
-  #version = "1.17"
+ 
 
   launch_template {
     name    = aws_launch_template.lt-ng2.name

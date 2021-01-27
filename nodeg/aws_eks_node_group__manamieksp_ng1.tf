@@ -12,7 +12,7 @@ resource "aws_eks_node_group" "ng1" {
   }
   node_group_name = format("ng1-%s", data.aws_eks_cluster.eks_cluster.name)
   node_role_arn   = data.terraform_remote_state.iam.outputs.nodegroup_role_arn
-  #release_version = "1.17.11-20201007"
+ 
   subnet_ids = [
       data.terraform_remote_state.net.outputs.sub-priv1,
       data.terraform_remote_state.net.outputs.sub-priv2,
