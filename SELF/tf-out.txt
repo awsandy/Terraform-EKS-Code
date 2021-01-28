@@ -1,0 +1,5 @@
+it might exist
+it does get it
+id from state = d6ca6b5965640d3c
+check /Users/awsandy/.tfid exists
+/Users/awsandy/.tfid exists
