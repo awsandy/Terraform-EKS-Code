@@ -1,5 +1,4 @@
-it might exist
-it does get it
-id from state = d6ca6b5965640d3c
+no terraform random_id.id1 exists
 check /Users/awsandy/.tfid exists
-/Users/awsandy/.tfid exists
+file exists - trying to get id
+id from file = 5F17037C51C893DB

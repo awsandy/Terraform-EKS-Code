@@ -5,6 +5,10 @@
 idfile=$HOME/.tfid
 gotid=0
 rm -f tf-out.txt
+# get the subdir and basedir
+
+
+
 
 # Method 1 - it's in the hidden file already 
 if [ $gotid -eq 0 ]; then
@@ -52,8 +56,20 @@ if [ $gotid -eq 0 ]; then
                     exit 4
                 fi
             else
-                echo "s3 buck does not exist" >> tf-out.txt
-                exit 5
+                echo "s3 buck does not exist yet" >> tf-out.txt 
+                id=`hexdump -n 8 -e '4/4 "%08X" 1 "\n"' /dev/random | tr -d ' '`
+                if [ -f "$idfile" ]; then
+                    echo "$idfile exists unexpected !" >> tf-out.txt
+                    exit 3
+                else
+                    gotid=1
+                    echo "$idfile does not exist - write it" >> tf-out.txt
+                    printf "{\n" > $idfile
+                    printf "\"id\" : \"%s\"\n" $id >> $idfile
+                    printf "}\n" >> $idfile
+                    cat $idfile >> tf-out.txt
+                fi
+
             fi
 fi
 
