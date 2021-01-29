@@ -1,17 +1,8 @@
-data "external" "bucket_name" {
-  program = ["bash", "get-bucket-name.sh"]
-}
-
-output "Name" {
-  value = data.external.bucket_name.result.Name
-}
-
-
 
 resource "aws_s3_bucket" "terraform_state" {
   depends_on=[random_id.id1]
-  bucket = data.external.bucket_name.result.Name
-
+#  bucket = data.external.bucket_name.result.Name
+   bucket=format("tf-eks-state-%s",random_id.id1.hex)
   // This is only here so we can destroy the bucket as part of automated tests. You should not copy this for production
   // usage
   force_destroy = true
