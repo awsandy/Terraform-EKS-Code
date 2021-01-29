@@ -7,10 +7,6 @@ gotid=0
 rm -f tf-out.txt
 # get the subdir and basedir
 
-# sync
-echo "sleep 2m for sync"
-sleep 120
-
 
 # Method 1 - it's in the hidden file already 
 if [ $gotid -eq 0 ]; then

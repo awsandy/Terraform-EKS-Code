@@ -25,7 +25,9 @@ provisioner "local-exec" {
 
         # cat backend.tf
         terraform init -lock=false -force-copy -no-color > /dev/null
-
+        terraform refresh -lock=false
+        echo "sleep 1m for sync"
+        sleep 60
         #echo "done"
      EOT
     #command = "./gen-s3.sh"
