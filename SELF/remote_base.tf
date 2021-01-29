@@ -13,6 +13,6 @@ backend = "s3"
 config = {
 bucket = data.external.tfid.result.Name
 region = data.aws_region.current.name
-key = "terraform/terraform_locks_self.tfstate"
+key = "terraform/terraform_state_self.tfstate"
 }
 }

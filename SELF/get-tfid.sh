@@ -8,7 +8,8 @@ rm -f tf-out.txt
 # get the subdir and basedir
 
 # sync
-sleep 5
+echo "sleep 2m for sync"
+sleep 120
 
 
 # Method 1 - it's in the hidden file already 
