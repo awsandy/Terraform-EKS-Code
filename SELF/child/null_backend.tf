@@ -7,7 +7,7 @@ provisioner "local-exec" {
     when = create
     command     = <<EOT
             noout=${var.no-output}
-            id=${random_id.id1.hex}
+            id=${data.terraform_remote_state.self.outputs.tfid}
             p1=${lower(basename(path.cwd))}
             reg=${data.aws_region.current.name}
             
