@@ -16,7 +16,7 @@ provisioner "local-exec" {
             printf "terraform {\n" > $idfile
             printf "backend \"s3\" {\n" >> $idfile
             printf "bucket=\"tf-eks-state-%s\"\n" $id >> $idfile
-            printf "key = \"terraform/terraform_state_%s.tfstate\"\n" $p1 >> $idfile
+            printf "key = \"terraform/tf_state_%s.tfstate\"\n" $p1 >> $idfile
             printf "region = \"%s\"\n" $reg >> $idfile
             printf "dynamodb_table = \"tf_lock_%s_%s\"\n" $id $p1 >> $idfile
             printf "encrypt = "true"\n" >> $idfile
@@ -24,6 +24,7 @@ provisioner "local-exec" {
             printf "}\n" >> $idfile
 
             terraform init -lock=false -force-copy -no-color
+            rm -f *.tfstate*
             #echo "done"
      EOT
     #command = "./gen-s3.sh"
