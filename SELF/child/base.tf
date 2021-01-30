@@ -29,10 +29,10 @@ provider "external" {}
 data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
-resource "aws_dynamodb_table" "terraform_locks" {
+resource "aws_dynamodb_table" "terraform_lock" {
  
   #depends_on=[aws_s3_bucket.terraform_state]
-  name         = format("terraform_locks_%s",lower(basename(path.cwd)))
+  name         = format("tf_lock_%s_%s",data.terraform_remote_state.self.outputs.tfid,lower(basename(path.cwd)))
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 
@@ -46,7 +46,7 @@ resource "null_resource" "backend" {
 triggers = {
     always_run = timestamp()
 }
-depends_on = [aws_dynamodb_table.terraform_locks]
+depends_on = [aws_dynamodb_table.terraform_lock]
 provisioner "local-exec" {
     when = create
     command     = <<EOT
@@ -62,7 +62,7 @@ provisioner "local-exec" {
             printf "bucket=\"tf-eks-state-%s\"\n" $id >> $idfile
             printf "key = \"terraform/terraform_state_%s.tfstate\"\n" $p1 >> $idfile
             printf "region = \"%s\"\n" $reg >> $idfile
-            printf "dynamodb_table = \"terraform_locks_%s\"\n" $p1 >> $idfile
+            printf "dynamodb_table = \"tf_lock_%s_%s\"\n" $id $p1 >> $idfile
             printf "encrypt = "true"\n" >> $idfile
             printf "}\n" >> $idfile
             printf "}\n" >> $idfile
