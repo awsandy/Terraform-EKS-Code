@@ -11,17 +11,17 @@ variable "profile" {
   default     = "default"
 }
 
-variable "cluster-name" {
-  description = "The name of the EKS Cluster"
-  type        = string
-  default     = "mycluster1"
-}
-
 variable "no-output" {
   description = "The name of the EKS Cluster"
   type        = string
   default     = "secret"
   sensitive   = true
+}
+
+variable "cluster-name" {
+  description = "The name of the EKS Cluster"
+  type        = string
+  default     = "mycluster1"
 }
 
 

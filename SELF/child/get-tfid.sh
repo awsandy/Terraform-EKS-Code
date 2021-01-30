@@ -55,19 +55,7 @@ if [ $gotid -eq 0 ]; then
                 fi
             else
                 echo "s3 buck does not exist yet" >> tf-out.txt 
-                id=`hexdump -n 8 -e '4/4 "%08X" 1 "\n"' /dev/random | tr -d ' '`
-                if [ -f "$idfile" ]; then
-                    echo "$idfile exists unexpected !" >> tf-out.txt
-                    exit 3
-                else
-                    gotid=1
-                    echo "$idfile does not exist - write it" >> tf-out.txt
-                    printf "{\n" > $idfile
-                    printf "\"id\" : \"%s\"\n" $id >> $idfile
-                    printf "}\n" >> $idfile
-                    cat $idfile >> tf-out.txt
-                fi
-
+                exit 5
             fi
 fi
 
