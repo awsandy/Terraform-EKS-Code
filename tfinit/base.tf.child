@@ -35,7 +35,7 @@ data "external" "tfid" {
 
 resource "aws_dynamodb_table" "terraform_lock" {
   # switch var
-  name         = format("tf_lock_%s_%s",random_id.id1.hex,lower(basename(path.cwd)))
+  name         = format("tf_lock_%s_%s",data.external.tfid.result.Name,lower(basename(path.cwd)))
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 
@@ -73,20 +73,20 @@ provisioner "local-exec" {
 
             echo "*****Changing state to S3"
 
-            id=${random_id.id1.hex}
-
+            id=${data.external.tfid.result.Name}
+            
             printf "terraform {\n" > $idfile
             printf "backend \"s3\" {\n" >> $idfile
             printf "bucket=\"tf-eks-state-%s\"\n" $id >> $idfile
             printf "key = \"terraform/tf_state_%s.tfstate\"\n" $p1 >> $idfile
             printf "region = \"%s\"\n" $reg >> $idfile
-
+             
             printf "dynamodb_table = \"tf_lock_%s_%s\"\n" $id $p1 >> $idfile
             
             printf "encrypt = "true"\n" >> $idfile
             printf "}\n" >> $idfile
             printf "}\n" >> $idfile
-
+            
             mv backend.tf.new backend.tf
             terraform init -lock=false -force-copy -no-color
 
