@@ -1,1 +1,1 @@
-../tfinit/child/base.tf
+../tfinit/base.tf.child
