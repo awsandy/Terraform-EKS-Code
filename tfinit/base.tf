@@ -89,15 +89,13 @@ provisioner "local-exec" {
             printf "}\n" >> $idfile
             printf "}\n" >> $idfile
             sleep 5
+            if [ "$p1" == "tfinit" ];then
+              terraform destroy  -target=aws_dynamodb_table.terraform_lock -lock=false -auto-approve
+
+            fi
 
             mv backend.tf.new backend.tf
             terraform init -lock=false -force-copy -no-color
-            if [ "$p1" == "tfinit" ];then
-              # cleanup dynamo db
-            fi
-
-
-
 
             #rm -f tf-out.txt 
             #echo "done"
