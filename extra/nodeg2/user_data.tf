@@ -12,6 +12,11 @@ echo "Running custom user data script" > /tmp/me.txt
 yum install -y amazon-ssm-agent
 echo "yum'd agent" >> /tmp/me.txt
 systemctl enable amazon-ssm-agent && systemctl start amazon-ssm-agent
+#disable meta data
+yum install -y iptables-services
+iptables --insert FORWARD 1 --in-interface eni+ --destination 169.254.169.254/32 --jump DROP
+iptables-save | tee /etc/sysconfig/iptables 
+systemctl enable --now iptables
 date >> /tmp/me.txt
 
 --==MYBOUNDARY==--
