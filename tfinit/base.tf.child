@@ -61,7 +61,7 @@ provisioner "local-exec" {
             
             idfile="backend.tf.new"
             tobuild=$(grep 'resource' *.tf | grep '"' | grep  '{' | grep -v '#' |  grep aws_ | wc -l)
-            rc=$(terraform state list -no-color | grep 'aws_' | wc -l )
+            rc=$(terraform state list -no-color | grep 'aws_' | grep -v 'data.' | wc -l )
 
             echo "found $rc of $tobuild"
             while [ $rc -lt $tobuild ]; do
