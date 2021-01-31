@@ -29,9 +29,17 @@ provider "external" {}
 data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
+data "external" "tfid" {
+  program = ["bash", "get-tfid.sh"]
+}
+
+output "Name" {
+  value = data.external.tfid.result.Name
+}
+
 resource "aws_dynamodb_table" "terraform_lock" {
  
-  name         = format("tf_lock_%s_%s",data.terraform_remote_state.tfinit.outputs.tfid,lower(basename(path.cwd)))
+  name         = format("tf_lock_%s_%s",data.external.tfid.result.Name,lower(basename(path.cwd)))
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 
@@ -50,7 +58,7 @@ provisioner "local-exec" {
     when = create
     command     = <<EOT
             noout=${var.no-output}
-            id=${data.terraform_remote_state.tfinit.outputs.tfid}
+            id=${data.external.tfid.result.Name}
             p1=${lower(basename(path.cwd))}
             reg=${data.aws_region.current.name}
             
@@ -76,7 +84,7 @@ provisioner "local-exec" {
             #echo "*****Changing state to S3"
             mv backend.tf.new backend.tf
             terraform init -lock=false -force-copy -no-color
-            #rm -f 
+            rm -f tf-out.txt 
             #echo "done"
 
      EOT
@@ -84,22 +92,5 @@ provisioner "local-exec" {
 }
 }
 
-data "external" "tfid" {
-  program = ["bash", "get-tfid.sh"]
-}
 
-output "Name" {
-  value = data.external.tfid.result.Name
-}
-
-
-data terraform_remote_state "tfinit" {
-
-backend = "s3"
-config = {
-bucket = data.external.tfid.result.Name
-region = data.aws_region.current.name
-key = "terraform/tf_state_tfinit.tfstate"
-}
-}
 

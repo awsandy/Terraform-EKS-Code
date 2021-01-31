@@ -7,6 +7,20 @@ gotid=0
 rm -f tf-out.txt
 # get the subdir and basedir
 
+# Method 0 - try random_id
+#terraform state list > tf-out2.txt
+#if [ $? -eq 0 ]; then
+#    terraform state list | grep random_id.id1 > /dev/null
+#    if [ $? -eq 0 ]; then
+#        id=$(terraform state show random_id.id1 | grep hex | cut -f2 -d'=' | tr -d '"' | tr -d ' ')
+#        echo "id from state = $id" >> tf-out.txt
+#        gotid=1
+#    else
+#        echo "no state random_id.id1 detected " >> tf-out.txt
+#    fi
+#else
+#    echo "no state list detected = $id" >> tf-out.txt
+#fi
 
 # Method 1 - it's in the hidden file already 
 if [ $gotid -eq 0 ]; then
@@ -71,5 +85,5 @@ if [ $gotid -eq 0 ]; then
             fi
 fi
 
-BUCKET_NAME=`printf "tf-eks-state-%s" $id | awk '{print tolower($0)}'`
+BUCKET_NAME=`printf "%s" $id | awk '{print tolower($0)}'`
 jq -n --arg bn "$BUCKET_NAME" '{"Name":$bn}'

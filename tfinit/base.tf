@@ -29,9 +29,13 @@ provider "external" {}
 data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
+data "external" "tfid" {
+  program = ["bash", "get-tfid.sh"]
+}
+
 resource "aws_dynamodb_table" "terraform_lock" {
- 
-  name         = format("tf_lock_%s_%s",data.terraform_remote_state.tfinit.outputs.tfid,lower(basename(path.cwd)))
+  # switch var
+  name         = format("tf_lock_%s_%s",data.external.tfid.result.Name,lower(basename(path.cwd)))
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 
@@ -41,6 +45,7 @@ resource "aws_dynamodb_table" "terraform_lock" {
   }
 }
 
+
 resource "null_resource" "backend" {
 triggers = {
     always_run = timestamp()
@@ -49,34 +54,52 @@ depends_on = [aws_dynamodb_table.terraform_lock]
 provisioner "local-exec" {
     when = create
     command     = <<EOT
-            noout=${var.no-output}
-            id=${data.terraform_remote_state.tfinit.outputs.tfid}
+            
+            
             p1=${lower(basename(path.cwd))}
             reg=${data.aws_region.current.name}
             
             idfile="backend.tf.new"
             tobuild=$(grep 'resource' *.tf | grep '"' | grep  '{' | grep -v '#' |  grep aws_ | wc -l)
             rc=$(terraform state list -no-color | grep 'aws_' | wc -l )
+
+            echo "found $rc of $tobuild"
+            while [ $rc -lt $tobuild ]; do
+              echo "found $rc of $tobuild sleeping 10"
+              sleep 10
+              rc=$(terraform state list -no-color | grep 'aws_' | grep -v 'data.' | wc -l )
+            done
+            sleep 5
+
+            echo "*****Changing state to S3"
+            if [ "$p1" == "tfinit" ];then 
+              id=${random_id.id1.hex}
+            else
+              id=${data.external.tfid.result.Name}
+            fi
             printf "terraform {\n" > $idfile
             printf "backend \"s3\" {\n" >> $idfile
             printf "bucket=\"tf-eks-state-%s\"\n" $id >> $idfile
             printf "key = \"terraform/tf_state_%s.tfstate\"\n" $p1 >> $idfile
             printf "region = \"%s\"\n" $reg >> $idfile
-            printf "dynamodb_table = \"tf_lock_%s_%s\"\n" $id $p1 >> $idfile
+            if [ "$p1" != "tfinit" ];then 
+              printf "dynamodb_table = \"tf_lock_%s_%s\"\n" $id $p1 >> $idfile
+            fi
             printf "encrypt = "true"\n" >> $idfile
             printf "}\n" >> $idfile
             printf "}\n" >> $idfile
-            
-            while [ $rc -lt $tobuild ]; do
-              #echo "found $rc of $tobuild sleeping 10"
-              sleep 10
-              rc=$(terraform state list -no-color | grep 'aws_' | grep -v 'data.' | wc -l )
-            done
             sleep 5
-            #echo "*****Changing state to S3"
+
             mv backend.tf.new backend.tf
             terraform init -lock=false -force-copy -no-color
-            #rm -f 
+            if [ "$p1" == "tfinit" ];then
+              # cleanup dynamo db
+            fi
+
+
+
+
+            #rm -f tf-out.txt 
             #echo "done"
 
      EOT
@@ -84,22 +107,5 @@ provisioner "local-exec" {
 }
 }
 
-data "external" "tfid" {
-  program = ["bash", "get-tfid.sh"]
-}
 
-output "Name" {
-  value = data.external.tfid.result.Name
-}
-
-
-data terraform_remote_state "tfinit" {
-
-backend = "s3"
-config = {
-bucket = data.external.tfid.result.Name
-region = data.aws_region.current.name
-key = "terraform/tf_state_tfinit.tfstate"
-}
-}
 

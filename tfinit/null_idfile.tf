@@ -6,8 +6,9 @@ depends_on = [random_id.id1]
 provisioner "local-exec" {
     when = create
     command     = <<EOT
-        noout=${var.no-output}
+        
         idfile=$HOME/.tfid
+	    rm -f $idfile
         id=${random_id.id1.hex}
         #echo $id
         printf "{\n" > $idfile
