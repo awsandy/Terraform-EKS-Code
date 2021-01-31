@@ -1,1 +1,1 @@
-../tfinit/base.tf.child
+/Users/awsandy/odp/aws/sw/Terraform-EKS-Code/tfinit/base.tf.child

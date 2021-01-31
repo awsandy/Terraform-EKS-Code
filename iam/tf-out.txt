@@ -1,4 +1,0 @@
-no terraform random_id.id1 exists
-check /Users/awsandy/.tfid exists
-file exists - trying to get id
-id from file = 77d00d6fbd30dec6
