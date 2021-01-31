@@ -31,8 +31,7 @@ data "aws_caller_identity" "current" {}
 
 resource "aws_dynamodb_table" "terraform_lock" {
  
-  #depends_on=[aws_s3_bucket.terraform_state]
-  name         = format("tf_lock_%s_%s",data.terraform_remote_state.self.outputs.tfid,lower(basename(path.cwd)))
+  name         = format("tf_lock_%s_%s",data.terraform_remote_state.tfinit.outputs.tfid,lower(basename(path.cwd)))
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 
@@ -51,7 +50,7 @@ provisioner "local-exec" {
     when = create
     command     = <<EOT
             noout=${var.no-output}
-            id=${data.terraform_remote_state.self.outputs.tfid}
+            id=${data.terraform_remote_state.tfinit.outputs.tfid}
             p1=${lower(basename(path.cwd))}
             reg=${data.aws_region.current.name}
             
@@ -80,8 +79,6 @@ provisioner "local-exec" {
             #rm -f 
             #echo "done"
 
-
-
      EOT
  
 }
@@ -96,13 +93,13 @@ output "Name" {
 }
 
 
-data terraform_remote_state "self" {
+data terraform_remote_state "tfinit" {
 
 backend = "s3"
 config = {
 bucket = data.external.tfid.result.Name
 region = data.aws_region.current.name
-key = "terraform/tf_state_self.tfstate"
+key = "terraform/tf_state_tfinit.tfstate"
 }
 }
 
