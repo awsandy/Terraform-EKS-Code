@@ -26,6 +26,11 @@ echo "**** Destroying in $i ****"
 rm -rf .terrform* backend.tf
 terraform init -no-color -force-copy -lock=false > /dev/null
 terraform destroy -auto-approve -lock=false -no-color
+rc=$(terraform state list | wc -l)
+if [ $rc .gt 0 ];then
+    echo "**** Unexpected resources left in state exit ...."
+    exit
+fi
 cd $cur
 date
 done
