@@ -8,11 +8,11 @@ resource "aws_eks_cluster" "cluster" {
     "controllerManager",
     "scheduler",
   ]
-  name       = var.cluster-name
-  
-  role_arn   = data.terraform_remote_state.iam.outputs.cluster_service_role_arn
-  tags       = {}
-  version    = "1.18"
+  name = var.cluster-name
+
+  role_arn = data.terraform_remote_state.iam.outputs.cluster_service_role_arn
+  tags     = {}
+  version  = "1.18"
 
   timeouts {}
 
@@ -33,18 +33,18 @@ resource "aws_eks_cluster" "cluster" {
   }
 }
 
-output cluster-name {
-  value=aws_eks_cluster.cluster.name
+output "cluster-name" {
+  value = aws_eks_cluster.cluster.name
 }
 
-output cluster-sg {
-  value=aws_eks_cluster.cluster.vpc_config[0].cluster_security_group_id
+output "cluster-sg" {
+  value = aws_eks_cluster.cluster.vpc_config[0].cluster_security_group_id
 }
 
-output ca {
-  value=aws_eks_cluster.cluster.certificate_authority[0].data
+output "ca" {
+  value = aws_eks_cluster.cluster.certificate_authority[0].data
 }
 
-output endpoint {
-  value=aws_eks_cluster.cluster.endpoint
+output "endpoint" {
+  value = aws_eks_cluster.cluster.endpoint
 }

@@ -1,15 +1,15 @@
 resource "null_resource" "load_ecr" {
-triggers = {
+  triggers = {
     always_run = timestamp()
-}
-depends_on = [aws_ecr_repository.busybox]
-provisioner "local-exec" {
+  }
+  depends_on = [aws_ecr_repository.busybox]
+  provisioner "local-exec" {
     on_failure  = fail
-    when = create
+    when        = create
     interpreter = ["/bin/bash", "-c"]
     command     = <<EOT
         ./load_ecr.sh
         echo "************************************************************************************"
      EOT
-}
+  }
 }

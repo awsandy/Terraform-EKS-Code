@@ -6,11 +6,11 @@ provider "helm" {
 
 resource "helm_release" "aws-load-balancer-controller" {
   name       = "aws-load-balancer-controller"
-  depends_on=[null_resource.post-policy]
+  depends_on = [null_resource.post-policy]
 
   repository = "https://aws.github.io/eks-charts"
   chart      = "aws-load-balancer-controller"
-  namespace = "kube-system"
+  namespace  = "kube-system"
 
   set {
     name  = "clusterName"

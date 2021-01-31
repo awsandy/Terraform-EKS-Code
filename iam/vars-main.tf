@@ -1,1 +1,1 @@
-/Users/awsandy/odp/aws/sw/Terraform-EKS-Code/tfinit/tfinit/vars-main.tf
+../tfinit/vars-main.tf

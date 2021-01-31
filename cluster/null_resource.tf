@@ -1,11 +1,11 @@
 resource "null_resource" "gen_cluster_auth" {
-triggers = {
+  triggers = {
     always_run = timestamp()
-}
-depends_on = [aws_eks_cluster.cluster]
-provisioner "local-exec" {
+  }
+  depends_on = [aws_eks_cluster.cluster]
+  provisioner "local-exec" {
     on_failure  = fail
-    when = create
+    when        = create
     interpreter = ["/bin/bash", "-c"]
     command     = <<EOT
         echo -e "\x1B[32m Testing Network Connectivity ${aws_eks_cluster.cluster.name}...should see port 443/tcp open  https\x1B[0m"
@@ -14,7 +14,7 @@ provisioner "local-exec" {
         ./auth.sh ${aws_eks_cluster.cluster.name}
         echo "************************************************************************************"
      EOT
-}
+  }
 }
 
   

@@ -1,1 +1,1 @@
-/Users/awsandy/odp/aws/sw/Terraform-EKS-Code/tfinit/tfinit/get-tfid.sh
+../tfinit/get-tfid.sh

@@ -14,19 +14,19 @@ resource "aws_eks_node_group" "ng2" {
   node_role_arn   = data.terraform_remote_state.iam.outputs.nodegroup_role_arn
   #release_version = "1.17.11-20201007"
   subnet_ids = [
-      data.terraform_remote_state.net.outputs.sub-priv1,
-      data.terraform_remote_state.net.outputs.sub-priv2,
-      data.terraform_remote_state.net.outputs.sub-priv3,
+    data.terraform_remote_state.net.outputs.sub-priv1,
+    data.terraform_remote_state.net.outputs.sub-priv2,
+    data.terraform_remote_state.net.outputs.sub-priv3,
   ]
   tags = {
-    "eks/cluster-name"                = data.aws_eks_cluster.eks_cluster.name
-    "eks/eksctl-version"              = "0.29.2"
-    "eks/nodegroup-name"              = format("ng2-%s", data.aws_eks_cluster.eks_cluster.name)
-    "eks/nodegroup-type"              = "managed"
+    "eks/cluster-name"                            = data.aws_eks_cluster.eks_cluster.name
+    "eks/eksctl-version"                          = "0.29.2"
+    "eks/nodegroup-name"                          = format("ng2-%s", data.aws_eks_cluster.eks_cluster.name)
+    "eks/nodegroup-type"                          = "managed"
     "eksctl.cluster.k8s.io/v1alpha1/cluster-name" = data.aws_eks_cluster.eks_cluster.name
-    "eksnet" = "net-main"
+    "eksnet"                                      = "net-main"
   }
- 
+
 
   launch_template {
     name    = aws_launch_template.lt-ng2.name
