@@ -1,6 +1,6 @@
-resource "kubernetes_namespace" "game-2048" {
+resource "kubernetes_namespace" "fargate1" {
   metadata {
-    name = "game-2048"
+    name = "fargate1"
   }
 
   timeouts {   

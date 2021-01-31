@@ -16,7 +16,7 @@ resource "aws_eks_fargate_profile" "fargate-profile" {
   tags = {}
 
   selector {
-    namespace = "game-2048"
+    namespace = "fargate1"
   }
 
   timeouts {}

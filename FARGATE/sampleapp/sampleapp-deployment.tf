@@ -1,11 +1,10 @@
-data "aws_region" "current" {}
-data "aws_caller_identity" "current" {}
 
-resource "kubernetes_deployment" "game-2048__deployment-2048" {
+
+resource "kubernetes_deployment" "fargate1__deployment-2048" {
 
   metadata {
     name      = "deployment-2048"
-    namespace = "game-2048"
+    namespace = kubernetes_namespace.fargate1.name
   }
 
   timeouts {   
