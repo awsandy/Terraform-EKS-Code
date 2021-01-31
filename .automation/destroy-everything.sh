@@ -23,9 +23,9 @@ for i in $dirs; do
 cd $cur
 cd ../$i
 echo "**** Destroying in $i ****"
-rm -rf .terrform*
-terraform init > /dev/null
-terraform destroy -auto-approve
+rm -rf .terrform* backend.tf
+terraform init -no-color -force-copy -lock=false > /dev/null
+terraform destroy -auto-approve -lock=false -no-color
 cd $cur
 date
 done
@@ -35,7 +35,7 @@ for i in $dirs; do
 cd $cur
 cd ../$i
 echo "**** Destroying in $i ****"
-terraform destroy -auto-approve > /dev/null
+terraform destroy -auto-approve -lock=false -no-color > /dev/null
 rm -f tfplan terraform*
 rm -rf .terraform
 cd $cur
@@ -45,7 +45,7 @@ dirs="tf-setup"
 for i in $dirs; do
 cd ../$i
 echo "**** Destroying in $i ****"
-terraform destroy -auto-approve > /dev/null
+terraform destroy -auto-approve -lock=false -no-color > /dev/null
 rm -f tfplan terraform*
 rm -rf .terraform
 cd $cur
