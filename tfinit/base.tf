@@ -88,10 +88,9 @@ provisioner "local-exec" {
             printf "encrypt = "true"\n" >> $idfile
             printf "}\n" >> $idfile
             printf "}\n" >> $idfile
-            sleep 5
+            
             if [ "$p1" == "tfinit" ];then
-              terraform destroy  -target=aws_dynamodb_table.terraform_lock -lock=false -auto-approve
-
+              terraform destroy  -target=aws_dynamodb_table.terraform_lock -lock=false -auto-approve -no-color
             fi
 
             mv backend.tf.new backend.tf
