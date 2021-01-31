@@ -18,10 +18,10 @@ aws configure set default.region ${AWS_REGION}
 aws configure get region
 
 echo "Install Terraform"
-wget https://releases.hashicorp.com/terraform/0.14.3/terraform_0.14.3_linux_amd64.zip
-unzip -qq terraform_0.14.3_linux_amd64.zip
+wget https://releases.hashicorp.com/terraform/0.14.5/terraform_0.14.5_linux_amd64.zip
+unzip -qq terraform_0.14.5_linux_amd64.zip
 sudo mv terraform /usr/local/bin/
-rm -f terraform_0.14.3_linux_amd64.zip
+rm -f terraform_0.14.5_linux_amd64.zip
 mkdir -p $HOME/.terraform.d/plugin-cache
 cp tf-setup/dot-terraform.rc $HOME/.terraformrc
 
@@ -54,10 +54,10 @@ eksctl completion bash >> ~/.bash_completion
 . /etc/profile.d/bash_completion.sh
 . ~/.bash_completion
 echo "helm"
-wget https://get.helm.sh/helm-v3.2.1-linux-amd64.tar.gz
-tar -zxf helm-v3.2.1-linux-amd64.tar.gz
+wget https://get.helm.sh/helm-v3.5.1-linux-amd64.tar.gz
+tar -zxf helm-v3.5.1-linux-amd64.tar.gz
 sudo mv linux-amd64/helm /usr/local/bin/helm
-rm -rf helm-v3.2.1-linux-amd64.tar.gz linux-amd64
+rm -rf helm-v3.5.1-linux-amd64.tar.gz linux-amd64
 echo "add helm repos"
 helm repo add eks https://aws.github.io/eks-charts
 
