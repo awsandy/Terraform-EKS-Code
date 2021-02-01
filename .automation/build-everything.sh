@@ -10,17 +10,21 @@ for i in $dirs; do
     echo " "
     echo "**** Building in $i ****"
     tobuild=$(grep 'data\|resource' *.tf | grep '"' | grep  '{' | cut -f2 -d ':' | grep -v '#' | grep aws_ |  wc -l)
-    rm -rf .terraform* backend.tf
-    terraform init -no-color -force-copy -lock=false 
-    rc=0
     terraform state list 2> /dev/null | grep aws_ > /dev/null
     if [ $? -eq 0 ]; then
         rc=$(terraform state list | grep aws_ | wc -l ) 
     fi
-    # array elements in hetre so special rule
     if [ $rc -ge $tobuild ]; then echo "$rc in tf state expected $tobuild so skipping build ..." && continue; fi
     
-    terraform plan -out tfplan -no-color
+    rm -rf .terraform* backend.tf
+    echo "Terraform Init"
+    terraform init -no-color -force-copy -lock=false > /dev/null
+    rc=0
+
+    # array elements in hetre so special rule
+    
+    echo "Terraform Plan"
+    terraform plan -out tfplan -no-color > /dev/null
     terraform apply tfplan -no-color
     rc=$(terraform state list | grep aws_ | wc -l)
     
