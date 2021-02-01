@@ -1,5 +1,6 @@
 date
 cur=`pwd`
+buildok=1
 rm -rf $HOME/.terraform.d/plugin-cache/registry.terraform.io 
 #dirs="tf-setup net iam c9net cluster nodeg cicd eks-cidr lb2 sampleapp"
 dirs="tfinit net iam c9net cluster nodeg cicd eks-cidr lb2 sampleapp extra/nodeg2 extra/eks-cidr2 extra/sampleapp2"
@@ -26,7 +27,7 @@ for i in $dirs; do
     
 
 
-    if [ "$i" == "tf-setup" ] && [ $rc -lt 12 ]; then echo "only $rc in tf state expected 12" && break; fi
+    #if [ "$i" == "tf-setup" ] && [ $rc -lt 12 ]; then echo "only $rc in tf state expected 12" && exit; fi
     # double check the helm chart has gone in
     if [ "$i" == "lb2" ] ; then
         hc=$(helm ls -A | wc -l )
@@ -37,7 +38,7 @@ for i in $dirs; do
             terraform apply tfplan -no-color
         fi
     fi
-    if [ $rc -lt $tobuild ]; then echo "only $rc in tf state expected $tobuild" && break; fi
+    if [ $rc -lt $tobuild ]; then echo "only $rc in tf state expected $tobuild .. exit .." && exit; fi
 
     echo "check state counts"
     rsc=`terraform state list | wc -l`
