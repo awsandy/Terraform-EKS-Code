@@ -31,6 +31,7 @@ if [ $rc .gt 0 ];then
     echo "**** Unexpected resources left in state exit ...."
     exit
 fi
+rm -f terraform.tfstate*
 cd $cur
 date
 done
@@ -42,7 +43,7 @@ cd ../$i
 echo "**** Destroying in $i ****"
 terraform destroy -auto-approve -lock=false -no-color > /dev/null
 rm -f tfplan terraform*
-rm -rf .terraform
+rm -rf .terraform*
 cd $cur
 date
 done
@@ -52,7 +53,7 @@ cd ../$i
 echo "**** Destroying in $i ****"
 terraform destroy -auto-approve -lock=false -no-color > /dev/null
 rm -f tfplan terraform*
-rm -rf .terraform
+rm -rf .terraform*
 cd $cur
 date
 done
