@@ -3,7 +3,7 @@ cur=`pwd`
 buildok=1
 rm -rf $HOME/.terraform.d/plugin-cache/registry.terraform.io 
 #dirs="tf-setup net iam c9net cluster nodeg cicd eks-cidr lb2 sampleapp"
-dirs="tfinit net iam c9net cluster nodeg cicd eks-cidr lb2 sampleapp extra/nodeg2 extra/eks-cidr2 extra/sampleapp2"
+dirs="tfinit net iam c9net cluster nodeg cicd eks-cidr lb2 sampleapp extra/nodeg2 extra/eks-cidr2 extra/sampleapp2 fargate"
 for i in $dirs; do
     cd $cur
     cd ../$i

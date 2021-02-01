@@ -35,7 +35,7 @@ resource "kubernetes_job" "default__eks-iam-test-s3" {
         host_pid                         = false
         node_selector                    = {}
         restart_policy                   = "Never"
-        service_account_name             = kubernetes_service_account.default__iam-test.metadata[0].name
+        service_account_name             = kubernetes_service_account.iam-test.metadata[0].name
         share_process_namespace          = false
         termination_grace_period_seconds = 30
 
