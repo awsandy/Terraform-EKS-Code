@@ -4,7 +4,7 @@ metadata:
   name: sample-app
   namespace: fargate1
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: nginx

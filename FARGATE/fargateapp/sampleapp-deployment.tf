@@ -4,7 +4,7 @@ resource "kubernetes_deployment" "fargate1__deployment-2048" {
 
   metadata {
     name      = "deployment-2048"
-    namespace = kubernetes_namespace.fargate1.name
+    namespace = kubernetes_namespace.fargate1.id
   }
 
   timeouts {   
