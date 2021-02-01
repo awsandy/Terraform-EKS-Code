@@ -1,4 +1,16 @@
-# kubernetes_config_map.aws-observability__aws-logging:
+resource "kubernetes_namespace" "aws-observability" {
+
+  metadata {
+    annotations = {}
+    labels = {
+      "aws-observability" = "enabled"
+    }
+    name = "aws-observability"
+  }
+
+  timeouts {}
+}
+
 resource "kubernetes_config_map" "aws-observability__aws-logging" {
     binary_data = {}
     data        = {
