@@ -9,7 +9,7 @@ for i in $dirs; do
     cd ../$i
     echo " "
     echo "**** Building in $i ****"
-    tobuild=$(grep 'data\|resource' *.tf | grep '"' | grep  '{' | grep -v '#' | grep aws_ |  wc -l)
+    tobuild=$(grep 'data\|resource' *.tf | grep '"' | grep  '{' | cut -f2 -d ':' | grep -v '#' | grep aws_ |  wc -l)
     rm -rf .terraform* backend.tf
     terraform init -no-color -force-copy -lock=false 
     rc=0
