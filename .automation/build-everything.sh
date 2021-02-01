@@ -10,24 +10,20 @@ for i in $dirs; do
     echo " "
     echo "**** Building in $i ****"
     tobuild=$(grep 'data\|resource' *.tf | grep '"' | grep  '{' | grep -v '#' | grep aws_ |  wc -l)
-    rm -rf .terraform*
-    terraform init -no-color > /dev/null
+    rm -rf .terraform* backend.tf
+    terraform init -no-color -force-copy -lock=false > /dev/null
     rc=0
     terraform state list 2> /dev/null | grep aws_ > /dev/null
     if [ $? -eq 0 ]; then
         rc=$(terraform state list | grep aws_ | wc -l ) 
     fi
     # array elements in hetre so special rule
-    if [ "$i" == "tf-setup" ] && [ $rc -ge 12 ]; then echo "$rc in tf state expected 12 so skipping build ..." && continue; fi
     if [ $rc -ge $tobuild ]; then echo "$rc in tf state expected $tobuild so skipping build ..." && continue; fi
     
     terraform plan -out tfplan -no-color
     terraform apply tfplan -no-color
     rc=$(terraform state list | grep aws_ | wc -l)
     
-
-
-    #if [ "$i" == "tf-setup" ] && [ $rc -lt 12 ]; then echo "only $rc in tf state expected 12" && exit; fi
     # double check the helm chart has gone in
     if [ "$i" == "lb2" ] ; then
         hc=$(helm ls -A | wc -l )
