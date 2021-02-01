@@ -31,7 +31,7 @@ if [ $rc .gt 0 ];then
     echo "**** Unexpected resources left in state exit ...."
     exit
 fi
-rm -f terraform.tfstate*
+rm -f terraform.tfstate* tfplan 
 cd $cur
 date
 done
@@ -41,13 +41,13 @@ for i in $dirs; do
 cd $cur
 cd ../$i
 echo "**** Destroying in $i ****"
-terraform destroy -auto-approve -lock=false -no-color > /dev/null
+#terraform destroy -auto-approve -lock=false -no-color > /dev/null
 rm -f tfplan terraform*
 rm -rf .terraform*
 cd $cur
 date
 done
-dirs="tf-setup"
+dirs="tfinit"
 for i in $dirs; do
 cd ../$i
 echo "**** Destroying in $i ****"
