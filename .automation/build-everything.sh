@@ -1,5 +1,6 @@
 date
 cur=`pwd`
+rm -rf $HOME/.terraform.d/plugin-cache/registry.terraform.io 
 #dirs="tf-setup net iam c9net cluster nodeg cicd eks-cidr lb2 sampleapp"
 dirs="tfinit net iam c9net cluster nodeg cicd eks-cidr lb2 sampleapp extra/nodeg2 extra/eks-cidr2 extra/sampleapp2"
 for i in $dirs; do
@@ -8,7 +9,7 @@ for i in $dirs; do
     echo " "
     echo "**** Building in $i ****"
     tobuild=$(grep 'data\|resource' *.tf | grep '"' | grep  '{' | grep -v '#' |  wc -l)
-    rm -rf .terraform
+    rm -rf .terraform*
     terraform init -no-color > /dev/null
     rc=0
     terraform state list 2> /dev/null | grep aws_ > /dev/null
