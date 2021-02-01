@@ -45,7 +45,7 @@ for i in $dirs; do
         exit
     fi
 
-    echo "Passed $i tests"
+    echo "PASSED: $i tests"
     cd $cur
     date
 done
@@ -56,7 +56,7 @@ rc=$(kubectl get pods -A | grep Running | wc -l)
 if [ $rc -lt 23 ]; then 
 echo "ERROR: Found only $rc pods running - expected 23"
 else
-echo "Passed running pod count"
+echo "PASSED: running pod count"
 fi
 
 # terraform state rm helm_release.aws-load-balancer-controller
