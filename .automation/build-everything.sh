@@ -40,6 +40,10 @@ for i in $dirs; do
     rsc=`terraform state list | wc -l`
     lsc=`terraform state list -state=terraform.tfstate | wc -l`
     echo "$rsc $lsc"
+    if [ $rsc -ne $lsc ]; then
+        echo "Remote state != local state count ... exit ..."
+        exit
+    fi
 
     echo "Passed $i tests"
     cd $cur
