@@ -100,7 +100,7 @@ echo "export MASTER_ARN=${MASTER_ARN}" | tee -a ~/.bash_profile
 fi
 
 echo "git-remote-codecommit"
-pip install git-remote-codecommit
+pip install git-remote-codecommit > /dev/null
 
 echo "Verify ...."
 for command in jq aws wget kubectl terraform eksctl helm kubectx
@@ -125,6 +125,6 @@ source ~/.bash_profile
 #eksctl version
 #Install  version --client
 #helm version
-test -n "$AWS_REGION" && echo AWS_REGION is "$AWS_REGION" || echo AWS_REGION is not set !!
-test -n "$ACCOUNT_ID" && echo ACCOUNT_ID is "$ACCOUNT_ID" || echo ACCOUNT_ID is not set !!
+test -n "$AWS_REGION" && echo "PASSED: AWS_REGION is $AWS_REGION" || echo AWS_REGION is not set !!
+test -n "$ACCOUNT_ID" && echo "PASSED: ACCOUNT_ID is $ACCOUNT_ID" || echo ACCOUNT_ID is not set !!
 cd $this
