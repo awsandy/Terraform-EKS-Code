@@ -1,11 +1,26 @@
 echo "Install OS tools"
-sudo yum -y -q -e 0 install  jq moreutils bash-completion nmap
-echo "update aws cli"
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip -qq awscliv2.zip
-sudo ./aws/install
-rm -f awscliv2.zip
-rm -rf aws
+sudo yum -y -q -e 0 install  jq moreutils bash-completion nmap > /dev/null
+
+aws --version > /dev/null
+if [ $? -ne 0 ]; then
+  echo "Install aws cli"
+  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  unzip -qq awscliv2.zip
+  sudo ./aws/install
+  rm -f awscliv2.zip
+  rm -rf aws
+else
+  av=$(aws --version | cut -f2 -d '/' | cut -f1 -d'.')
+  if [ $av != "2" ];then 
+    echo "Update aws cli"
+    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    unzip -qq awscliv2.zip
+    sudo ./aws/install
+    rm -f awscliv2.zip
+    rm -rf aws
+
+  fi
+fi
 
 # setup for AWS cli
 rm -vf ${HOME}/.aws/credentials
@@ -17,24 +32,54 @@ echo "export AWS_REGION=${AWS_REGION}" | tee -a ~/.bash_profile
 aws configure set default.region ${AWS_REGION}
 aws configure get region
 
-echo "Install Terraform"
-wget https://releases.hashicorp.com/terraform/0.14.5/terraform_0.14.5_linux_amd64.zip
-unzip -qq terraform_0.14.5_linux_amd64.zip
-sudo mv terraform /usr/local/bin/
-rm -f terraform_0.14.5_linux_amd64.zip
-rm -rf $HOME/.terraform.d/plugin-cache/registry.terraform.io
-mkdir -p $HOME/.terraform.d/plugin-cache
-cp tf-setup/dot-terraform.rc $HOME/.terraformrc
 
-echo "Install kubectl"
-curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-chmod +x ./kubectl
-sudo mv ./kubectl  /usr/local/bin/kubectl
+if [ ! `which terraform` ]; then
+  echo "Install Terraform"
+  wget https://releases.hashicorp.com/terraform/0.14.5/terraform_0.14.5_linux_amd64.zip
+  unzip -qq terraform_0.14.5_linux_amd64.zip
+  sudo mv terraform /usr/local/bin/
+  rm -f terraform_0.14.5_linux_amd64.zip
+fi
 
-echo "Enable bash_completion"
-kubectl completion bash >>  ~/.bash_completion
-. /etc/profile.d/bash_completion.sh
-. ~/.bash_completion
+if [ ! -f $HOME/.terraform.d/plugin-cache ];then
+  mkdir -p $HOME/.terraform.d/plugin-cache
+  cp tf-setup/dot-terraform.rc $HOME/.terraformrc
+fi
+
+if [ ! `which kubectl` ]; then
+  echo "Install kubectl"
+  curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+  chmod +x ./kubectl
+  sudo mv ./kubectl  /usr/local/bin/kubectl
+  kubectl completion bash >>  ~/.bash_completion
+fi
+
+if [ ! `which eksctl` ]; then
+echo "install eksctl"
+curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+sudo mv -v /tmp/eksctl /usr/local/bin
+echo "eksctl completion"
+eksctl completion bash >> ~/.bash_completion
+fi
+
+if [ ! `which helm` ]; then
+  echo "helm"
+  wget https://get.helm.sh/helm-v3.5.1-linux-amd64.tar.gz
+  tar -zxf helm-v3.5.1-linux-amd64.tar.gz
+  sudo mv linux-amd64/helm /usr/local/bin/helm
+  rm -rf helm-v3.5.1-linux-amd64.tar.gz linux-amd64
+fi
+echo "add helm repos"
+helm repo add eks https://aws.github.io/eks-charts
+
+if [ ! `which kubectx` ]; then
+  echo "kubectx"
+  sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
+  sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
+  sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
+fi
+
+
 
 echo "ssh key"
 mkdir -p ~/.ssh
@@ -47,25 +92,7 @@ aws kms create-alias --alias-name alias/eksworkshop --target-key-id $(aws kms cr
 export MASTER_ARN=$(aws kms describe-key --key-id alias/eksworkshop --query KeyMetadata.Arn --output text)
 echo "export MASTER_ARN=${MASTER_ARN}" | tee -a ~/.bash_profile
 
-echo "install eksctl"
-curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-sudo mv -v /tmp/eksctl /usr/local/bin
-echo "eksctl completion"
-eksctl completion bash >> ~/.bash_completion
-. /etc/profile.d/bash_completion.sh
-. ~/.bash_completion
-echo "helm"
-wget https://get.helm.sh/helm-v3.5.1-linux-amd64.tar.gz
-tar -zxf helm-v3.5.1-linux-amd64.tar.gz
-sudo mv linux-amd64/helm /usr/local/bin/helm
-rm -rf helm-v3.5.1-linux-amd64.tar.gz linux-amd64
-echo "add helm repos"
-helm repo add eks https://aws.github.io/eks-charts
 
-echo "kubectx"
-sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
-sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
-sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 
 echo "git-remote-codecommit"
 pip install git-remote-codecommit
@@ -84,7 +111,9 @@ cd ~/environment
 #git clone https://github.com/brentley/ecsdemo-nodejs.git
 #git clone https://github.com/brentley/ecsdemo-crystal.git
 #git clone https://github.com/aws-samples/aws2tf.git
-
+echo "Enable bash_completion"
+. /etc/profile.d/bash_completion.sh
+. ~/.bash_completion
 source ~/.bash_profile
 
 #aws --version

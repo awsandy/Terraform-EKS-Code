@@ -1,5 +1,5 @@
 resource "aws_launch_template" "lt-ng2" {
-  instance_type          = "t3.small"
+  instance_type          = "t3a.small"
   key_name               = "eksworkshop"
   name                   = format("at-lt-%s-ng2", data.aws_eks_cluster.eks_cluster.name)
   tags                   = {}
@@ -16,4 +16,15 @@ resource "aws_launch_template" "lt-ng2" {
     create_before_destroy = true
   }
 }
+
+
+
+  #block_device_mappings {
+  #  device_name = "/dev/sda1"
+
+  #  ebs {
+  #    volume_size = 20
+  #    volume_type = "gp3"
+  #  }
+  #}
 
