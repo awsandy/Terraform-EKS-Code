@@ -23,14 +23,17 @@ else
 fi
 
 # setup for AWS cli
-rm -vf ${HOME}/.aws/credentials
-export ACCOUNT_ID=$(aws sts get-caller-identity --output text --query Account)
-export AWS_REGION=$(curl -s 169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
-test -n "$AWS_REGION" && echo AWS_REGION is "$AWS_REGION" || echo AWS_REGION is not set !!
-echo "export ACCOUNT_ID=${ACCOUNT_ID}" | tee -a ~/.bash_profile
-echo "export AWS_REGION=${AWS_REGION}" | tee -a ~/.bash_profile
-aws configure set default.region ${AWS_REGION}
-aws configure get region
+aws sts get-caller-identity --query Arn | grep eksworkshop-admin > /dev/null
+if [ $? -eq 0 ]; then
+  rm -vf ${HOME}/.aws/credentials
+  export ACCOUNT_ID=$(aws sts get-caller-identity --output text --query Account)
+  export AWS_REGION=$(curl -s 169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
+  test -n "$AWS_REGION" && echo AWS_REGION is "$AWS_REGION" || echo AWS_REGION is not set !!
+  echo "export ACCOUNT_ID=${ACCOUNT_ID}" | tee -a ~/.bash_profile
+  echo "export AWS_REGION=${AWS_REGION}" | tee -a ~/.bash_profile
+  aws configure set default.region ${AWS_REGION}
+  aws configure get region
+fi
 
 
 if [ ! `which terraform` ]; then
@@ -82,11 +85,13 @@ fi
 
 
 echo "ssh key"
-mkdir -p ~/.ssh
-ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
-chmod 600 ~/.ssh/id*
-aws ec2 delete-key-pair --key-name "eksworkshop"
-aws ec2 import-key-pair --key-name "eksworkshop" --public-key-material fileb://~/.ssh/id_rsa.pub
+if [ ! -f ~/.ssh/id_rsa ]; then
+  mkdir -p ~/.ssh
+  ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
+  chmod 600 ~/.ssh/id*
+fi
+aws ec2 delete-key-pair --key-name "eksworkshop" > /dev/null
+aws ec2 import-key-pair --key-name "eksworkshop" --public-key-material fileb://~/.ssh/id_rsa.pub > /dev/null
 echo "KMS key"
 aws kms create-alias --alias-name alias/eksworkshop --target-key-id $(aws kms create-key --query KeyMetadata.Arn --output text)
 export MASTER_ARN=$(aws kms describe-key --key-id alias/eksworkshop --query KeyMetadata.Arn --output text)
