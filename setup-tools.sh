@@ -49,7 +49,7 @@ fi
 
 if [ ! -f $HOME/.terraform.d/plugin-cache ];then
   mkdir -p $HOME/.terraform.d/plugin-cache
-  cp tf-setup/dot-terraform.rc $HOME/.terraformrc
+  cp tfinit/dot-terraform.rc $HOME/.terraformrc
 fi
 
 if [ ! `which kubectl` ]; then
