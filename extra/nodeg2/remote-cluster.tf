@@ -1,1 +1,1 @@
-../../tfinit/remote-cluster.tf.child
+../../.stub/remote-cluster.tf

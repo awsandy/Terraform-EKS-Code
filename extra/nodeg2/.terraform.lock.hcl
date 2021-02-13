@@ -17,6 +17,14 @@ provider "registry.terraform.io/hashicorp/external" {
   ]
 }
 
+provider "registry.terraform.io/hashicorp/kubernetes" {
+  version     = "2.0.2"
+  constraints = "~> 2.0.1"
+  hashes = [
+    "h1:vNrgTrqsLcL2Uw8kr89ZIq2NF858MZ15sLtNfd55hVA=",
+  ]
+}
+
 provider "registry.terraform.io/hashicorp/null" {
   version     = "3.0.0"
   constraints = "~> 3.0"

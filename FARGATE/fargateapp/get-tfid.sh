@@ -1,1 +1,0 @@
-../../tfinit/get-tfid.sh

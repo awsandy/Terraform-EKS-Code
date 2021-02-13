@@ -1,1 +1,1 @@
-../../tfinit/base.tf.child
+../../.stub/base.tf

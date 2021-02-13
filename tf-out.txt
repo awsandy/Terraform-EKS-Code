@@ -1,6 +1,0 @@
-no terraform random_id.id1 exists
-check /Users/awsandy/.tfid exists
-no random_id and no /Users/awsandy/.tfid
-look for bucket
-s3 buck exists - get it's name
-multiple state buckets

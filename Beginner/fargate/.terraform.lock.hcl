@@ -18,10 +18,10 @@ provider "registry.terraform.io/hashicorp/external" {
 }
 
 provider "registry.terraform.io/hashicorp/kubernetes" {
-  version     = "2.0.1"
+  version     = "2.0.2"
   constraints = "~> 2.0.1"
   hashes = [
-    "h1:MlKp+R32gnNeODxsj30XigkGOTLXeEEsgT9xwCmi5xU=",
+    "h1:vNrgTrqsLcL2Uw8kr89ZIq2NF858MZ15sLtNfd55hVA=",
   ]
 }
 
@@ -30,5 +30,12 @@ provider "registry.terraform.io/hashicorp/null" {
   constraints = "~> 3.0"
   hashes = [
     "h1:V1tzrSG6t3e7zWvUwRbGbhsWU2Jd/anrJpOl9XM+R/8=",
+  ]
+}
+
+provider "registry.terraform.io/hashicorp/random" {
+  version = "3.0.1"
+  hashes = [
+    "h1:0QaSbRBgBi8vI/8IRwec1INdOqBxXbgsSFElx1O4k4g=",
   ]
 }

@@ -1,1 +1,1 @@
-../../tfinit/remote-net.tf.child
+../../.stub/remote-net.tf

@@ -1,1 +1,1 @@
-../../tfinit/get-tfid.sh
+../../.stub/get-tfid.sh
