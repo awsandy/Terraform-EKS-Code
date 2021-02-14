@@ -25,7 +25,7 @@ rm -f tf-out.txt
 # Method 1 - it's in the hidden file already 
 if [ $gotid -eq 0 ]; then
     # state does not exist
-    echo "no terraform random_id.id1 exists" >> tf-out.txt
+    #echo "no terraform random_id.id1 exists" >> tf-out.txt
     echo "check $idfile exists" >> tf-out.txt
         if [ -f "$idfile" ]; then
             echo "file exists - trying to get id" >> tf-out.txt
