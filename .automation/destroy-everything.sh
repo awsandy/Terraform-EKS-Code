@@ -1,3 +1,4 @@
+date
 echo "Pre cli based actions ..."
 userid=$(aws iam list-service-specific-credentials --user-name git-user | jq -r .ServiceSpecificCredentials[0].ServiceSpecificCredentialId)
 if [ "$userid" != "null" ]; then
