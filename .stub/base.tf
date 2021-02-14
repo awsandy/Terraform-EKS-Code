@@ -67,9 +67,9 @@ resource "null_resource" "backend" {
             tobuild=$(grep 'resource' *.tf | grep '"' | grep  '{' | cut -f2 -d ':' | grep -v '#' |  grep aws_ | wc -l)
             rc=$(terraform state list -no-color | grep 'aws_' | grep -v 'data.' | wc -l )
 
-            echo "found $rc of $tobuild"
+            echo "Found $rc of $tobuild Terraform resources"
             while [ $rc -lt $tobuild ]; do
-              echo "found $rc of $tobuild sleeping 10"
+              echo "Found $rc of $tobuild  Terraform resources .. sleeping 10s"
               sleep 10
               rc=$(terraform state list -no-color | grep 'aws_' | grep -v 'data.' | wc -l )
             done
