@@ -39,7 +39,7 @@ if [ $? -eq 0 ]; then
 fi
 
 
-if [ ! `which terraform` ]; then
+if [ ! `which terraform 2> /dev/null` ]; then
   echo "Install Terraform"
   wget https://releases.hashicorp.com/terraform/0.14.5/terraform_0.14.5_linux_amd64.zip
   unzip -qq terraform_0.14.5_linux_amd64.zip
@@ -52,7 +52,7 @@ if [ ! -f $HOME/.terraform.d/plugin-cache ];then
   cp tfinit/dot-terraform.rc $HOME/.terraformrc
 fi
 
-if [ ! `which kubectl` ]; then
+if [ ! `which kubectl 2> /dev/null` ]; then
   echo "Install kubectl"
   curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
   chmod +x ./kubectl
@@ -60,7 +60,7 @@ if [ ! `which kubectl` ]; then
   kubectl completion bash >>  ~/.bash_completion
 fi
 
-if [ ! `which eksctl` ]; then
+if [ ! `which eksctl 2> /dev/null` ]; then
 echo "install eksctl"
 curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
 sudo mv -v /tmp/eksctl /usr/local/bin
@@ -68,7 +68,7 @@ echo "eksctl completion"
 eksctl completion bash >> ~/.bash_completion
 fi
 
-if [ ! `which helm` ]; then
+if [ ! `which helm 2> /dev/null` ]; then
   echo "helm"
   wget https://get.helm.sh/helm-v3.5.1-linux-amd64.tar.gz
   tar -zxf helm-v3.5.1-linux-amd64.tar.gz
@@ -78,7 +78,7 @@ fi
 echo "add helm repos"
 helm repo add eks https://aws.github.io/eks-charts
 
-if [ ! `which kubectx` ]; then
+if [ ! `which kubectx 2> /dev/null` ]; then
   echo "kubectx"
   sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx
   sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
