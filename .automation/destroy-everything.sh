@@ -52,7 +52,9 @@ dirs="tfinit"
 for i in $dirs; do
 cd ../$i
 echo "**** Destroying in $i ****"
+
 rm -f backend.tf
+terraform init -force-copy
 terraform destroy -auto-approve -lock=false -no-color > /dev/null
 rm -f tfplan terraform*
 rm -rf .terraform*

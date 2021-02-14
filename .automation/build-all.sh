@@ -13,7 +13,7 @@ dirs="tfinit net iam c9net cluster nodeg cicd eks-cidr lb2 sampleapp extra/nodeg
 ./build-stage.sh Intermediate/cicd
 ./build-stage.sh Intermediate/sampleapp
 ./build-stage.sh Beginner/fargate
-#./build-stage.sh Beginner/fargate/fargateapp
+./build-stage.sh Beginner/fargate/fargateapp
 ./build-stage.sh extra/nodeg2
 ./build-stage.sh extra/eks-cidr2 
 ./build-stage.sh extra/sampleapp2
