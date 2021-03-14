@@ -1,4 +1,9 @@
-no terraform random_id.id1 exists
 check /Users/awsandy/.tfid exists
-file exists - trying to get id
-id from file = B93169AA07FAA39A
+no random_id and no /Users/awsandy/.tfid
+look for bucket
+s3 buck exists - get it's name
+check /Users/awsandy/.tfid exists
+/Users/awsandy/.tfid does not exist - write it
+{
+"id" : "77d00d6fbd30dec6"
+}

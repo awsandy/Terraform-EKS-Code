@@ -55,4 +55,15 @@ Note the log group is only created when:
 * The CW permissions are added to the fargate profile
 * the pod is running
 * the container produces soem output
-* 
+
+
+
+
+                Name cloudwatch
+                Match *
+                region ${data.aws_region.current.name}
+                log_group_name fluent-bit-cloudwatch1
+                log_stream_prefix from-fluent-bit-1-
+                auto_create_group true
+                sts_endpoint https://sts.eu-west-1.amazonaws.com
+                endpoint https://logs.eu-west-1.amazonaws.com

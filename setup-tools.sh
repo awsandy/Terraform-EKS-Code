@@ -130,4 +130,5 @@ source ~/.bash_profile
 #helm version
 test -n "$AWS_REGION" && echo "PASSED: AWS_REGION is $AWS_REGION" || echo AWS_REGION is not set !!
 test -n "$ACCOUNT_ID" && echo "PASSED: ACCOUNT_ID is $ACCOUNT_ID" || echo ACCOUNT_ID is not set !!
+echo "setup tools run" >> ~/setup-tools.log
 cd $this

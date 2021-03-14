@@ -29,6 +29,9 @@ for i in $dirs; do
     echo "Terraform Plan"
     terraform plan -out tfplan -no-color > /dev/null
     terraform apply tfplan -no-color
+    echo "State to S3. ."
+    terraform init -force-copy -no-color
+
     rc=$(terraform state list | grep aws_ | wc -l)
     
     # double check the helm chart has gone in
@@ -39,6 +42,8 @@ for i in $dirs; do
             terraform state rm helm_release.aws-load-balancer-controller
             terraform plan -out tfplan -no-color
             terraform apply tfplan -no-color
+            echo "State to S3. ."
+            terraform init -force-copy -no-color
         fi
     fi
     if [ $rc -lt $tobuild ]; then echo "only $rc in tf state expected $tobuild .. exit .." && exit; fi

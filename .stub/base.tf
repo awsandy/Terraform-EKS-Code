@@ -4,7 +4,7 @@ terraform {
     aws = {
       source = "hashicorp/aws"
       #  Allow any 3.22+  version of the AWS provider
-      version = "~> 3.22"
+      version = "~> 3.32"
     }
     null = {
       source  = "hashicorp/null"
@@ -50,57 +50,6 @@ resource "aws_dynamodb_table" "terraform_lock" {
 }
 
 
-resource "null_resource" "backend" {
-  triggers = {
-    always_run = timestamp()
-  }
-  depends_on = [aws_dynamodb_table.terraform_lock]
-  provisioner "local-exec" {
-    when    = create
-    command = <<EOT
-            
-            
-            p1=${lower(basename(path.cwd))}
-            reg=${data.aws_region.current.name}
-            
-            idfile="backend.tf.new"
-            tobuild=$(grep 'resource' *.tf | grep '"' | grep  '{' | cut -f2 -d ':' | grep -v '#' |  grep aws_ | wc -l)
-            rc=$(terraform state list -no-color | grep 'aws_' | grep -v 'data.' | wc -l )
-
-            echo "Found $rc of $tobuild Terraform resources"
-            while [ $rc -lt $tobuild ]; do
-              echo "Found $rc of $tobuild  Terraform resources .. sleeping 10s"
-              sleep 10
-              rc=$(terraform state list -no-color | grep 'aws_' | grep -v 'data.' | wc -l )
-            done
-            sleep 5
-
-            echo "*****Changing state to S3"
-
-            id=${data.external.tfid.result.Name}
-            
-            printf "terraform {\n" > $idfile
-            printf "backend \"s3\" {\n" >> $idfile
-            printf "bucket=\"tf-eks-state-%s\"\n" $id >> $idfile
-            printf "key = \"terraform/tf_state_%s.tfstate\"\n" $p1 >> $idfile
-            printf "region = \"%s\"\n" $reg >> $idfile
-             
-            printf "dynamodb_table = \"tf_lock_%s_%s\"\n" $id $p1 >> $idfile
-            
-            printf "encrypt = "true"\n" >> $idfile
-            printf "}\n" >> $idfile
-            printf "}\n" >> $idfile
-            
-            mv backend.tf.new backend.tf
-            terraform init -lock=false -force-copy -no-color
-
-            #rm -f tf-out.txt 
-            #echo "done"
-
-     EOT
-
-  }
-}
 
 
 
