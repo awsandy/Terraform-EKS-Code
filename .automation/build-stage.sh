@@ -28,9 +28,9 @@ for i in $dirs; do
     
     echo "Terraform Plan"
     terraform plan -out tfplan -no-color > /dev/null
-    terraform apply tfplan -no-color
+    terraform apply tfplan -no-color && terraform init -force-copy -no-color
     echo "State to S3. ."
-    terraform init -force-copy -no-color
+
 
     rc=$(terraform state list | grep aws_ | wc -l)
     
@@ -41,9 +41,8 @@ for i in $dirs; do
             echo "retry helm chart"
             terraform state rm helm_release.aws-load-balancer-controller
             terraform plan -out tfplan -no-color
-            terraform apply tfplan -no-color
-            echo "State to S3. ."
-            terraform init -force-copy -no-color
+            terraform apply tfplan -no-color && terraform init -force-copy -no-color
+            
         fi
     fi
     if [ $rc -lt $tobuild ]; then echo "only $rc in tf state expected $tobuild .. exit .." && exit; fi
