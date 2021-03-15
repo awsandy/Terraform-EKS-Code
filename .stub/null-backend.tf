@@ -13,7 +13,7 @@ provisioner "local-exec" {
             
             echo "***** Writing backend.tf for S3 state *****"
             
-            id=${random_id.id1.hex}
+            id=${data.external.tfid.result.Name}
 
             printf "terraform {\n" > $idfile
             printf "backend \"s3\" {\n" >> $idfile
