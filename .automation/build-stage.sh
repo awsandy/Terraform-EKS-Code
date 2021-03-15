@@ -2,6 +2,11 @@ if [ $1 = "" ];then
 echo "must provide a stage directory .. exiting"
 fi 
 date
+grep Error: build.log
+if [[ $? -eq 0 ]]
+    echo "Error: in build.log exit .."
+    exit
+fi
 cur=`pwd`
 buildok=1
 rc=0
