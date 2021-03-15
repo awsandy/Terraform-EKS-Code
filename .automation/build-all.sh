@@ -7,7 +7,7 @@ for i in `echo $dirs`;do
     echo $i
     ./build-stage.sh $i 2>&1 | tee -a build.log
     grep Error: build.log
-    if [[ $> -eq 0 ]];then
+    if [[ $? -eq 0 ]];then
         echo "Error: in build.log"
         exit
     fi
