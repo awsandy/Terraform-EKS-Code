@@ -1,9 +1,6 @@
-date
+
 cur=`pwd`
 #dirs="tf-setup net iam c9net cluster nodeg cicd eks-cidr lb2 sampleapp"
-
-echo "Some post build verifications"
-echo "Should have 23 pods running in total"
 rc=$(kubectl get pods -A | grep Running | wc -l)
 if [ $rc -lt 23 ]; then 
 echo "ERROR: Found only $rc pods running - expected 23"
@@ -48,5 +45,7 @@ echo "PASSED: fargate pod count"
 fi
 helm ls -A | grep aws-load-balancer-controller | grep deployed > /dev/null && echo "PASSED: helm lb deployed" || echo "FAILED: helm lb deployed"
 kubectl get pods -n kube-system | grep aws-load-balancer-controller | grep Running > /dev/null && echo "PASSED: lb pod" || echo "FAILED: lb pod"
+helm ls -A | grep appmesh-controller | grep deployed > /dev/null && echo "PASSED: helm lb deployed" || echo "FAILED: helm lb deployed"
+kubectl get pods -n kube-system | grep appmesh-controller | grep Running > /dev/null && echo "PASSED: lb pod" || echo "FAILED: lb pod"
 kubectl logs jobs/eks-iam-test-s3 | grep tf > /dev/null && echo "PASSED: irsa test" || echo "FAILED: irsa test"
 
