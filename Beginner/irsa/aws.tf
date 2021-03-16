@@ -32,3 +32,7 @@ provider "external" {}
 
 data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
+
+data "external" "tfid" {
+  program = ["bash", "get-tfid.sh"]
+}
