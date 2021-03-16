@@ -17,6 +17,7 @@ terraform {
     kubernetes = {
       source = "hashicorp/kubernetes"
       version = "~> 2.0.1"
+      load_config_file = false
     }
     
   }
