@@ -27,14 +27,14 @@ rc=$(kubectl get pods -n game1-2048 | grep Running | wc -l)
 if [ $rc -lt 4 ]; then 
 echo "ERROR: Found only $rc game1-2048 pods running - expected 4"
 else
-echo "PASSED: game-2048 pod count"
+echo "PASSED: game1-2048 pod count"
 fi
 
 rc=$(kubectl get pods -n game2-2048 | grep Running | wc -l)
 if [ $rc -lt 4 ]; then 
 echo "ERROR: Found only $rc game2-2048 pods running - expected 4"
 else
-echo "PASSED: game-2048 pod count"
+echo "PASSED: game2-2048 pod count"
 fi
 
 rc=$(kubectl get pods -n fargate1 | grep Running | wc -l)
