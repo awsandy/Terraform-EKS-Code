@@ -10,7 +10,7 @@ resource "helm_release" "appmesh-controller" {
 
   repository = "https://aws.github.io/eks-charts"
   chart      = "appmesh-controller"
-  namespace = kubernetes_namespace.appmesh-system.metadata.name
+  namespace = kubernetes_namespace.appmesh-system.metadata[0].name
 
   set {
     name  = "clusterName"
