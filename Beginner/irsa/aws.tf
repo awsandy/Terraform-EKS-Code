@@ -17,7 +17,6 @@ terraform {
     kubernetes = {
       source = "hashicorp/kubernetes"
       version = "~> 2.0.1"
-      load_config_file = false
     }
     
   }
@@ -30,6 +29,8 @@ provider "aws" {
 }
 provider "null" {}
 provider "external" {}
+
+provider "kubernetes" {}
 
 data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
