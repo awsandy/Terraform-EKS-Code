@@ -30,7 +30,6 @@ provider "aws" {
 provider "null" {}
 provider "external" {}
 
-provider "kubernetes" {}
 
 data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
