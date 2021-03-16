@@ -17,9 +17,9 @@ resource "helm_release" "appmesh-controller" {
     value = data.aws_eks_cluster.eks_cluster.name
   }
 
-    set {
+  set {
     name  = "region"
-    value = data.aws_eks_cluster.eks_cluster.name
+    value = data.aws_region.current.name
   }
 
   set {
