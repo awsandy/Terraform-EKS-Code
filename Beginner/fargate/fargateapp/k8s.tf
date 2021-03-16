@@ -1,5 +1,1 @@
-
-provider "kubernetes" {
-  # Configuration options
-    config_path    = "~/.kube/config"
-}
+../../../.stub/k8s.tf
