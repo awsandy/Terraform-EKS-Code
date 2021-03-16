@@ -1,3 +1,4 @@
+echo "circa 45 minutes ..."
 rm -f build.log
 date >> build.log
 cur=`pwd`

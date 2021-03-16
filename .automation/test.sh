@@ -41,7 +41,7 @@ echo "PASSED: game-2048 pod count"
 fi
 
 rc=$(kubectl get pods -n fargate1 | grep Running | wc -l)
-if [ $rc -lt 2 ]]; then 
+if [[ $rc -lt 2 ]]; then 
 echo "ERROR: Found only $rc fargate pods running - expected 2"
 else
 echo "PASSED: fargate pod count"

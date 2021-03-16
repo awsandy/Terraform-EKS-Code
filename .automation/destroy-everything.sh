@@ -16,6 +16,7 @@ fi
 #
 # lb, lb sg, launch template
 
+echo "circa 25 minutes..."
 echo "pass 1 ...."
 cur=`pwd`
 date
