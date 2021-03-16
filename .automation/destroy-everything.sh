@@ -19,7 +19,7 @@ fi
 echo "pass 1 ...."
 cur=`pwd`
 date
-dirs="Beginner/fargate extra/sampleapp2 extra/eks-cidr2 extra/nodeg2 Intermediate/sampleapp Launch/lb2 Intermediate/cicd Beginner/eks-cidr Launch/nodeg Launch/cluster Launch/c9net Launch/iam Launch/net"
+dirs="Beginner/fargate/fargateapp Beginner/irsa Advanced/app-mesh Beginner/fargate extra/sampleapp2 extra/eks-cidr2 extra/nodeg2 Intermediate/sampleapp Launch/lb2 Intermediate/cicd Beginner/eks-cidr Launch/nodeg Launch/cluster Launch/c9net Launch/iam Launch/net"
 for i in $dirs; do
 cd $cur
 cd ../$i
