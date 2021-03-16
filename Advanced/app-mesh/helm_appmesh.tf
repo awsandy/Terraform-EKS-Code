@@ -23,6 +23,11 @@ resource "helm_release" "appmesh-controller" {
   }
 
   set {
+    name  = "accountId"
+    value = data.aws_caller_identity.current.account_id
+  }
+
+  set {
     name  = "serviceAccount.name"
     value = "appmesh-controller"
   }
