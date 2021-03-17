@@ -16,19 +16,6 @@ resource "aws_launch_template" "lt-ng2" {
     create_before_destroy = true
   }
 
-  provisioner "file" {
-    source      = "cw-config.json"
-    destination = "~/config.json"
-
-    connection {
-      type        = "ssh"
-      user        = "ec2-user"
-      private_key = "${file("~/.ssh/id_rsa")}"
-      host        = "${self.private_dns}"
-    }
-  }
-
-
 }
 
 

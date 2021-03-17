@@ -51,5 +51,17 @@ resource "aws_eks_node_group" "ng2" {
     ignore_changes = [scaling_config[0].desired_size]
   }
 
+  provisioner "file" {
+    source      = "cw-config.json"
+    destination = "~/config.json"
+
+    connection {
+      type        = "ssh"
+      user        = "ec2-user"
+      private_key = "${file("~/.ssh/id_rsa")}"
+      host        = "${self.private_dns}"
+    }
+  }
+
   timeouts {}
 }
