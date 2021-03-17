@@ -18,7 +18,7 @@ locals {
 
 data "cloudinit_config" "example" {
   gzip          = false
-  base64_encode = false
+  base64_encode = true
 
   part {
     content_type = "text/cloud-config"
