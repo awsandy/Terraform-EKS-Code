@@ -37,6 +37,9 @@ data "cloudinit_config" "example" {
     echo "yum'd agent" >> /tmp/me.txt
     systemctl enable amazon-ssm-agent && systemctl start amazon-ssm-agent 
     inst=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
+    ls -l /opt/aws/amazon-cloudwatch-agent/bin/config.json
+    /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/bin/config.json
+    /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -m ec2 -a start
     echo $inst >> /tmp/me.txt
     EOF
   }
