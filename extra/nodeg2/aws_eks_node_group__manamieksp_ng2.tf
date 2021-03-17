@@ -5,7 +5,16 @@ resource "aws_eks_node_group" "ng2" {
   depends_on     = [aws_launch_template.lt-ng2]
   cluster_name   = data.aws_eks_cluster.eks_cluster.name
   disk_size      = 0
-  instance_types = []
+  capacity_type = "SPOT"
+  instance_types = [
+    "m5.large",
+    "m4.large",
+    "m5a.large",
+    "m5d.large",
+    "m5n.large",
+    "m5ad.large",
+    "m5dn.large",
+  ]
   labels = {
     "eks/cluster-name"   = data.aws_eks_cluster.eks_cluster.name
     "eks/nodegroup-name" = format("ng2-%s", data.aws_eks_cluster.eks_cluster.name)
@@ -33,7 +42,7 @@ resource "aws_eks_node_group" "ng2" {
   }
 
   scaling_config {
-    desired_size = 2
+    desired_size = 1
     max_size     = 3
     min_size     = 1
   }
