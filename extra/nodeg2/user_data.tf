@@ -41,7 +41,7 @@ log_stream_name = myeks
 datetime_format = %Y-%m-%dT%H:%M:%SZ
 EOF
 
-sed -i 's/MYINST/${myinst}' /etc/awslogs/awslogs.conf
+sed -i 's/MYINST/${myinst}/g' /etc/awslogs/awslogs.conf
 cat <<EOF > /etc/awslogs/awscli.conf
 [plugins]
 cwlogs = cwlogs
