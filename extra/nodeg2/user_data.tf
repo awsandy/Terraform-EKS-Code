@@ -95,10 +95,10 @@ cat <<EOF > /opt/aws/amazon-cloudwatch-agent/bin/config.json
     },
     "metrics": {
             "append_dimensions": {
-                    "AutoScalingGroupName": "${aws:AutoScalingGroupName}",
-                    "ImageId": "${aws:ImageId}",
-                    "InstanceId": "${aws:InstanceId}",
-                    "InstanceType": "${aws:InstanceType}"
+                    "ClusterName": "${data.aws_eks_cluster.eks_cluster.name}",
+                    "ImageId": "${data.aws_eks_cluster.eks_cluster.endpoint}",
+                    "NodeGroup": "ng2",
+                    "InstanceType": "spot"
             },
             "metrics_collected": {
                     "collectd": {
