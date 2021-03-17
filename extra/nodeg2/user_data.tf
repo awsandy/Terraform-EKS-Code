@@ -96,7 +96,7 @@ cat <<EOF > /opt/aws/amazon-cloudwatch-agent/bin/config.json
     "metrics": {
             "append_dimensions": {
                     "ClusterName": "${data.aws_eks_cluster.eks_cluster.name}",
-                    "NodeGroup": "${aws_eks_node_group.ng2.node_group_name}",
+                    "NodeGroup": "ng2",
                     "InstanceType": "spot"
             },
             "metrics_collected": {
