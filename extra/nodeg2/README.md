@@ -1,0 +1,1 @@
+aws ssm put-parameter --name "AWSCloudWatch-Linux" --type "String" --value file://cw-config.json
