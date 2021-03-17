@@ -25,23 +25,23 @@ state_file = /var/lib/awslogs/agent-state
 
 [/var/log/dmesg]
 file = /var/log/dmesg
-log_group_name = myeks/${inst}/var/log/dmesg
+log_group_name = myeks/MYINST/var/log/dmesg
 log_stream_name = myeks
 
 [/var/log/messages]
 file = /var/log/messages
-log_group_name = myeks/${inst}/var/log/messages
+log_group_name = myeks/MYINST/var/log/messages
 log_stream_name = myeks
 datetime_format = %b %d %H:%M:%S
 
 [/var/log/cloud-init-output.log]
-file = /var/log/cloud-init-output.log.*
-log_group_name = myeks/${inst}/var/log/ecs/ecs-init
+file = /var/log/cloud-init-output.log
+log_group_name = myeks/MYINST/var/log/ecs/ecs-init
 log_stream_name = myeks
 datetime_format = %Y-%m-%dT%H:%M:%SZ
-
-
 EOF
+
+sed -i 's/MYINST/${myinst}' /etc/awslogs/awslogs.conf
 cat <<EOF > /etc/awslogs/awscli.conf
 [plugins]
 cwlogs = cwlogs
