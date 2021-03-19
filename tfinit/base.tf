@@ -33,9 +33,9 @@ provider "external" {}
 data "aws_region" "current" {}
 data "aws_caller_identity" "current" {}
 
-data "external" "tfid" {
-  program = ["bash", "get-tfid.sh"]
-}
+#data "external" "tfid" {
+#  program = ["bash", "get-tfid.sh"]
+#}
 
 resource "aws_dynamodb_table" "terraform_lock" {
   # switch var
