@@ -1,11 +1,11 @@
 resource "null_resource" "gen_idfile" {
-triggers = {
+  triggers = {
     always_run = timestamp()
-}
-depends_on = [random_id.id1]
-provisioner "local-exec" {
-    when = create
-    command     = <<EOT
+  }
+  depends_on = [random_id.id1]
+  provisioner "local-exec" {
+    when    = create
+    command = <<EOT
         noout=${var.no-output}
         idfile=$HOME/.tfid
 	    rm -f $idfile
@@ -17,6 +17,6 @@ provisioner "local-exec" {
         #echo "done"
 
      EOT
-   
-}
+
+  }
 }

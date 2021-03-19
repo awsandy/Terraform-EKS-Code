@@ -2,23 +2,23 @@ terraform {
   required_version = "~> 0.14.3"
   required_providers {
     aws = {
-    source = "hashicorp/aws"
-    #  Allow any 3.22+  version of the AWS provider
-    version = "~> 3.22"
+      source = "hashicorp/aws"
+      #  Allow any 3.22+  version of the AWS provider
+      version = "~> 3.22"
     }
     null = {
-    source = "hashicorp/null"
-    version = "~> 3.0"
+      source  = "hashicorp/null"
+      version = "~> 3.0"
     }
     external = {
-    source = "hashicorp/external"
-    version = "~> 2.0"
+      source  = "hashicorp/external"
+      version = "~> 2.0"
     }
     kubernetes = {
-      source = "hashicorp/kubernetes"
+      source  = "hashicorp/kubernetes"
       version = "~> 2.0.1"
     }
-    
+
   }
 }
 
@@ -39,7 +39,7 @@ data "external" "tfid" {
 
 resource "aws_dynamodb_table" "terraform_lock" {
   # switch var
-  name         = format("tf_lock_%s_%s",random_id.id1.hex,lower(basename(path.cwd)))
+  name         = format("tf_lock_%s_%s", random_id.id1.hex, lower(basename(path.cwd)))
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 
@@ -51,5 +51,5 @@ resource "aws_dynamodb_table" "terraform_lock" {
 
 
 
- 
+
 
