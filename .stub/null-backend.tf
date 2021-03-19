@@ -1,11 +1,11 @@
 resource "null_resource" "backend" {
-triggers = {
+  triggers = {
     always_run = timestamp()
-}
-depends_on = [aws_dynamodb_table.terraform_lock]
-provisioner "local-exec" {
-    when = create
-    command     = <<EOT
+  }
+  depends_on = [aws_dynamodb_table.terraform_lock]
+  provisioner "local-exec" {
+    when    = create
+    command = <<EOT
             
             p1=${lower(basename(path.cwd))}
             reg=${data.aws_region.current.name}
@@ -33,6 +33,6 @@ provisioner "local-exec" {
             #echo "done"
 
      EOT
- 
-}
+
+  }
 }
