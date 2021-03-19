@@ -4,7 +4,6 @@
 # .tfstate files
 *.tfstate
 *.tfstate.*
-
 # Crash log files
 crash.log
 
@@ -35,9 +34,7 @@ kubectl*
 jq
 **/backend-*.tf
 backend-*.tf
-**/remote-*.tf
-remote-*.tf
+**/backend.tf
 **/tf-setup/generated/*
 **/net-v2/*
 **/notused/*
-

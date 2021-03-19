@@ -1,0 +1,9 @@
+check /Users/awsandy/.tfid exists
+no random_id and no /Users/awsandy/.tfid
+look for bucket
+s3 buck exists - get it's name
+check /Users/awsandy/.tfid exists
+/Users/awsandy/.tfid does not exist - write it
+{
+"id" : "77d00d6fbd30dec6"
+}

@@ -5,28 +5,36 @@ resource "aws_eks_node_group" "ng2" {
   depends_on     = [aws_launch_template.lt-ng2]
   cluster_name   = data.aws_eks_cluster.eks_cluster.name
   disk_size      = 0
-  instance_types = []
+  capacity_type = "SPOT"
+  instance_types = [
+    "m5.large",
+    "m4.large",
+    "m5a.large",
+    "m5d.large",
+    "m5n.large",
+    "m5ad.large",
+    "m5dn.large",
+  ]
   labels = {
-    "alpha.eksctl.io/cluster-name"   = data.aws_eks_cluster.eks_cluster.name
-    "alpha.eksctl.io/nodegroup-name" = format("ng2-%s", data.aws_eks_cluster.eks_cluster.name)
+    "eks/cluster-name"   = data.aws_eks_cluster.eks_cluster.name
+    "eks/nodegroup-name" = format("ng2-%s", data.aws_eks_cluster.eks_cluster.name)
   }
   node_group_name = format("ng2-%s", data.aws_eks_cluster.eks_cluster.name)
   node_role_arn   = data.terraform_remote_state.iam.outputs.nodegroup_role_arn
   #release_version = "1.17.11-20201007"
   subnet_ids = [
-      data.terraform_remote_state.net.outputs.sub-priv1,
-      data.terraform_remote_state.net.outputs.sub-priv2,
-      data.terraform_remote_state.net.outputs.sub-priv3,
+    data.terraform_remote_state.net.outputs.sub-priv1,
+    data.terraform_remote_state.net.outputs.sub-priv2,
+    data.terraform_remote_state.net.outputs.sub-priv3,
   ]
   tags = {
-    "alpha.eksctl.io/cluster-name"                = data.aws_eks_cluster.eks_cluster.name
-    "alpha.eksctl.io/eksctl-version"              = "0.29.2"
-    "alpha.eksctl.io/nodegroup-name"              = format("ng2-%s", data.aws_eks_cluster.eks_cluster.name)
-    "alpha.eksctl.io/nodegroup-type"              = "managed"
+    "eks/cluster-name"                            = data.aws_eks_cluster.eks_cluster.name
+    "eks/nodegroup-name"                          = format("ng2-%s", data.aws_eks_cluster.eks_cluster.name)
+    "eks/nodegroup-type"                          = "managed"
     "eksctl.cluster.k8s.io/v1alpha1/cluster-name" = data.aws_eks_cluster.eks_cluster.name
-    "eksnet" = "net-main"
+    "eksnet"                                      = "net-main"
   }
-  #version = "1.17"
+
 
   launch_template {
     name    = aws_launch_template.lt-ng2.name
@@ -34,7 +42,7 @@ resource "aws_eks_node_group" "ng2" {
   }
 
   scaling_config {
-    desired_size = 2
+    desired_size = 1
     max_size     = 3
     min_size     = 1
   }
@@ -42,6 +50,7 @@ resource "aws_eks_node_group" "ng2" {
   lifecycle {
     ignore_changes = [scaling_config[0].desired_size]
   }
+
 
   timeouts {}
 }

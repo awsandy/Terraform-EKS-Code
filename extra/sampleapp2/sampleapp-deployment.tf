@@ -1,6 +1,3 @@
-data "aws_region" "current" {}
-data "aws_caller_identity" "current" {}
-
 resource "kubernetes_deployment" "game1-2048__deployment1-2048" {
 
   metadata {
@@ -32,7 +29,7 @@ resource "kubernetes_deployment" "game1-2048__deployment1-2048" {
 
       spec {
 
-        node_selector                    = { "alpha.eksctl.io/nodegroup-name" = "ng1-mycluster1" }
+        node_selector                    = { "eks/nodegroup-name" = "ng1-mycluster1" }
         restart_policy                   = "Always"
         share_process_namespace          = false
         termination_grace_period_seconds = 30
@@ -88,7 +85,7 @@ resource "kubernetes_deployment" "game2-2048__deployment2-2048" {
 
       spec {
 
-        node_selector                    = { "alpha.eksctl.io/nodegroup-name" = "ng2-mycluster1" }
+        node_selector                    = { "eks/nodegroup-name" = "ng2-mycluster1" }
         restart_policy                   = "Always"
         share_process_namespace          = false
         termination_grace_period_seconds = 30
