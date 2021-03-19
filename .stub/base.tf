@@ -39,7 +39,7 @@ data "external" "tfid" {
 
 resource "aws_dynamodb_table" "terraform_lock" {
   # switch var
-  name         = format("tf_lock_%s_%s", data.external.tfid.result.Name, lower(basename(path.cwd)))
+  name         = format("tf_lock_%s_%s", var.tfid, lower(basename(path.cwd)))
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 
