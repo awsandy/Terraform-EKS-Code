@@ -2,8 +2,10 @@ test -n "$1" && echo CLUSTER is "$1" || "echo CLUSTER is not set && exit"
 CLUSTER=$(echo $1)
 # set custom networking for the CNI
 kubectl set env ds aws-node -n kube-system AWS_VPC_K8S_CNI_CUSTOM_NETWORK_CFG=true
+kubectl set env ds aws-node -n kube-system AWS_VPC_K8S_CNI_EXTERNALSNAT=true
 # quick look to see if it's now set
-kubectl describe daemonset aws-node -n kube-system | grep -A5 Environment | grep CUSTOM
+kubectl describe daemonset aws-node -n kube-system | grep CNI_CUSTOM | tr -d ' '
+kubectl describe daemonset aws-node -n kube-system | grep AWS_VPC_K8S_CNI_EXTERNALSNAT  | tr -d ' '
 # Get a list of all the instances in the node group
 comm=`printf "aws ec2 describe-instances --query 'Reservations[*].Instances[*].InstanceId' --filters \"Name=tag-key,Values=eks:nodegroup-name\" \"Name=tag-value,Values=ng1-%s\" \"Name=instance-state-name,Values=running\" --output text" $CLUSTER`
 INSTANCE_IDS=(`eval $comm`)
