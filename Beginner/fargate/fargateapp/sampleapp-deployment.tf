@@ -1,9 +1,9 @@
 
 
-resource "kubernetes_deployment" "fargate1__deployment-2048" {
+resource "kubernetes_deployment" "fargate1__logging_server" {
 
   metadata {
-    name      = "deployment-2048"
+    name      = "logging-server"
     namespace = kubernetes_namespace.fargate1.id
   }
 
@@ -15,7 +15,7 @@ resource "kubernetes_deployment" "fargate1__deployment-2048" {
     replicas = 2
     selector {
       match_labels = {
-        "app.kubernetes.io/name" = "app-2048"
+        "app.kubernetes.io/name" = "logging-server"
       }
     }
     strategy {
@@ -30,7 +30,7 @@ resource "kubernetes_deployment" "fargate1__deployment-2048" {
     template {
       metadata {
         annotations = {}
-        labels      = { "app.kubernetes.io/name" = "app-2048" }
+        labels      = { "app.kubernetes.io/name" = "logging-server" }
       }
 
       spec {
@@ -38,9 +38,9 @@ resource "kubernetes_deployment" "fargate1__deployment-2048" {
 
 
         container {
-          image             = format("%s.dkr.ecr.%s.amazonaws.com/sample-app", data.aws_caller_identity.current.account_id, data.aws_region.current.name)
+          image             = format("%s.dkr.ecr.%s.amazonaws.com/nginx", data.aws_caller_identity.current.account_id, data.aws_region.current.name)
           image_pull_policy = "Always"
-          name              = "app-2048"
+          name              = "nginx"
           port {
             container_port = 80
             host_port      = 0
