@@ -19,7 +19,7 @@ resource "kubernetes_config_map" "aws-observability__aws-logging" {
                 Name cloudwatch
                 Match *
                 region ${data.aws_region.current.name}
-                log_group_name fluent-bit-cloudwatch1
+                log_group_name fluent-bit-eks-fargate
                 log_stream_prefix fargate1-
                 auto_create_group true
                 sts_endpoint https://sts.eu-west-1.amazonaws.com
