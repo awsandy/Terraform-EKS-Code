@@ -38,30 +38,8 @@ cd $cur
 date
 done
 echo "Pass 1 cli based actions ..."
-echo "pass 2 ...."
-for i in $dirs; do
-cd $cur
-cd ../$i
-echo "**** Destroying in $i ****"
-#terraform destroy -auto-approve -lock=false -no-color > /dev/null
-rm -f tfplan terraform*
-rm -rf .terraform*
-cd $cur
-date
-done
-dirs="tfinit"
-for i in $dirs; do
-cd ../$i
-echo "**** Destroying in $i ****"
 
-rm -f backend.tf
-terraform init -force-copy
-terraform destroy -auto-approve -lock=false -no-color > /dev/null
-rm -f tfplan terraform*
-rm -rf .terraform*
-cd $cur
-date
-done
+
 echo "Done"
 
 exit
