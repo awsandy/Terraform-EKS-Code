@@ -13,6 +13,7 @@ resource "null_resource" "gen_cluster_auth" {
         echo -e "\x1B[32m Checking Authorization ${aws_eks_cluster.cluster.name}...should see Server Version: v1.18.xxx \x1B[0m"
         ./auth.sh ${aws_eks_cluster.cluster.name}
         echo "************************************************************************************"
+        
      EOT
   }
 }
