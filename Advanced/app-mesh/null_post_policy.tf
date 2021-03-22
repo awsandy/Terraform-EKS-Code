@@ -8,10 +8,10 @@ provisioner "local-exec" {
     interpreter = ["/bin/bash", "-c"]
     when = create
     command     = <<EOT
-        rm -f crds.yaml*
-        curl -o crds.yaml https://raw.githubusercontent.com/aws/eks-charts/master/stable/appmesh-controller/crds/crds.yaml
-        kubectl apply -f crds.yaml
-        #echo "done"
+        #rm -f crds.yaml*
+        #curl -o crds.yaml https://raw.githubusercontent.com/aws/eks-charts/master/stable/appmesh-controller/crds/crds.yaml
+        #kubectl apply -f crds.yaml
+        echo "done"
      EOT
 }
 }
