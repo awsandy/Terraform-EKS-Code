@@ -95,14 +95,14 @@ EOF
 }
 
 main() {
-    check_appmesh_k8s
+    #check_appmesh_k8s
 
     if [ -z $SKIP_IMAGES ]; then
         echo "deploy images..."
         deploy_images
     fi
 
-    deploy_app
+    #deploy_app
 }
 
 main
