@@ -1,3 +1,35 @@
+### App Mesh
+
+
+https://aws.amazon.com/blogs/containers/introducing-ingress-support-in-aws-app-mesh/
+
+
+
+Envoy-Image
+840364872350.dkr.ecr.region-code.amazonaws.com/aws-appmesh-envoy:v1.16.1.1-prod
+
+* Create Cluster
+* OISC SA - for appmesh
+* helm for app mesh controller
+* deploy.sh
+  * check appmesh ctrl and CRD's exist
+  * colorapp to ECR
+  * kubectl apply manifest.yaml  (copied form manifest.yaml.template)
+
+
+
+https://github.com/aws/aws-app-mesh-examples/blob/master/walkthroughs/eks/base.md
+
+https://github.com/aws/aws-app-mesh-examples/tree/master/walkthroughs/howto-k8s-http2
+
+
+https://github.com/aws/aws-app-mesh-controller-for-k8s/blob/master/docs/tutorials/walkthroughs.md
+
+
+
+
+
+
 ### Troubleshoot
 
 helm search repo eks/aws-load-balancer-controller -l
