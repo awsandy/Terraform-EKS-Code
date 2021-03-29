@@ -1,0 +1,78 @@
+# kubernetes_deployment.howto-k8s-ingress-gateway__ingress-gw:
+resource "kubernetes_deployment" "howto-k8s-ingress-gateway__ingress-gw" {
+
+  metadata {
+    annotations = {}
+    labels      = {}
+    name        = "ingress-gw"
+    namespace   = "howto-k8s-ingress-gateway"
+  }
+
+  spec {
+    min_ready_seconds         = 0
+    paused                    = false
+    progress_deadline_seconds = 600
+    replicas                  = "1"
+    revision_history_limit    = 10
+
+    selector {
+      match_labels = {
+        "app" = "ingress-gw"
+      }
+    }
+
+    strategy {
+      type = "RollingUpdate"
+
+      rolling_update {
+        max_surge       = "25%"
+        max_unavailable = "25%"
+      }
+    }
+
+    template {
+      metadata {
+        annotations = {}
+        labels = {
+          "app" = "ingress-gw"
+        }
+      }
+
+      spec {
+        automount_service_account_token  = false
+        dns_policy                       = "ClusterFirst"
+        enable_service_links             = false
+        host_ipc                         = false
+        host_network                     = false
+        host_pid                         = false
+        node_selector                    = {}
+        restart_policy                   = "Always"
+        share_process_namespace          = false
+        termination_grace_period_seconds = 30
+
+        container {
+          args                       = []
+          command                    = []
+          image                      = "840364872350.dkr.ecr.eu-west-1.amazonaws.com/aws-appmesh-envoy:v1.16.1.1-prod"
+          image_pull_policy          = "IfNotPresent"
+          name                       = "envoy"
+          stdin                      = false
+          stdin_once                 = false
+          termination_message_path   = "/dev/termination-log"
+          termination_message_policy = "File"
+          tty                        = false
+
+          port {
+            container_port = 8088
+            host_port      = 0
+            protocol       = "TCP"
+          }
+
+          resources {}
+        }
+      }
+    }
+  }
+
+  timeouts {}
+}

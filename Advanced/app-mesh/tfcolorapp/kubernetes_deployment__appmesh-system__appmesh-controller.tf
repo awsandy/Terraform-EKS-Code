@@ -1,0 +1,159 @@
+# kubernetes_deployment.appmesh-system__appmesh-controller:
+resource "kubernetes_deployment" "appmesh-system__appmesh-controller" {
+
+  metadata {
+    annotations = {
+      "meta.helm.sh/release-name"      = "appmesh-controller"
+      "meta.helm.sh/release-namespace" = "appmesh-system"
+    }
+    labels = {
+      "control-plane" = "appmesh-controller"
+      "helm.sh/chart" = "appmesh-controller-1.3.0"
+    }
+    name      = "appmesh-controller"
+    namespace = "appmesh-system"
+  }
+
+  spec {
+    min_ready_seconds         = 0
+    paused                    = false
+    progress_deadline_seconds = 600
+    replicas                  = "1"
+    revision_history_limit    = 10
+
+    selector {
+      match_labels = {
+        "control-plane" = "appmesh-controller"
+      }
+    }
+
+    strategy {
+      type = "RollingUpdate"
+
+      rolling_update {
+        max_surge       = "25%"
+        max_unavailable = "25%"
+      }
+    }
+
+    template {
+      metadata {
+        annotations = {
+          "prometheus.io/port"   = "8080"
+          "prometheus.io/scrape" = "true"
+        }
+        labels = {
+          "control-plane" = "appmesh-controller"
+        }
+      }
+
+      spec {
+        automount_service_account_token  = false
+        dns_policy                       = "ClusterFirst"
+        enable_service_links             = false
+        host_ipc                         = false
+        host_network                     = false
+        host_pid                         = false
+        node_selector                    = {}
+        restart_policy                   = "Always"
+        service_account_name             = "appmesh-controller"
+        share_process_namespace          = false
+        termination_grace_period_seconds = 30
+
+        container {
+          args = [
+            "--enable-leader-election=true",
+            "--log-level=info",
+            "--sidecar-image=840364872350.dkr.ecr.us-west-1.amazonaws.com/aws-appmesh-envoy:v1.16.1.0-prod",
+            "--sidecar-cpu-requests=10m",
+            "--sidecar-memory-requests=32Mi",
+            "--sidecar-cpu-limits=",
+            "--sidecar-memory-limits=",
+            "--init-image=840364872350.dkr.ecr.us-west-1.amazonaws.com/aws-appmesh-proxy-route-manager:v3-prod",
+            "--enable-stats-tags=false",
+            "--prestop-delay=20",
+            "--readiness-probe-initial-delay=1",
+            "--readiness-probe-period=10",
+            "--envoy-admin-access-port=9901",
+            "--envoy-admin-access-log-file=/tmp/envoy_admin_access.log",
+            "--preview=false",
+            "--enable-sds=false",
+            "--sds-uds-path=/run/spire/sockets/agent.sock",
+            "--cloudmap-dns-ttl=300",
+            "--aws-region=eu-west-1",
+            "--sidecar-log-level=info",
+            "--health-probe-port=61779",
+          ]
+          command = [
+            "/controller",
+          ]
+          image                      = "602401143452.dkr.ecr.us-west-2.amazonaws.com/amazon/appmesh-controller:v1.3.0"
+          image_pull_policy          = "IfNotPresent"
+          name                       = "controller"
+          stdin                      = false
+          stdin_once                 = false
+          termination_message_path   = "/dev/termination-log"
+          termination_message_policy = "File"
+          tty                        = false
+
+          liveness_probe {
+            failure_threshold     = 2
+            initial_delay_seconds = 30
+            period_seconds        = 10
+            success_threshold     = 1
+            timeout_seconds       = 10
+
+            http_get {
+              path   = "/healthz"
+              port   = "61779"
+              scheme = "HTTP"
+            }
+          }
+
+          port {
+            container_port = 9443
+            host_port      = 0
+            name           = "webhook-server"
+            protocol       = "TCP"
+          }
+          port {
+            container_port = 8080
+            host_port      = 0
+            name           = "metrics-server"
+            protocol       = "TCP"
+          }
+
+          resources {
+            limits = {
+              "cpu"    = "2"
+              "memory" = "1Gi"
+            }
+            requests = {
+              "cpu"    = "100m"
+              "memory" = "200Mi"
+            }
+          }
+
+          volume_mount {
+            mount_propagation = "None"
+            mount_path        = "/tmp/k8s-webhook-server/serving-certs"
+            name              = "cert"
+            read_only         = true
+          }
+        }
+
+        volume {
+          name = "cert"
+
+          secret {
+            default_mode = "0644"
+            optional     = false
+            secret_name  = "appmesh-controller-webhook-server-cert"
+          }
+        }
+      }
+    }
+  }
+
+  timeouts {}
+}
