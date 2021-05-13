@@ -1,5 +1,5 @@
 echo "Install OS tools"
-sudo yum -y -q -e 0 install  jq moreutils bash-completion nmap > /dev/null
+sudo yum -y -q -e 0 install  jq moreutils nmap > /dev/null
 
 aws --version > /dev/null
 if [ $? -ne 0 ]; then
@@ -41,10 +41,10 @@ fi
 
 if [ ! `which terraform 2> /dev/null` ]; then
   echo "Install Terraform"
-  wget https://releases.hashicorp.com/terraform/0.14.6/terraform_0.14.6_linux_amd64.zip
-  unzip -qq terraform_0.14.6_linux_amd64.zip
+  wget https://releases.hashicorp.com/terraform/0.15.3/terraform_0.15.3_linux_amd64.zip
+  unzip -qq terraform_0.15.3_linux_amd64.zip
   sudo mv terraform /usr/local/bin/
-  rm -f terraform_0.14.6_linux_amd64.zip
+  rm -f terraform_0.15.3_linux_amd64.zip
 fi
 
 if [ ! -f $HOME/.terraform.d/plugin-cache ];then
@@ -70,10 +70,10 @@ fi
 
 if [ ! `which helm 2> /dev/null` ]; then
   echo "helm"
-  wget https://get.helm.sh/helm-v3.5.1-linux-amd64.tar.gz
-  tar -zxf helm-v3.5.1-linux-amd64.tar.gz
+  wget https://get.helm.sh/helm-v3.5.4-linux-amd64.tar.gz
+  tar -zxf helm-v3.5.4-linux-amd64.tar.gz
   sudo mv linux-amd64/helm /usr/local/bin/helm
-  rm -rf helm-v3.5.1-linux-amd64.tar.gz linux-amd64
+  rm -rf helm-v3.5.4-linux-amd64.tar.gz linux-amd64
 fi
 echo "add helm repos"
 helm repo add eks https://aws.github.io/eks-charts
