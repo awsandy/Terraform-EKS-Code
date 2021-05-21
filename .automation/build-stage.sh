@@ -22,7 +22,8 @@ for i in $dirs; do
     
     rm -rf .terraform* backend.tf
     echo "Terraform Init"
-    terraform init -no-color -force-copy -lock=false > /dev/null
+    #terraform init -no-color -force-copy -lock=false > /dev/null
+    terraform init -no-color -force-copy > /dev/null
     rc=0
 
     # array elements in hetre so special rule
