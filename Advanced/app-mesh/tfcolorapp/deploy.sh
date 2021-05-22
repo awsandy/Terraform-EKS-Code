@@ -2,6 +2,7 @@
 
 set -eo pipefail
 AWS_ACCOUNT_ID=`aws sts get-caller-identity --query Account | tr -d '"' `
+AWS_DEFAULT_REGION=$(curl -s 169.254.169.254/latest/dynamic/instance-identity/document | jq -r '.region')
 if [ -z $AWS_ACCOUNT_ID ]; then
     echo "AWS_ACCOUNT_ID environment variable is not set."
     exit 1
