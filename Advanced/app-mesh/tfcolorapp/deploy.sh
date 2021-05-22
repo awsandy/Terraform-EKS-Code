@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -eo pipefail
-AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account | jq -r)
+AWS_ACCOUNT_ID=`aws sts get-caller-identity --query Account | tr -d '"' `
 if [ -z $AWS_ACCOUNT_ID ]; then
     echo "AWS_ACCOUNT_ID environment variable is not set."
     exit 1
