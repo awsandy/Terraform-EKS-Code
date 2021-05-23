@@ -87,6 +87,7 @@ resource "kubernetes_deployment" "appmesh-system__appmesh-controller" {
           command = [
             "/controller",
           ]
+          
           image                      = "602401143452.dkr.ecr.us-west-2.amazonaws.com/amazon/appmesh-controller:v1.3.0"
           image_pull_policy          = "IfNotPresent"
           name                       = "controller"

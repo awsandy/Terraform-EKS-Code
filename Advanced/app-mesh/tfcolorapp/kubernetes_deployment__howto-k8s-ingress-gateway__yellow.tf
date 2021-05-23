@@ -55,7 +55,7 @@ resource "kubernetes_deployment" "howto-k8s-ingress-gateway__yellow" {
         container {
           args                       = []
           command                    = []
-          image                      = "566972129213.dkr.ecr.eu-west-1.amazonaws.com/howto-k8s-ingress-gateway/colorapp"
+          image= format("%s.dkr.ecr.%s.amazonaws.com/howto-k8s-ingress-gateway/colorapp", data.aws_caller_identity.current.account_id, data.aws_region.current.name)
           image_pull_policy          = "Always"
           name                       = "app"
           stdin                      = false
