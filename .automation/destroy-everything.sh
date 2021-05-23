@@ -26,8 +26,8 @@ cd $cur
 cd ../$i
 echo "**** Destroying in $i ****"
 rm -rf .terrform* backend.tf
-terraform init -no-color -force-copy -lock=false > /dev/null
-terraform destroy -auto-approve -lock=false -no-color
+terraform init -no-color -force-copy > /dev/null
+terraform destroy -auto-approve -no-color
 rc=$(terraform state list | wc -l)
 if [ $rc -gt 0 ];then
     echo "**** Unexpected resources left in state exit ...."
@@ -56,7 +56,7 @@ echo "**** Destroying in $i ****"
 
 rm -f backend.tf
 terraform init -force-copy
-terraform destroy -auto-approve -lock=false -no-color > /dev/null
+terraform destroy -auto-approve -no-color > /dev/null
 rm -f tfplan terraform*
 rm -rf .terraform*
 cd $cur
