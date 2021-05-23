@@ -2,7 +2,7 @@
 # aws_appmesh_virtual_node.howto-k8s-ingress-gateway__green_howto-k8s-ingress-gateway:
 resource "aws_appmesh_virtual_node" "howto-k8s-ingress-gateway__green_howto-k8s-ingress-gateway" {
   mesh_name  = "howto-k8s-ingress-gateway"
-  mesh_owner = "566972129213"
+  mesh_owner = data.aws_caller_identity.current.account_id
   name       = "green_howto-k8s-ingress-gateway"
   tags       = {}
 

@@ -2,7 +2,7 @@
 # aws_appmesh_gateway_route.howto-k8s-ingress-gateway__ingress-gw_howto-k8s-ingress-gateway__gateway-route-headers_howto-k8s-ingress-gateway:
 resource "aws_appmesh_gateway_route" "howto-k8s-ingress-gateway__ingress-gw_howto-k8s-ingress-gateway__gateway-route-headers_howto-k8s-ingress-gateway" {
   mesh_name            = "howto-k8s-ingress-gateway"
-  mesh_owner           = "566972129213"
+  mesh_owner           = data.aws_caller_identity.current.account_id
   name                 = "gateway-route-headers_howto-k8s-ingress-gateway"
   tags                 = {}
   virtual_gateway_name = "ingress-gw_howto-k8s-ingress-gateway"

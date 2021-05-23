@@ -2,7 +2,7 @@
 # aws_appmesh_route.howto-k8s-ingress-gateway__color-headers_howto-k8s-ingress-gateway__color-route-white:
 resource "aws_appmesh_route" "howto-k8s-ingress-gateway__color-headers_howto-k8s-ingress-gateway__color-route-white" {
   mesh_name           = "howto-k8s-ingress-gateway"
-  mesh_owner          = "566972129213"
+  mesh_owner          = data.aws_caller_identity.current.account_id
   name                = "color-route-white"
   tags                = {}
   virtual_router_name = "color-headers_howto-k8s-ingress-gateway"
