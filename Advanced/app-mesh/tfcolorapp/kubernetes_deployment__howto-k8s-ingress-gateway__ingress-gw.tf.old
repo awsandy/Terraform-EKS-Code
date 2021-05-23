@@ -1,4 +1,6 @@
 # kubernetes_deployment.howto-k8s-ingress-gateway__ingress-gw:
+# ingress gateway - create form mesh resources instead ?
+
 resource "kubernetes_deployment" "howto-k8s-ingress-gateway__ingress-gw" {
 
   metadata {
