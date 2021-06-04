@@ -1,22 +1,24 @@
 terraform {
-  #required_version = "~> 0.14.3"
-  required_version = "~> 0.15.3"
+  required_version = "~> 0.15.5"
   required_providers {
     aws = {
-    source = "hashicorp/aws"
-    #  Allow any 3.22+  version of the AWS provider
-    #version = "~> 3.22"
-    version = "= 3.39"
+      source = "hashicorp/aws"
+      #  Allow any 3.22+  version of the AWS provider
+      version = "= 3.44"
     }
     null = {
-    source = "hashicorp/null"
-    version = "~> 3.0"
+      source  = "hashicorp/null"
+      version = "= 3.1.0"
     }
     external = {
-    source = "hashicorp/external"
-    version = "~> 2.0"
+      source  = "hashicorp/external"
+      version = "= 2.1.0"
     }
-    
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "= 2.3.1"
+    }
+
   }
 }
 

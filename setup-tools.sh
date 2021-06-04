@@ -1,5 +1,6 @@
 echo "Install OS tools"
 sudo yum -y -q -e 0 install  jq moreutils nmap > /dev/null
+sudo yum update -y
 
 aws --version > /dev/null
 if [ $? -ne 0 ]; then
@@ -39,13 +40,6 @@ if [ $? -eq 0 ]; then
 fi
 
 
-if [ ! `which terraform 2> /dev/null` ]; then
-  echo "Install Terraform"
-  wget https://releases.hashicorp.com/terraform/0.15.3/terraform_0.15.3_linux_amd64.zip
-  unzip -qq terraform_0.15.3_linux_amd64.zip
-  sudo mv terraform /usr/local/bin/
-  rm -f terraform_0.15.3_linux_amd64.zip
-fi
 
 if [ ! -f $HOME/.terraform.d/plugin-cache ];then
   mkdir -p $HOME/.terraform.d/plugin-cache
