@@ -11,7 +11,8 @@ if [ $? -ne 0 ]; then
   rm -f awscliv2.zip
   rm -rf aws
 else
-  av=$(aws --version | cut -f2 -d '/' | cut -f1 -d'.')
+  aws --version 2&> aws.tmp
+  av=$(cat aws.tmp | cut -f2 -d '/' | cut -f1 -d'.')
   if [ $av != "2" ];then 
     echo "Update aws cli"
     curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -116,12 +117,15 @@ cd ~/environment
 echo "Enable bash_completion"
 . /etc/profile.d/bash_completion.sh
 . ~/.bash_completion
+echo "alias tfb='terraform init && terraform plan -out tfplan && terraform apply tfplan'" >> ~/.bash_profile
+echo "alias aws='/usr/local/bin/aws'" >> ~/.bash_profile
 source ~/.bash_profile
 
 #aws --version
 #eksctl version
 #Install  version --client
 #helm version
+
 test -n "$AWS_REGION" && echo "PASSED: AWS_REGION is $AWS_REGION" || echo AWS_REGION is not set !!
 test -n "$ACCOUNT_ID" && echo "PASSED: ACCOUNT_ID is $ACCOUNT_ID" || echo ACCOUNT_ID is not set !!
 echo "setup tools run" >> ~/setup-tools.log
