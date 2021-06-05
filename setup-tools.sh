@@ -1,28 +1,19 @@
 echo "Install OS tools"
 sudo yum -y -q -e 0 install  jq moreutils nmap > /dev/null
-sudo yum update -y
-
+echo "Update OS tools"
+sudo yum update -y > /dev/null
+echo "Update pip"
+sudo pip install --upgrade pip
+echo "Uninstall AWS CLI v1"
+sudo /usr/local/bin/pip uninstall awscli -y > /dev/null
 aws --version > /dev/null
-if [ $? -ne 0 ]; then
-  echo "Install aws cli"
-  curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-  unzip -qq awscliv2.zip
-  sudo ./aws/install
-  rm -f awscliv2.zip
-  rm -rf aws
-else
-  aws --version 2&> aws.tmp
-  av=$(cat aws.tmp | cut -f2 -d '/' | cut -f1 -d'.')
-  if [ $av != "2" ];then 
-    echo "Update aws cli"
-    curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-    unzip -qq awscliv2.zip
-    sudo ./aws/install
-    rm -f awscliv2.zip
-    rm -rf aws
 
-  fi
-fi
+echo "Install AWS CLI v2"
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip -qq awscliv2.zip
+sudo ./aws/install
+rm -f awscliv2.zip
+rm -rf aws
 
 # setup for AWS cli
 aws sts get-caller-identity --query Arn | grep eksworkshop-admin > /dev/null
@@ -40,13 +31,12 @@ if [ $? -eq 0 ]; then
   aws configure get region
 fi
 
-
-
+echo "Setup Terraform cache"
 if [ ! -f $HOME/.terraform.d/plugin-cache ];then
   mkdir -p $HOME/.terraform.d/plugin-cache
   cp tfinit/dot-terraform.rc $HOME/.terraformrc
 fi
-
+echo "Setup kubectl"
 if [ ! `which kubectl 2> /dev/null` ]; then
   echo "Install kubectl"
   curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
@@ -114,7 +104,7 @@ cd ~/environment
 #git clone https://github.com/brentley/ecsdemo-nodejs.git
 #git clone https://github.com/brentley/ecsdemo-crystal.git
 #git clone https://github.com/aws-samples/aws2tf.git
-sudo pip install --upgrade pip
+
 echo "Enable bash_completion"
 . /etc/profile.d/bash_completion.sh
 . ~/.bash_completion
