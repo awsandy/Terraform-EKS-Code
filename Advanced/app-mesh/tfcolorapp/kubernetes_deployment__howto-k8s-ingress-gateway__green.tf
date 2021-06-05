@@ -71,7 +71,6 @@ resource "kubernetes_deployment" "howto-k8s-ingress-gateway__green" {
 
           port {
             container_port = 8080
-            host_port      = 8080
             protocol       = "TCP"
           }
 
