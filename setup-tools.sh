@@ -114,6 +114,7 @@ cd ~/environment
 #git clone https://github.com/brentley/ecsdemo-nodejs.git
 #git clone https://github.com/brentley/ecsdemo-crystal.git
 #git clone https://github.com/aws-samples/aws2tf.git
+sudo pip install --upgrade pip
 echo "Enable bash_completion"
 . /etc/profile.d/bash_completion.sh
 . ~/.bash_completion
