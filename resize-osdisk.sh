@@ -1,4 +1,4 @@
-pip install --user --upgrade boto3
+pip install --user --upgrade boto3 > /dev/null
 export instance_id=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
 date
 python -c "import boto3
