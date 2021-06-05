@@ -1,0 +1,1 @@
+kubectl create deployment demo-app --image=566972129213.dkr.ecr.eu-west-1.amazonaws.com/nginx -n fargate1
