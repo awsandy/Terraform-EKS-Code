@@ -10,7 +10,7 @@ sudo /usr/local/bin/pip uninstall awscli -y > /dev/null
 echo "Install AWS CLI v2"
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" > /dev/null
 unzip -qq awscliv2.zip
-sudo ./aws/install
+sudo ./aws/install > /dev/null
 rm -f awscliv2.zip
 rm -rf aws
 
