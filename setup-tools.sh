@@ -8,7 +8,7 @@ echo "Uninstall AWS CLI v1"
 sudo /usr/local/bin/pip uninstall awscli -y > /dev/null
 
 echo "Install AWS CLI v2"
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" > /dev/null
+curl --silent "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" > /dev/null
 unzip -qq awscliv2.zip
 sudo ./aws/install > /dev/null
 rm -f awscliv2.zip
@@ -38,7 +38,7 @@ fi
 echo "Setup kubectl"
 if [ ! `which kubectl 2> /dev/null` ]; then
   echo "Install kubectl"
-  curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl  > /dev/null
+  curl --silent -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl  > /dev/null
   chmod +x ./kubectl
   sudo mv ./kubectl  /usr/local/bin/kubectl > /dev/null
   kubectl completion bash >>  ~/.bash_completion
@@ -64,7 +64,7 @@ helm repo add eks https://aws.github.io/eks-charts
 
 if [ ! `which kubectx 2> /dev/null` ]; then
   echo "kubectx"
-  sudo git clone https://github.com/ahmetb/kubectx /opt/kubectx > /dev/null
+  sudo git clone -q https://github.com/ahmetb/kubectx /opt/kubectx > /dev/null
   sudo ln -s /opt/kubectx/kubectx /usr/local/bin/kubectx
   sudo ln -s /opt/kubectx/kubens /usr/local/bin/kubens
 fi
