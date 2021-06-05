@@ -113,13 +113,13 @@ resource "kubernetes_deployment" "appmesh-system__appmesh-controller" {
 
           port {
             container_port = 9443
-            host_port      = 0
+            host_port      = 9443
             name           = "webhook-server"
             protocol       = "TCP"
           }
           port {
             container_port = 8080
-            host_port      = 0
+            host_port      = 8080
             name           = "metrics-server"
             protocol       = "TCP"
           }
