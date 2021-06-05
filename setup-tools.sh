@@ -54,7 +54,7 @@ fi
 
 if [ ! `which helm 2> /dev/null` ]; then
   echo "helm"
-  wget https://get.helm.sh/helm-v3.5.4-linux-amd64.tar.gz > /dev/null
+  wget -q https://get.helm.sh/helm-v3.5.4-linux-amd64.tar.gz > /dev/null
   tar -zxf helm-v3.5.4-linux-amd64.tar.gz
   sudo mv linux-amd64/helm /usr/local/bin/helm > /dev/null
   rm -rf helm-v3.5.4-linux-amd64.tar.gz linux-amd64
