@@ -43,7 +43,7 @@ resource "kubernetes_deployment" "fargate1__logging_server" {
           name              = "nginx"
           port {
             container_port = 80
-            host_port      = 0
+            host_port      = 80
             protocol       = "TCP"
           }
 
