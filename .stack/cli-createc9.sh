@@ -1,0 +1,1 @@
+aws cloud9 create-environment-ec2 --name eks-terraform2 --instance-type t3.small --automatic-stop-time-minutes 240 --connection-type CONNECT_SSM
