@@ -31,7 +31,6 @@ resource "aws_eks_node_group" "ng2" {
     "eks/cluster-name"                            = data.aws_eks_cluster.eks_cluster.name
     "eks/nodegroup-name"                          = format("ng2-%s", data.aws_eks_cluster.eks_cluster.name)
     "eks/nodegroup-type"                          = "managed"
-    "eksctl.cluster.k8s.io/v1alpha1/cluster-name" = data.aws_eks_cluster.eks_cluster.name
     "eksnet"                                      = "net-main"
   }
 
