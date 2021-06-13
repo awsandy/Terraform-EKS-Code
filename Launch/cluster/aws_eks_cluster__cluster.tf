@@ -31,6 +31,15 @@ resource "aws_eks_cluster" "cluster" {
       data.terraform_remote_state.net.outputs.sub-priv3,
     ]
   }
+encryption_config = {
+  provider = {
+    key_arn = var.MASTER_ARN
+  }
+  resources = ["secrets"]
+}
+
+
+
 }
 
 output "cluster-name" {
