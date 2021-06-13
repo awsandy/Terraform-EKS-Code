@@ -5,6 +5,21 @@ variable "MASTER_ARN" {
   type = string
 }
 
+resource "aws_eks_addon" "vpc-cni" {
+  cluster_name = aws_eks_cluster.cluster.name
+  addon_name   = "vpc-cni"
+}
+
+resource "aws_eks_addon" "kube-proxy" {
+  cluster_name = aws_eks_cluster.cluster.name
+  addon_name   = "kube-proxy"
+}
+
+resource "aws_eks_addon" "coredns" {
+  cluster_name = aws_eks_cluster.cluster.name
+  addon_name   = "coredns"
+}
+
 
 resource "aws_eks_cluster" "cluster" {
   enabled_cluster_log_types = [
