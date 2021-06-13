@@ -1,3 +1,4 @@
+# noout=${var.no-output}
 resource "null_resource" "backend" {
   triggers = {
     always_run = timestamp()
@@ -6,7 +7,6 @@ resource "null_resource" "backend" {
   provisioner "local-exec" {
     when    = create
     command = <<EOT
-            noout=${var.no-output}
             p1=${lower(basename(path.cwd))}
             reg=${data.aws_region.current.name}
             idfile="backend.tf.new"
@@ -36,3 +36,4 @@ resource "null_resource" "backend" {
 
   }
 }
+
