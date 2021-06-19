@@ -80,8 +80,8 @@ aws ec2 delete-key-pair --key-name "eksworkshop" > /dev/null
 
 
 echo "pip3"
-curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
-python3 get-pip.py
+curl --silent "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
+python3 get-pip.py 2&> /dev/null
 echo "git-remote-codecommit"
 pip3 install git-remote-codecommit 2&> /dev/null
 
