@@ -3,9 +3,9 @@ sudo yum -y -q -e 0 install  jq moreutils nmap > /dev/null
 echo "Update OS tools"
 sudo yum update -y > /dev/null
 echo "Update pip"
-sudo pip install --upgrade pip > /dev/null
+sudo pip install --upgrade pip 2&> /dev/null
 echo "Uninstall AWS CLI v1"
-sudo /usr/local/bin/pip uninstall awscli -y > /dev/null
+sudo /usr/local/bin/pip uninstall awscli -y 2&> /dev/null
 
 echo "Install AWS CLI v2"
 curl --silent "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" > /dev/null
@@ -70,7 +70,6 @@ if [ ! `which kubectx 2> /dev/null` ]; then
 fi
 
 
-
 echo "ssh key"
 if [ ! -f ~/.ssh/id_rsa ]; then
   mkdir -p ~/.ssh
@@ -82,8 +81,8 @@ aws ec2 delete-key-pair --key-name "eksworkshop" > /dev/null
 
 
 echo "git-remote-codecommit"
-pip install git-remote-codecommit > /dev/null
-
+pip install git-remote-codecommit 2&> /dev/null
+/usr/bin/pip install git-remote-codecommit 2&> /dev/null
 echo "Verify ...."
 for command in jq aws wget kubectl terraform eksctl helm kubectx
   do
