@@ -6,7 +6,7 @@ echo "Update pip"
 sudo pip install --upgrade pip 2&> /dev/null
 echo "Uninstall AWS CLI v1"
 sudo /usr/local/bin/pip uninstall awscli -y 2&> /dev/null
-
+sudo pip uninstall awscli -y 2&> /dev/null
 echo "Install AWS CLI v2"
 curl --silent "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" > /dev/null
 unzip -qq awscliv2.zip
@@ -80,9 +80,12 @@ fi
 aws ec2 delete-key-pair --key-name "eksworkshop" > /dev/null
 
 
+echo "pip3"
+curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
+python3 get-pip.py
 echo "git-remote-codecommit"
-pip install git-remote-codecommit 2&> /dev/null
-/usr/bin/pip install git-remote-codecommit 2&> /dev/null
+pip3 install git-remote-codecommit 2&> /dev/null
+
 echo "Verify ...."
 for command in jq aws wget kubectl terraform eksctl helm kubectx
   do
@@ -93,10 +96,6 @@ for command in jq aws wget kubectl terraform eksctl helm kubectx
 this=`pwd`
 #echo "sample apps"
 cd ~/environment
-#git clone https://github.com/brentley/ecsdemo-frontend.git
-#git clone https://github.com/brentley/ecsdemo-nodejs.git
-#git clone https://github.com/brentley/ecsdemo-crystal.git
-#git clone https://github.com/aws-samples/aws2tf.git
 
 echo "Enable bash_completion"
 . /etc/profile.d/bash_completion.sh
