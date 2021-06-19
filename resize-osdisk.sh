@@ -24,7 +24,7 @@ try:
             VolumeId=volume_id,    
             Size=30
     )
-    print(resize)
+    print('Resized to 30GB')
 except ClientError as e:
     if e.response['Error']['Code'] == 'InvalidParameterValue':
         print('ERROR MESSAGE: {}'.format(e))"
