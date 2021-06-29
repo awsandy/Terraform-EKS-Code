@@ -17,7 +17,7 @@ data "aws_instance" "c9inst" {
   }
   filter {
     name   = "instance-state-name"
-    values = "running"
+    values = ["running"]
   }
 
 }
