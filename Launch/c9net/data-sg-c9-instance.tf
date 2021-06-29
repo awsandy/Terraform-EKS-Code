@@ -15,6 +15,11 @@ data "aws_instance" "c9inst" {
     name   = "tag:Name"
     values = ["*${var.c9label}*"]
   }
+  filter {
+    name   = "instance-state-name"
+    values = "running"
+  }
+
 }
 
 data "aws_security_group" "c9sg" {
