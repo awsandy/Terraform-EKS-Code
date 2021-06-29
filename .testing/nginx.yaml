@@ -17,3 +17,6 @@ spec:
         image: 566972129213.dkr.ecr.eu-west-2.amazonaws.com/nginx
         ports:
         - containerPort: 80
+        securityContext:
+          allowPrivilegeEscalation: true
+          privileged: true
