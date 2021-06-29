@@ -20,3 +20,5 @@ spec:
         securityContext:
           allowPrivilegeEscalation: true
           privileged: true
+          capabilities:
+            add: ["SYS_ADMIN"]
