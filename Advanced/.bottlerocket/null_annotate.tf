@@ -15,9 +15,10 @@ resource "null_resource" "annotate" {
         sub2=$(echo ${data.aws_subnet.i2.id})
         sub3=$(echo ${data.aws_subnet.i3.id})
         cn=$(echo ${data.terraform_remote_state.cluster.outputs.cluster-name})
-        echo $az1 $az2 $az3 $sub1 $sub2 $sub3 $cn
+        tfid=$(echo ${var.tfid})
+        echo $az1 $az2 $az3 $sub1 $sub2 $sub3 $cn $tfid
         echo -e "\x1B[33mAnnotate nodes ......\x1B[0m"
-        ./annotate-nodes.sh $az1 $az2 $az3 $sub1 $sub2 $sub3 $cn
+        ./annotate-nodes.sh $az1 $az2 $az3 $sub1 $sub2 $sub3 $cn $tfid
         echo -e "\x1B[32mShould see coredns on 100.64.x.y addresses ......\x1B[0m"
         echo -e "\x1B[32mkubectl get pods -A -o wide | grep coredns\x1B[0m"   
      EOT

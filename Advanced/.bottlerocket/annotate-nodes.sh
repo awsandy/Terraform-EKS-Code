@@ -6,10 +6,12 @@ sub1=$(echo $4)
 sub2=$(echo $5)
 sub3=$(echo $6)
 CLUSTER=$(echo $7)
+tfid=$(echo $8)
 kubectl get crd
 # get the SG's
 # get a list of the insytances in the node group
-comm=`printf "aws ec2 describe-instances --query 'Reservations[*].Instances[*].InstanceId' --filters \"Name=tag-key,Values=eks:nodegroup-name\" \"Name=tag-value,Values=ng1-%s\" \"Name=instance-state-name,Values=running\" --output text" $CLUSTER`
+#format("eks-node.%s.%s",var.cluster-name,var.tfid)
+comm=`printf "aws ec2 describe-instances --query 'Reservations[*].Instances[*].InstanceId' --filters \"Name=tag-key,Values=eks:nodegroup-name\" \"Name=tag-value,Values=%s-mng-worker-%s\" \"Name=instance-state-name,Values=running\" --output text" $CLUSTER $tfid`
 INSTANCE_IDS=(`eval $comm`)
 # extract the security groups
 for i in "${INSTANCE_IDS[0]}"
