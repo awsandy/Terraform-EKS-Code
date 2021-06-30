@@ -39,7 +39,6 @@ resource "aws_eks_node_group" "worker-node-group" {
   }
 
 depends_on = [aws_launch_template.bottlerocket_lt,
-             aws_eks_cluster.cluster,
              local_file.aws_auth_configmap
 ]
 lifecycle {
