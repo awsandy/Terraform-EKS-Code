@@ -14,7 +14,7 @@ resource "null_resource" "annotate" {
         sub1=$(echo ${data.aws_subnet.i1.id})
         sub2=$(echo ${data.aws_subnet.i2.id})
         sub3=$(echo ${data.aws_subnet.i3.id})
-        cn=$(echo ${data.aws_eks_cluster.eks_cluster.name})
+        cn=$(echo ${data.terraform_remote_state.cluster.outputs.cluster-name})
         echo $az1 $az2 $az3 $sub1 $sub2 $sub3 $cn
         echo -e "\x1B[33mAnnotate nodes ......\x1B[0m"
         ./annotate-nodes.sh $az1 $az2 $az3 $sub1 $sub2 $sub3 $cn
