@@ -1,8 +1,16 @@
 
 #######################Addons-node-group
 
+data "aws_subnet_ids" "private" {
+    vpc_id = data.terraform_remote_state.net.outputs.eks-vpc
+    tags = {
+        "subnet-type"  = "private"
+    }
+}
+
+
  locals {
-worker-mng-name = "${var.name}-mng-worker-${random_string.worker-mng-name.result}"
+worker-mng-name = "${var.cluster-name}-mng-worker-${var-tfid}"
  }
 
 resource "random_string" "worker-mng-name" {
@@ -14,10 +22,9 @@ resource "random_string" "worker-mng-name" {
 }
 
 resource "aws_eks_node_group" "worker-node-group" {
-  cluster_name    = var.name
+  cluster_name    = var.cluster-name
   node_group_name = local.worker-mng-name
-  node_role_arn   = aws_iam_role.managed_workers.arn
-  #subnet_ids      = values(var.vpc_config.private_subnet_ids)
+  node_role_arn   = data.terraform_remote_state.iam.outputs.nodegroup_role_arn)
   subnet_ids      = concat(sort(data.aws_subnet_ids.private.ids))
 
   launch_template {
