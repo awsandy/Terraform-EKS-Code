@@ -10,7 +10,7 @@ data "aws_subnet_ids" "private" {
 
 
  locals {
-worker-mng-name = "${var.cluster-name}-mng-worker-${var-tfid}"
+worker-mng-name = "${var.cluster-name}-mng-worker-${var.tfid}"
  }
 
 resource "random_string" "worker-mng-name" {
