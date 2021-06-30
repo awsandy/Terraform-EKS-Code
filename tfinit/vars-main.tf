@@ -24,4 +24,28 @@ variable "no-output" {
   sensitive   = true
 }
 
+variable "cidr_block" {
+  type        = string
+  default     = "10.0.0.0/20"
+  description = "The CIDR block for the VPC."
+}
+
+variable "cidr_block2" {
+  type        = string
+  default     = "100.64.0.0/16"
+  description = "The CIDR block for the VPC."
+}
+
+
+
+
+variable "availability_zones" {
+  default = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  description = "The availability zones to create subnets in"
+}
+
+variable "az_counts" {
+  default = 3
+}
+
 

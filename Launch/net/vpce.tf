@@ -20,11 +20,8 @@ resource "aws_vpc_endpoint" "vpce-xray" {
     aws_security_group.cluster-sg.id
   ]
   service_name = format("com.amazonaws.%s.xray", data.aws_region.current.name)
-  subnet_ids = [
-    aws_subnet.subnet-i3.id,
-    aws_subnet.subnet-i1.id,
-    aws_subnet.subnet-i2.id,
-  ]
+  subnet_ids = concat(sort(data.aws_subnet_ids.isolated.ids))
+  
   tags              = {}
   vpc_endpoint_type = "Interface"
   vpc_id            = aws_vpc.cluster.id
@@ -56,11 +53,7 @@ resource "aws_vpc_endpoint" "vpce-appmesh-envoy-management" {
     aws_security_group.cluster-sg.id
   ]
   service_name = format("com.amazonaws.%s.appmesh-envoy-management", data.aws_region.current.name)
-  subnet_ids = [
-    aws_subnet.subnet-i3.id,
-    aws_subnet.subnet-i1.id,
-    aws_subnet.subnet-i2.id,
-  ]
+  subnet_ids = concat(sort(data.aws_subnet_ids.isolated.ids))
   tags              = {}
   vpc_endpoint_type = "Interface"
   vpc_id            = aws_vpc.cluster.id
@@ -88,11 +81,7 @@ resource "aws_vpc_endpoint" "vpce-autoscaling" {
     aws_security_group.cluster-sg.id
   ]
   service_name = format("com.amazonaws.%s.autoscaling", data.aws_region.current.name)
-  subnet_ids = [
-    aws_subnet.subnet-i3.id,
-    aws_subnet.subnet-i1.id,
-    aws_subnet.subnet-i2.id,
-  ]
+  subnet_ids = concat(sort(data.aws_subnet_ids.isolated.ids))
   tags              = {}
   vpc_endpoint_type = "Interface"
   vpc_id            = aws_vpc.cluster.id
@@ -121,11 +110,7 @@ resource "aws_vpc_endpoint" "vpce-ec2" {
     aws_security_group.cluster-sg.id
   ]
   service_name = format("com.amazonaws.%s.ec2", data.aws_region.current.name)
-  subnet_ids = [
-    aws_subnet.subnet-i3.id,
-    aws_subnet.subnet-i1.id,
-    aws_subnet.subnet-i2.id,
-  ]
+  subnet_ids = concat(sort(data.aws_subnet_ids.isolated.ids))
   tags              = {}
   vpc_endpoint_type = "Interface"
   vpc_id            = aws_vpc.cluster.id
@@ -154,11 +139,7 @@ resource "aws_vpc_endpoint" "vpce-vpce-ec2messages" {
     aws_security_group.cluster-sg.id
   ]
   service_name = format("com.amazonaws.%s.ec2messages", data.aws_region.current.name)
-  subnet_ids = [
-    aws_subnet.subnet-i3.id,
-    aws_subnet.subnet-i1.id,
-    aws_subnet.subnet-i2.id,
-  ]
+  subnet_ids = concat(sort(data.aws_subnet_ids.isolated.ids))  
   tags              = {}
   vpc_endpoint_type = "Interface"
   vpc_id            = aws_vpc.cluster.id
@@ -187,11 +168,7 @@ resource "aws_vpc_endpoint" "vpce-ecrapi" {
     aws_security_group.cluster-sg.id
   ]
   service_name = format("com.amazonaws.%s.ecr.api", data.aws_region.current.name)
-  subnet_ids = [
-    aws_subnet.subnet-i3.id,
-    aws_subnet.subnet-i1.id,
-    aws_subnet.subnet-i2.id,
-  ]
+  subnet_ids = concat(sort(data.aws_subnet_ids.isolated.ids))
   tags              = {}
   vpc_endpoint_type = "Interface"
   vpc_id            = aws_vpc.cluster.id
@@ -220,11 +197,7 @@ resource "aws_vpc_endpoint" "vpce-ecrdkr" {
     aws_security_group.cluster-sg.id
   ]
   service_name = format("com.amazonaws.%s.ecr.dkr", data.aws_region.current.name)
-  subnet_ids = [
-    aws_subnet.subnet-i3.id,
-    aws_subnet.subnet-i1.id,
-    aws_subnet.subnet-i2.id,
-  ]
+  subnet_ids = concat(sort(data.aws_subnet_ids.isolated.ids))
   tags              = {}
   vpc_endpoint_type = "Interface"
   vpc_id            = aws_vpc.cluster.id
@@ -253,11 +226,7 @@ resource "aws_vpc_endpoint" "vpce-elb" {
     aws_security_group.cluster-sg.id
   ]
   service_name = format("com.amazonaws.%s.elasticloadbalancing", data.aws_region.current.name)
-  subnet_ids = [
-    aws_subnet.subnet-i3.id,
-    aws_subnet.subnet-i1.id,
-    aws_subnet.subnet-i2.id,
-  ]
+  subnet_ids = concat(sort(data.aws_subnet_ids.isolated.ids))
   tags              = {}
   vpc_endpoint_type = "Interface"
   vpc_id            = aws_vpc.cluster.id
@@ -286,11 +255,7 @@ resource "aws_vpc_endpoint" "vpce-logs" {
     aws_security_group.cluster-sg.id
   ]
   service_name = format("com.amazonaws.%s.logs", data.aws_region.current.name)
-  subnet_ids = [
-    aws_subnet.subnet-i3.id,
-    aws_subnet.subnet-i1.id,
-    aws_subnet.subnet-i2.id,
-  ]
+  subnet_ids = concat(sort(data.aws_subnet_ids.isolated.ids))
   tags              = {}
   vpc_endpoint_type = "Interface"
   vpc_id            = aws_vpc.cluster.id
@@ -350,11 +315,7 @@ resource "aws_vpc_endpoint" "vpce-ssm" {
     aws_security_group.cluster-sg.id
   ]
   service_name = format("com.amazonaws.%s.ssm", data.aws_region.current.name)
-  subnet_ids = [
-    aws_subnet.subnet-i3.id,
-    aws_subnet.subnet-i1.id,
-    aws_subnet.subnet-i2.id,
-  ]
+  subnet_ids = concat(sort(data.aws_subnet_ids.isolated.ids))
   tags              = {}
   vpc_endpoint_type = "Interface"
   vpc_id            = aws_vpc.cluster.id
@@ -383,11 +344,7 @@ resource "aws_vpc_endpoint" "vpce-ssmmessages" {
     aws_security_group.cluster-sg.id
   ]
   service_name = format("com.amazonaws.%s.ssmmessages", data.aws_region.current.name)
-  subnet_ids = [
-    aws_subnet.subnet-i3.id,
-    aws_subnet.subnet-i1.id,
-    aws_subnet.subnet-i2.id,
-  ]
+  subnet_ids = concat(sort(data.aws_subnet_ids.isolated.ids))
   tags              = {}
   vpc_endpoint_type = "Interface"
   vpc_id            = aws_vpc.cluster.id
@@ -416,11 +373,8 @@ resource "aws_vpc_endpoint" "vpce-sts" {
     aws_security_group.cluster-sg.id
   ]
   service_name = format("com.amazonaws.%s.sts", data.aws_region.current.name)
-  subnet_ids = [
-    aws_subnet.subnet-i3.id,
-    aws_subnet.subnet-i1.id,
-    aws_subnet.subnet-i2.id,
-  ]
+  subnet_ids = concat(sort(data.aws_subnet_ids.isolated.ids))
+
   tags              = {}
   vpc_endpoint_type = "Interface"
   vpc_id            = aws_vpc.cluster.id
