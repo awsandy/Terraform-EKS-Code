@@ -3,7 +3,7 @@ locals {
  root_device_mappings = tolist(data.aws_ami.bottlerocket_image.block_device_mappings)[0]
  autoscaler_tags      = var.cluster_autoscaler ? { "k8s.io/cluster-autoscaler/enabled" = "true", "k8s.io/cluster-autoscaler/${var.cluster-name}" = "owned" } : {}
  bottlerocket_tags    = { "Name" = "eks-node-aws_eks_cluster.cluster.name" }
- tags                 = merge(var.tags, { "kubernetes.io/cluster/${var.name}" = "owned"}, local.autoscaler_tags, local.bottlerocket_tags)
+ tags                 = merge(var.tags, { "kubernetes.io/cluster/${var.cluster-name}" = "owned"}, local.autoscaler_tags, local.bottlerocket_tags)
  labels = merge(
     var.labels
  )
