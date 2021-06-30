@@ -17,6 +17,11 @@ variable "cluster-name" {
   default     = "mycluster1"
 }
 
+variable "eks_version" {
+  type    = string
+  default = "1.20"
+}
+
 variable "no-output" {
   description = "The name of the EKS Cluster"
   type        = string

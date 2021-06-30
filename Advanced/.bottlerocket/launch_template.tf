@@ -1,7 +1,7 @@
 locals {
  instance_profile_arn = aws_iam_role.managed_workers
  root_device_mappings = tolist(data.aws_ami.bottlerocket_image.block_device_mappings)[0]
- autoscaler_tags      = var.cluster_autoscaler ? { "k8s.io/cluster-autoscaler/enabled" = "true", "k8s.io/cluster-autoscaler/${var.name}" = "owned" } : {}
+ autoscaler_tags      = var.cluster_autoscaler ? { "k8s.io/cluster-autoscaler/enabled" = "true", "k8s.io/cluster-autoscaler/${var.cluster-name}" = "owned" } : {}
  bottlerocket_tags    = { "Name" = "eks-node-aws_eks_cluster.cluster.name" }
  tags                 = merge(var.tags, { "kubernetes.io/cluster/${var.name}" = "owned"}, local.autoscaler_tags, local.bottlerocket_tags)
  labels = merge(
@@ -12,9 +12,9 @@ locals {
 data "template_file" "bottlerocket_config" {
   template = file("${path.root}/templates/bottlerocket_config.toml.tpl")
   vars = {
-    cluster_name                 = aws_eks_cluster.cluster.name
-    cluster_endpoint             = aws_eks_cluster.cluster.endpoint
-    cluster_ca_data              = aws_eks_cluster.cluster.certificate_authority[0].data
+    cluster_name                 = data.terraform_remote_state.cluster.outputs.cluster-name
+    cluster_endpoint             = data.terraform_remote_state.cluster.outputs.endpoint
+    cluster_ca_data              = data.terraform_remote_state.cluster.outputs.ca
     node_labels                  = join("\n", [for label, value in local.labels : "\"${label}\" = \"${value}\""])
     node_taints                  = join("\n", [for taint, value in var.taints : "\"${taint}\" = \"${value}\""])
     admin_container_enabled      = true
