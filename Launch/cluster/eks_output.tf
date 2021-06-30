@@ -7,7 +7,7 @@ metadata:
   namespace: kube-system
 data:
   mapRoles: |
-    - rolearn: ${aws_iam_role.managed_workers.arn}
+    - rolearn: ${data.terraform_remote_state.iam.outputs.nodegroup_role_arn}
       username: system:node:{{EC2PrivateDNSName}}
       groups:
         - system:bootstrappers
