@@ -6,7 +6,7 @@ cd ~/environment/tfekscode/Launch/lb2
 curl -o iam-policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/main/docs/install/iam_policy.json -s
 cd $cur
 buildok=1
-dirs="tfinit Launch/net Launch/iam Launch/c9net Launch/cluster"
+dirs="tfinit Launch/net Launch/iam Launch/c9net"
 for i in `echo $dirs`;do
     echo $i
     ./build-stage.sh $i 2>&1 | tee -a build.log
