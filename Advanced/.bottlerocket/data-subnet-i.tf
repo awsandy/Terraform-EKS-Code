@@ -1,13 +1,13 @@
 data "aws_subnet" "i1" {
-  subnet_id = data.terraform_remote_state.net.outputs.isolated_subnet_id[0]
+  subnet_id = data.aws_subnet_ids.private.ids[0]
 }
 
 data "aws_subnet" "i2" {
-  subnet_id = data.terraform_remote_state.net.outputs.isolated_subnet_id[1]
+  subnet_id = data.aws_subnet_ids.private.ids[1]
 
 }
 
 data "aws_subnet" "i3" {
-  subnet_id = data.terraform_remote_state.net.outputs.isolated_subnet_id[2]
+  subnet_id = data.aws_subnet_ids.private.ids[2]
   
 }
