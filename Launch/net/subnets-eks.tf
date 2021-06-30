@@ -29,7 +29,7 @@ resource "aws_subnet" "isolated" {
   count = var.az_counts
   depends_on                      = [aws_vpc_ipv4_cidr_block_association.vpc-cidr-assoc]
   availability_zone = data.aws_availability_zones.az.names[count.index]
-  cidr_block              = cidrsubnet(var.cidr_block2, 8, count.index)
+  cidr_block              = cidrsubnet(var.cidr_block2, 4, count.index)
   vpc_id = aws_vpc.cluster.id
   map_public_ip_on_launch = false
 
@@ -51,12 +51,12 @@ resource "aws_subnet" "private" {
   count = var.az_counts
 
   availability_zone = data.aws_availability_zones.az.names[count.index]
-  cidr_block              = cidrsubnet(var.cidr_block, 8, count.index)
+  cidr_block              = cidrsubnet(var.cidr_block, 4, count.index)
   vpc_id = aws_vpc.cluster.id
   map_public_ip_on_launch = false
 
   tags = {
-    Name = "${var.cluster-name}-isolated-${data.aws_availability_zones.az.names[count.index]}",
+    Name = "${var.cluster-name}-private-${data.aws_availability_zones.az.names[count.index]}",
     "kubernetes.io/cluster/${var.cluster-name}" = "shared",
     "kubernetes.io/role/internal-elb"           = "1"
     "subnet-type"             = "private"
