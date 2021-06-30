@@ -1,9 +1,9 @@
 data "aws_subnet" "i1" {
-  id = data.aws_subnet_ids.private.ids[0]
+  id = data.terraform_remote_state.net.outputs.isolated_subnet_id[2]
 }
 
 data "aws_subnet" "i2" {
-  id = data.aws_subnet_ids.private.ids[1]
+  id = data.terraform_remote_state.net.outputs.isolated_subnet_id[2]
 
 }
 
