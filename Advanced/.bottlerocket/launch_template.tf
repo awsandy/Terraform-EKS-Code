@@ -10,7 +10,7 @@ locals {
 }
 
 data "template_file" "bottlerocket_config" {
-  template = file("${path.root}/templates/bottlerocket_config.toml.tpl")
+  template = file("bottlerocket_config.toml.tpl")
   vars = {
     cluster_name                 = data.terraform_remote_state.cluster.outputs.cluster-name
     cluster_endpoint             = data.terraform_remote_state.cluster.outputs.endpoint
