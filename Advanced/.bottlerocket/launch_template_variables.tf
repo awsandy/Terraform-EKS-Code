@@ -31,10 +31,6 @@ variable "instance_size" {
   description = "The size of instances in this node group"
 }
 
-variable "key_name" {
-  type    = string
-  default = ""
-}
 
 variable "root_volume_size" {
   type        = number

@@ -37,7 +37,7 @@ data "aws_ami" "bottlerocket_image" {
 
 
 resource "aws_launch_template" "bottlerocket_lt" {
-  name_prefix            = var.name
+  name_prefix            = var.cluster-name
   update_default_version = true
   block_device_mappings {
     device_name = local.root_device_mappings.device_name
@@ -74,7 +74,7 @@ resource "aws_launch_template" "bottlerocket_lt" {
   }
   tags = local.tags
 
- key_name = var.key_name
+ key_name = data.terraform_remote_state.iam.outputs.key_name
 
   lifecycle {
     create_before_destroy = true
