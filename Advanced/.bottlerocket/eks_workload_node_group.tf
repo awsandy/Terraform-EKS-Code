@@ -24,7 +24,7 @@ resource "random_string" "worker-mng-name" {
 resource "aws_eks_node_group" "worker-node-group" {
   cluster_name    = var.cluster-name
   node_group_name = local.worker-mng-name
-  node_role_arn   = data.terraform_remote_state.iam.outputs.nodegroup_role_arn)
+  node_role_arn   = data.terraform_remote_state.iam.outputs.nodegroup_role_arn
   subnet_ids      = concat(sort(data.aws_subnet_ids.private.ids))
 
   launch_template {
