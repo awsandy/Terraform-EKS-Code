@@ -41,3 +41,9 @@ variable "root_volume_size" {
   default     = 40
   description = "Volume size for the root partition"
 }
+
+variable "cluster_autoscaler" {
+  type        = bool
+  default     = true
+  description = "Should this group be managed by the cluster autoscaler"
+}
