@@ -5,14 +5,7 @@ resource "aws_eks_fargate_profile" "fargate-profile" {
   fargate_profile_name   = "fargate1"
   #depends_on             = [aws_eks_cluster.ateksf1]
   pod_execution_role_arn = aws_iam_role.FargatePodExecutionRole.arn
-  subnet_ids = [
-    data.terraform_remote_state.net.outputs.sub-priv1,
-    data.terraform_remote_state.net.outputs.sub-priv2,
-    data.terraform_remote_state.net.outputs.sub-priv3,
-    #data.aws_subnet.i1.id,
-    #data.aws_subnet.i2.id,
-    #data.aws_subnet.i3.id,
-  ]
+  subnet_ids      = concat(sort(data.aws_subnet_ids.private.ids))
   tags = {}
 
   selector {
