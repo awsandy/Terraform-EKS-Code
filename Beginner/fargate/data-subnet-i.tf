@@ -1,24 +1,13 @@
 data "aws_subnet" "i1" {
-  vpc_id=data.terraform_remote_state.net.outputs.eks-vpc
-    filter {
-    name   = "tag:workshop"
-    values = ["subnet-i1"]
-  }
+  id = data.terraform_remote_state.net.outputs.isolated_subnet_id[0]
 }
 
 data "aws_subnet" "i2" {
-  vpc_id=data.terraform_remote_state.net.outputs.eks-vpc
-    filter {
-    name   = "tag:workshop"
-    values = ["subnet-i2"]
-  }
+  id = data.terraform_remote_state.net.outputs.isolated_subnet_id[1]
+
 }
 
-
 data "aws_subnet" "i3" {
-  vpc_id=data.terraform_remote_state.net.outputs.eks-vpc
-  filter {
-    name   = "tag:workshop"
-    values = ["subnet-i3"]
-  }
+  id = data.terraform_remote_state.net.outputs.isolated_subnet_id[2]
+  
 }
