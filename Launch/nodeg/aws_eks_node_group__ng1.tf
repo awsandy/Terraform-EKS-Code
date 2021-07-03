@@ -17,16 +17,16 @@ resource "aws_eks_node_group" "ng1" {
   instance_types = []
   labels = {
     "eks/cluster-name"   = data.aws_eks_cluster.eks_cluster.name
-    "eks/nodegroup-name" = format("ng1-%s", data.aws_eks_cluster.eks_cluster.name)
+    "eks/nodegroup-name" = format("%s-ng1-%s", data.aws_eks_cluster.eks_cluster.name,var.tfid)
   }
-  node_group_name = format("ng1-%s", data.aws_eks_cluster.eks_cluster.name)
+  node_group_name = format("%s-ng1-%s", data.aws_eks_cluster.eks_cluster.name,var.tfid)
   node_role_arn   = data.terraform_remote_state.iam.outputs.nodegroup_role_arn
 
   subnet_ids      = concat(sort(data.aws_subnet_ids.private.ids))
 
   tags = {
     "eks/cluster-name"                            = data.aws_eks_cluster.eks_cluster.name
-    "eks/nodegroup-name"                          = format("ng1-%s", data.aws_eks_cluster.eks_cluster.name)
+    "eks/nodegroup-name"                          = format("%s-ng1-%s", data.aws_eks_cluster.eks_cluster.name,var.tfid)
     "eks/nodegroup-type"                          = "managed"
   }
 

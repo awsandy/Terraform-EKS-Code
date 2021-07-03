@@ -1,7 +1,7 @@
 resource "aws_launch_template" "lt-ng1" {
   instance_type          = "m5a.large"
   key_name               = data.terraform_remote_state.iam.outputs.key_name
-  name                   = format("at-lt-%s-ng1", data.aws_eks_cluster.eks_cluster.name)
+  name                   = format("lt-%s-ng1-%s", data.aws_eks_cluster.eks_cluster.name,var.tfid)
   tags                   = {}
   image_id               = data.aws_ssm_parameter.eksami.value
   user_data              = base64encode(local.eks-node-private-userdata)
@@ -9,7 +9,7 @@ resource "aws_launch_template" "lt-ng1" {
   tag_specifications {
     resource_type = "instance"
     tags = {
-      Name = format("%s-ng1", data.aws_eks_cluster.eks_cluster.name)
+      Name = format("lt-%s-ng1-%s", data.aws_eks_cluster.eks_cluster.name,var.tfid)
     }
   }
   lifecycle {
