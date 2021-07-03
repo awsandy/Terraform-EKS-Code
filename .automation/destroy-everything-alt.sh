@@ -20,7 +20,7 @@ echo "circa 25 minutes..."
 echo "pass 1 ...."
 cur=`pwd`
 date
-dirs="Beginner/fargate/fargateapp Beginner/irsa Advanced/app-mesh Beginner/fargate extra/sampleapp2 extra/eks-cidr2 extra/nodeg2 Launch/lb2 Intermediate/cicd Beginner/eks-cidr Launch/cicd Launch/nodeg Launch/cluster Launch/c9net Launch/iam Launch/net"
+dirs="Beginner/fargate/fargateapp Beginner/irsa Advanced/.bottlerocket Beginner/fargate extra/sampleapp2 extra/eks-cidr2 extra/nodeg2 Launch/lb2 Intermediate/cicd Beginner/eks-cidr Launch/cicd Launch/nodeg Launch/cluster Launch/c9net Launch/iam Launch/net"
 for i in $dirs; do
 cd $cur
 cd ../$i
