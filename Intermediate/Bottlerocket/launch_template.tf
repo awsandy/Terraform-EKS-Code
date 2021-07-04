@@ -23,22 +23,17 @@ data "template_file" "bottlerocket_config" {
   }
 }
 
-data "aws_ssm_parameter" "bottlerocket_image_id" {
-  name = "/aws/service/bottlerocket/aws-k8s-${var.eks_version}/x86_64/latest/image_id"
-}
 
-data "aws_ami" "bottlerocket_image" {
-  owners = ["amazon"]
-  filter {
-    name   = "image-id"
-    values = [data.aws_ssm_parameter.bottlerocket_image_id.value]
-  }
-}
 
 
 resource "aws_launch_template" "bottlerocket_lt" {
-  name_prefix            = var.cluster-name
+  name_prefix            = format("%s-%s-",var.cluster-name,var.tfid)
   update_default_version = true
+  image_id      = data.aws_ami.bottlerocket_image.id 
+  user_data     = base64encode(data.template_file.bottlerocket_config.rendered)
+# ssh key
+  key_name = data.terraform_remote_state.iam.outputs.key_name
+
   block_device_mappings {
     device_name = local.root_device_mappings.device_name
 
@@ -49,7 +44,7 @@ resource "aws_launch_template" "bottlerocket_lt" {
     }
   }
 
-  instance_type = var.instance_size
+  #instance_type = var.instance_size
 
   monitoring {
     enabled = true
@@ -60,8 +55,6 @@ resource "aws_launch_template" "bottlerocket_lt" {
     delete_on_termination       = true
   }
 
-   image_id      = data.aws_ami.bottlerocket_image.id 
-   user_data     = base64encode(data.template_file.bottlerocket_config.rendered)
 
  tag_specifications {
     resource_type = "instance"
@@ -74,7 +67,6 @@ resource "aws_launch_template" "bottlerocket_lt" {
   }
   tags = local.tags
 
- key_name = data.terraform_remote_state.iam.outputs.key_name
 
   lifecycle {
     create_before_destroy = true

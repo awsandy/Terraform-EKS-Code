@@ -26,6 +26,14 @@ resource "aws_eks_node_group" "worker-node-group" {
   node_group_name = local.worker-mng-name
   node_role_arn   = data.terraform_remote_state.iam.outputs.nodegroup_role_arn
   subnet_ids      = concat(sort(data.aws_subnet_ids.private.ids))
+  capacity_type = "SPOT"
+  instance_types = [
+    "m5.large",
+    "m4.large",
+    "m5a.large",
+    "m5d.large",
+    "m5ad.large",
+  ]
 
   launch_template {
    name = aws_launch_template.bottlerocket_lt.name
