@@ -29,7 +29,8 @@ resource "kubernetes_deployment" "game1-2048__deployment1-2048" {
 
       spec {
 
-        node_selector                    = { "eks/nodegroup-name" = "ng1-mycluster1" }
+        #node_selector                    = { "eks/nodegroup-name" = "ng1-mycluster1" }
+        node_selector                    = { "eks/nodegroup-name" = format("%s-ng1-%s",var.cluster-name,var.tfid)}
         restart_policy                   = "Always"
         share_process_namespace          = false
         termination_grace_period_seconds = 30
@@ -84,7 +85,7 @@ resource "kubernetes_deployment" "game2-2048__deployment2-2048" {
 
       spec {
 
-        node_selector                    = { "eks/nodegroup-name" = "ng2-mycluster1" }
+        node_selector                    = { "eks/nodegroup-name" = format("%s-bottlerocket-%s",var.cluster-name,var.tfid)}
         restart_policy                   = "Always"
         share_process_namespace          = false
         termination_grace_period_seconds = 30
