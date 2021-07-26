@@ -31,6 +31,7 @@ resource "aws_launch_template" "bottlerocket_lt" {
   update_default_version = true
   image_id      = data.aws_ami.bottlerocket_image.id 
   user_data     = base64encode(data.template_file.bottlerocket_config.rendered)
+
 # ssh key
   key_name = data.terraform_remote_state.iam.outputs.key_name
 

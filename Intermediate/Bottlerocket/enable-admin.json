@@ -1,0 +1,9 @@
+{
+    "Parameters": {
+        "commands": [
+            "#!/bin/bash",
+            "apiclient -u /settings -m PATCH -d '{\"host-containers\": {\"admin\": {\"enabled\": true}}}'",
+            "apiclient -u /tx/commit_and_apply -m POST"
+        ]
+    }
+}

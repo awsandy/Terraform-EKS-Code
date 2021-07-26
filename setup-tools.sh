@@ -75,6 +75,12 @@ if [ ! -f ~/.ssh/id_rsa ]; then
   ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
   chmod 600 ~/.ssh/id*
 fi
+
+echo "ssm cli add on"
+curl --silent "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/linux_64bit/session-manager-plugin.rpm" -o "session-manager-plugin.rpm"
+sudo yum install -y session-manager-plugin.rpm > /dev/null
+rm -f session-manager-plugin.rpm
+
 # cleanup key_pair if already there
 aws ec2 delete-key-pair --key-name "eksworkshop" > /dev/null
 
