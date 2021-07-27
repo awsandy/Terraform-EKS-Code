@@ -24,8 +24,6 @@ data "template_file" "bottlerocket_config" {
 }
 
 
-
-
 resource "aws_launch_template" "bottlerocket_lt" {
   name_prefix            = format("%s-%s-",var.cluster-name,var.tfid)
   update_default_version = true
