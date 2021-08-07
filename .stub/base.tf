@@ -4,7 +4,7 @@ terraform {
     aws = {
       source = "hashicorp/aws"
       #  Lock the provider version
-      version = "= 3.48"
+      version = "= 3.53"
     }
     null = {
       source  = "hashicorp/null"
