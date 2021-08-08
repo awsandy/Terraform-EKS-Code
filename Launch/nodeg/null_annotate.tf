@@ -9,9 +9,6 @@ resource "null_resource" "annotate" {
     when        = create
     interpreter = ["/bin/bash", "-c"]
     command     = <<EOT
-        kubectl set env ds aws-node -n kube-system AWS_VPC_K8S_CNI_CUSTOM_NETWORK_CFG=true
-        kubectl set env ds aws-node -n kube-system AWS_VPC_K8S_CNI_EXTERNALSNAT=true
-        kubectl set env ds aws-node -n kube-system ENABLE_PREFIX_DELEGATION=true
         az1=$(echo ${data.aws_subnet.i1.availability_zone})
         az2=$(echo ${data.aws_subnet.i2.availability_zone})
         az3=$(echo ${data.aws_subnet.i3.availability_zone})
