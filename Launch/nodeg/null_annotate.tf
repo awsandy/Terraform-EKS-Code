@@ -2,8 +2,8 @@ resource "null_resource" "annotate" {
   triggers = {
     always_run = timestamp()
   }
-  #depends_on = [aws_eks_node_group.ng1]
-  depends_on = [aws_eks_addon.vpc-cni]
+  depends_on = [aws_eks_node_group.ng1]
+  #depends_on = [aws_eks_addon.vpc-cni]
   provisioner "local-exec" {
     on_failure  = fail
     when        = create
