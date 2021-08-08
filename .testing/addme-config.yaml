@@ -1,0 +1,6 @@
+data:
+  mapUsers: |
+    - userarn: arn:aws:iam::566972129213:user/andyt530  
+      username: andyt530
+      groups:
+        - system:masters
