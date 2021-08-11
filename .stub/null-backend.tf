@@ -11,7 +11,7 @@ resource "null_resource" "backend" {
             reg=${data.aws_region.current.name}
             idfile="backend.tf.new"
             nop=${var.no-output}
-            echo "***** Writing backend.tf for S3 state *****"
+            #echo "***** Writing backend.tf for S3 state *****"
             
             id=${var.tfid}
 

@@ -12,7 +12,7 @@ resource "null_resource" "backend" {
             reg=${data.aws_region.current.name}
             idfile="backend.tf"
             id=${random_id.id1.hex}            
-            echo "***** Writing backend.tf for S3 state *****"
+            #echo "***** Writing backend.tf for S3 state *****"
             
             printf "terraform {\n" > $idfile
             printf "backend \"s3\" {\n" >> $idfile
