@@ -115,10 +115,50 @@ echo "alias tfb='terraform init && terraform plan -out tfplan && terraform apply
 echo "alias aws='/usr/local/bin/aws'" >> ~/.bash_profile
 source ~/.bash_profile
 
-#aws --version
-#eksctl version
-#Install  version --client
-#helm version
+
+# ------  resize OS disk -----------
+
+# Specify the desired volume size in GiB as a command-line argument. If not specified, default to 20 GiB.
+VOLUME_SIZE=${1:-32}
+
+# Get the ID of the environment host Amazon EC2 instance.
+INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data//instance-id)
+
+# Get the ID of the Amazon EBS volume associated with the instance.
+VOLUME_ID=$(aws ec2 describe-instances \
+  --instance-id $INSTANCE_ID \
+  --query "Reservations[0].Instances[0].BlockDeviceMappings[0].Ebs.VolumeId" \
+  --output text)
+
+# Resize the EBS volume.
+aws ec2 modify-volume --volume-id $VOLUME_ID --size $VOLUME_SIZE
+
+# Wait for the resize to finish.
+while [ \
+  "$(aws ec2 describe-volumes-modifications \
+    --volume-id $VOLUME_ID \
+    --filters Name=modification-state,Values="optimizing","completed" \
+    --query "length(VolumesModifications)"\
+    --output text)" != "1" ]; do
+sleep 1
+done
+
+if [ $(readlink -f /dev/xvda) = "/dev/xvda" ]
+then
+  # Rewrite the partition table so that the partition takes up all the space that it can.
+  sudo growpart /dev/xvda 1
+ 
+  # Expand the size of the file system.
+  sudo resize2fs /dev/xvda1
+
+else
+  # Rewrite the partition table so that the partition takes up all the space that it can.
+  sudo growpart /dev/nvme0n1 1
+
+  # Expand the size of the file system.
+  # sudo resize2fs /dev/nvme0n1p1 #(Amazon Linux 1)
+  sudo xfs_growfs /dev/nvme0n1p1 #(Amazon Linux 2)
+fi
 
 test -n "$AWS_REGION" && echo "PASSED: AWS_REGION is $AWS_REGION" || echo AWS_REGION is not set !!
 test -n "$TF_VAR_region" && echo "PASSED: TF_VAR_region is $TF_VAR_region" || echo TF_VAR_region is not set !!
@@ -129,3 +169,19 @@ cd ~/environment/tfekscode/Launch/lb2
 curl -o iam-policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/main/docs/install/iam_policy.json -s
 
 cd $this
+#
+# final checks
+#
+echo "Checking workshop setup ..."
+ip=`aws ec2 describe-iam-instance-profile-associations --filters "Name=instance-id,Values=$INSTANCE_ID" | jq .IamInstanceProfileAssociations[0].IamInstanceProfile.Arn | cut -f2 -d'/' | tr -d '"'`
+#echo $ip
+if [ "$ip" != "eksworkshop-admin" ] ; then
+echo "ERROR: Could not find Instance profile eksworkshop-admin! - DO NOT PROCEED exiting"
+exit
+else
+echo "PASSED: Found Instance profile eksworkshop-admin - proceed with the workshop"
+fi
+aws sts get-caller-identity --query Arn | grep eksworkshop-admin -q && echo "PASSED: IAM role valid - eksworkshop-admin" || echo "ERROR: IAM role not valid - DO NOT PROCEED"
+iname=$(aws ec2 describe-tags --filters "Name=resource-type,Values=instance" "Name=resource-id,Values=$INSTANCE_ID" | jq -r '.Tags[] | select(.Key=="Name").Value')
+echo $iname| grep eks-terraform -q && echo "PASSED: Cloud9 IDE name is valid - contains eks-terraform" || echo "ERROR: Cloud9 IDE name invalid! - DO NOT PROCEED"
+
