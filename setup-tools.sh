@@ -92,7 +92,7 @@ if [ ! `which ec2-instance-selector 2> /dev/null` ]; then
   sudo mv ec2-instance-selector /usr/bin/ec2-instance-selector
 fi
 echo "getting SPOT instance types"
-export TF_VAR_spots=$(./spot-list.sh)
+./spot-list.sh
 
 # cleanup key_pair if already there
 aws ec2 delete-key-pair --key-name "eksworkshop" > /dev/null

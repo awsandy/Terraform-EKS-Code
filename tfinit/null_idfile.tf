@@ -10,18 +10,25 @@ resource "null_resource" "gen_idfile" {
         #idfile=$HOME/.tfid
 	      #rm -f $idfile
         id=${random_id.id1.hex}
-        #echo $id
-        #printf "{\n" > $idfile
-        #printf "\"id\" : \"%s\"\n" $id >> $idfile
-        #printf "}\n" >> $idfile
-        #echo "done"
         varfile="../.stub/var-tfid.tf"
+        sptfile="../.stub/var-spots.tf"
         printf "variable \"tfid\" {\n" > $varfile
         printf "description = \"The unique ID for the project\"\n" >> $varfile
         printf "type        = string\n" >> $varfile
         printf "default     = \"%s\"\n" $id >> $varfile
         printf "}\n" >> $varfile
-
+        il=()
+        il+="["
+        for i in $(ec2-instance-selector --usage-class spot -c 2 -a x86_64 -a amd64 --deny-list t[2-3]\.* -m 8Gib);do 
+        il+='"'
+        il+=$i
+        il+='"'
+        il+=','
+        done
+        il+="]"
+        echo 'variable "spots" {' > $sptfile
+        echo 'default = '${il} >> $sptfile
+        echo '}' >> $sptfile
      EOT
 
   }
