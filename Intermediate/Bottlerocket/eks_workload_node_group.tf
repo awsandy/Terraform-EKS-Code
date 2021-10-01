@@ -28,6 +28,10 @@ resource "aws_eks_node_group" "worker-node-group" {
   subnet_ids      = concat(sort(data.aws_subnet_ids.private.ids))
   capacity_type = "SPOT"
   instance_types = var.spots
+  labels = {
+    "eks/cluster-name"   = data.aws_eks_cluster.eks_cluster.name
+    "eks/nodegroup-name" = format("%s-bottlerocket-%s",data.aws_eks_cluster.eks_cluster.name,var.tfid)
+  }
 
   launch_template {
    name = aws_launch_template.bottlerocket_lt.name
