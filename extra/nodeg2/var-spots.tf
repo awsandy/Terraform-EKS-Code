@@ -1,0 +1,1 @@
+../../.stub/var-spots.tf
