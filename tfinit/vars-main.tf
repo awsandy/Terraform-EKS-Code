@@ -53,8 +53,6 @@ variable "az_counts" {
   default = 3
 }
 
-variable "spots" {
-  default = ["m5.large", "m5a.large", ]
-}
+
 
 

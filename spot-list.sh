@@ -9,3 +9,6 @@ done
 il+="]"
 echo $il 
 
+echo 'variable "spots" {' > .stub/var-spots.tf
+echo 'default = '${il} >> .stub/var-spots.tf
+echo '}' >> .stub/var-spots.tf
