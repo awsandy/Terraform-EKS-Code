@@ -30,11 +30,7 @@ provider "aws" {
 provider "null" {}
 provider "external" {}
 
-data "aws_region" "current" {}
-data "aws_caller_identity" "current" {}
-data "aws_availability_zones" "az" {
-  state = "available"
-}
+
 
 #data "external" "tfid" {
 #  program = ["bash", "get-tfid.sh"]
@@ -55,6 +51,17 @@ resource "aws_dynamodb_table" "terraform_lock" {
 	}
 }
 
+
+
+data "aws_region" "current" {}
+data "aws_caller_identity" "current" {}
+data "aws_availability_zones" "az" {
+  state = "available"
+}
+
+data "aws_kms_key" "ekskey" {
+  key_id=format("alias/eks-key-%s-%s",var.cluster-name,var.tfid)
+}
 
 
 
