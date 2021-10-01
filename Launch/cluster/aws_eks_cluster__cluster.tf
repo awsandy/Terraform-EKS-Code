@@ -2,10 +2,10 @@
 # aws_eks_cluster.cluster:
 
 data "aws_subnet_ids" "private" {
-    vpc_id = data.terraform_remote_state.net.outputs.eks-vpc
-    tags = {
-        "subnet-type"  = "private"
-    }
+  vpc_id = data.terraform_remote_state.net.outputs.eks-vpc
+  tags = {
+    "subnet-type" = "private"
+  }
 }
 
 
@@ -37,8 +37,8 @@ resource "aws_eks_cluster" "cluster" {
     subnet_ids = concat(sort(data.aws_subnet_ids.private.ids))
   }
 
-  encryption_config  {
-    provider  {
+  encryption_config {
+    provider {
       key_arn = data.aws_kms_key.ekskey.arn
     }
     resources = ["secrets"]
@@ -47,13 +47,13 @@ resource "aws_eks_cluster" "cluster" {
   provisioner "local-exec" {
     command     = "until curl --output /dev/null --insecure --silent ${self.endpoint}/healthz; do sleep 1; done"
     working_dir = path.module
-  } 
+  }
 
 
 }
 
 
 resource "aws_cloudwatch_log_group" "cluster" {
-  name              = format("/aws/eks/%s-%s/cluster",var.cluster-name,var.tfid)
+  name              = format("/aws/eks/%s-%s/cluster", var.cluster-name, var.tfid)
   retention_in_days = var.log_retention
 }

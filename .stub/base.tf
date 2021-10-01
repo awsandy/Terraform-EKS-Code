@@ -47,8 +47,8 @@ resource "aws_dynamodb_table" "terraform_lock" {
     type = "S"
   }
   point_in_time_recovery {
-		enabled = true
-	}
+    enabled = true
+  }
 }
 
 
@@ -60,7 +60,7 @@ data "aws_availability_zones" "az" {
 }
 
 data "aws_kms_key" "ekskey" {
-  key_id=format("alias/eks-key-%s-%s",var.cluster-name,var.tfid)
+  key_id = format("alias/eks-key-%s-%s", var.cluster-name, var.tfid)
 }
 
 

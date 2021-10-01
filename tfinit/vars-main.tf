@@ -45,7 +45,7 @@ variable "cidr_block2" {
 
 
 variable "availability_zones" {
-  default = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
   description = "The availability zones to create subnets in"
 }
 
@@ -54,7 +54,7 @@ variable "az_counts" {
 }
 
 variable "spots" {
-  default = ["m5.large","m5a.large",]
+  default = ["m5.large", "m5a.large", ]
 }
 
 
