@@ -86,6 +86,11 @@ wget -q https://github.com/aquasecurity/tfsec/releases/download/v0.56.0/tfsec-li
 sudo mv tfsec-linux-amd64 /usr/bin/tfsec
 sudo chmod 755 /usr/bin/tfsec 
 
+echo "install  ec2-instance-selector ..."
+if [ ! `which ec2-instance-selector 2> /dev/null` ]; then
+  curl -Lo ec2-instance-selector https://github.com/aws/amazon-ec2-instance-selector/releases/download/v2.0.3/ec2-instance-selector-`uname | tr '[:upper:]' '[:lower:]'`-amd64 && chmod +x ec2-instance-selector
+  sudo mv ec2-instance-selector /usr/bin/ec2-instance-selector
+fi
 
 # cleanup key_pair if already there
 aws ec2 delete-key-pair --key-name "eksworkshop" > /dev/null
