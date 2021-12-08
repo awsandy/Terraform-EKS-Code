@@ -4,7 +4,7 @@ terraform {
     aws = {
       source = "hashicorp/aws"
       #  Lock the provider version
-      version = "= 3.53"
+      version = "= 3.68"
     }
     null = {
       source  = "hashicorp/null"
@@ -16,7 +16,7 @@ terraform {
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "= 2.3.1"
+      version = "= 2.7.1"
     }
 
   }
