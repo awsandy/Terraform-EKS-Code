@@ -91,12 +91,9 @@ if [ ! `which ec2-instance-selector 2> /dev/null` ]; then
   curl --silent -Lo ec2-instance-selector https://github.com/aws/amazon-ec2-instance-selector/releases/download/v2.0.3/ec2-instance-selector-`uname | tr '[:upper:]' '[:lower:]'`-amd64 && chmod +x ec2-instance-selector
   sudo mv ec2-instance-selector /usr/bin/ec2-instance-selector
 fi
-echo "getting SPOT instance types"
-./spot-list.sh
 
 # cleanup key_pair if already there
 aws ec2 delete-key-pair --key-name "eksworkshop" > /dev/null
-
 
 echo "pip3"
 curl --silent "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
