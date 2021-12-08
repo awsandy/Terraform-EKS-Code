@@ -9,5 +9,5 @@ elif echo ${c9builder} | grep -q assumed-role; then
         echo Role ARN: ${rolearn}
 fi
 ## need to Terraform this
-eksctl create iamidentitymapping --cluster eksworkshop-eksctl --arn ${rolearn} --group system:masters --username admin
+eksctl create iamidentitymapping --cluster mycluster1 --arn ${rolearn} --group system:masters --username admin
 kubectl describe configmap -n kube-system aws-auth
