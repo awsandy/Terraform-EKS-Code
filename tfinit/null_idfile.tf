@@ -27,7 +27,7 @@ resource "null_resource" "gen_idfile" {
         done
         il+="]"
         echo 'variable "spots" {' > $sptfile
-        echo 'default = ' ${il} >> $sptfile
+        echo 'default = ' $il >> $sptfile
         echo '}' >> $sptfile
      EOT
 
