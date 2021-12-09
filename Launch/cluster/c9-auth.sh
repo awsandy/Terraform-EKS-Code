@@ -1,3 +1,4 @@
+test -n "$C9_PID" && echo C9_PID is "$C9_PID" || "echo C9_POID is not set && exit"
 echo "local auth"
 c9builder=$(aws cloud9 describe-environment-memberships --environment-id=$C9_PID | jq -r '.memberships[].userArn')
 if echo ${c9builder} | grep -q user; then
@@ -9,5 +10,16 @@ elif echo ${c9builder} | grep -q assumed-role; then
         echo Role ARN: ${rolearn}
 fi
 ## need to Terraform this
-eksctl create iamidentitymapping --cluster mycluster1 --arn ${rolearn} --group system:masters --username admin
+cat << EOF > patch.yaml
+data:
+  mapUsers: |
+    - userarn: ${rolearn}  
+      username: admin
+      groups:
+        - system:masters
+EOF
+kubectl get configmap -n kube-system aws-auth -o yaml > aws-auth.yaml
+cat patch.yaml >> aws-auth.yaml
+kubectl apply -f aws-auth.yaml
+#eksctl create iamidentitymapping --cluster mycluster1 --arn ${rolearn} --group system:masters --username admin
 kubectl describe configmap -n kube-system aws-auth
