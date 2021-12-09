@@ -13,7 +13,7 @@ for i in $dirs; do
     cd ../$i
     echo " "
     echo "**** Building in $i ****"
-    tobuild=$(grep 'data\|resource' *.tf | grep '"' | grep  '{' | cut -f2 -d ':' | grep -v '#' | grep aws_ |  wc -l)
+    tobuild=$(grep 'data\|resource' *.tf | grep '"' | grep  '{' | cut -f2 -d ':' | grep -v '#\|=' | grep aws_ |  wc -l)
     terraform state list 2> /dev/null | grep aws_ > /dev/null
     if [ $? -eq 0 ]; then
         rc=$(terraform state list | grep aws_ | wc -l ) 
