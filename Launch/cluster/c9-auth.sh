@@ -9,7 +9,7 @@ elif echo ${c9builder} | grep -q assumed-role; then
         rolearn=$(aws iam get-role --role-name ${assumedrolename} --query Role.Arn --output text) 
         echo Role ARN: ${rolearn}
 fi
-## need to Terraform this
+## need to Terraform this ?
 cat << EOF > patch.yaml
 data:
   mapUsers: |
