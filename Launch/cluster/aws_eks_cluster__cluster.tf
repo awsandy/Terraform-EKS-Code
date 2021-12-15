@@ -52,7 +52,6 @@ resource "aws_eks_cluster" "cluster" {
 
 }
 
-
 resource "aws_cloudwatch_log_group" "cluster" {
   name              = format("/aws/eks/%s-%s/cluster", var.cluster-name, var.tfid)
   retention_in_days = var.log_retention
