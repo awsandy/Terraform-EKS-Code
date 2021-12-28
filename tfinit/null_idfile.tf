@@ -19,7 +19,7 @@ resource "null_resource" "gen_idfile" {
         printf "}\n" >> $varfile
         il=()
         il+="["
-        for i in $(ec2-instance-selector --usage-class spot -c 2 -a x86_64 -a amd64 --deny-list t[2-3]\.* -m 8Gib);do 
+        for i in $(ec2-instance-selector --usage-class spot -c 2 -a x86_64 -a amd64 --deny-list 't[2-3]\.*|m6\.*' -m 8Gib);do 
         il+='"'
         il+=$i
         il+='"'
