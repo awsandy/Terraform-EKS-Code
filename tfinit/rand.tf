@@ -5,3 +5,4 @@ resource "random_id" "id1" {
 output "tfid" {
   value = random_id.id1.hex
 }
+
