@@ -42,8 +42,6 @@ variable "cidr_block2" {
 }
 
 
-
-
 variable "availability_zones" {
   default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
   description = "The availability zones to create subnets in"
