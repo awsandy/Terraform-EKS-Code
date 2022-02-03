@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # Adjust to your own cluster and nodegroup name
-cluster_name               = "eks-cluster"
-karpenter_target_nodegroup = "pri-ng"
+#cluster_name               = "eks-cluster"
+karpenter_target_nodegroup = "ng1"
 
 karpenter_namespace = "karpenter"
 karpenter_version   = "0.5.4"
@@ -22,10 +22,7 @@ karpenter_ec2_instance_types = [
   "m6g.xlarge",
   "m6g.2xlarge",
 ]
-karpenter_vpc_az = [
-  "ap-southeast-1a",
-  "ap-southeast-1b",
-  "ap-southeast-1c",
+karpenter_vpc_az = data.aws_availability_zones.az.names
 ]
 karpenter_ec2_arch                  = ["amd64"]
 karpenter_ec2_capacity_type         = ["spot", "on-demand"]
