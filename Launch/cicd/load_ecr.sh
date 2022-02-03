@@ -17,3 +17,7 @@ docker push $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/aws-cli
 docker pull public.ecr.aws/awsandy/docker-2048 
 docker tag public.ecr.aws/awsandy/docker-2048 $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/sample-app
 docker push $ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/sample-app
+
+
+docker pull public.ecr.aws/karpenter/controller:v0.6.0@sha256:c4b55bafc91bcab268c7c80c98f4341fc23ab0adc29ba33e28a1f9df1ec96de5
+docker pull public.ecr.aws/karpenter/webhook:v0.6.0@sha256:bce76e56b8315c7f5ebe097a738ef81e9a07f84cfdc5da1e55975ba17783d0dc
