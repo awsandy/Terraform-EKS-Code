@@ -9,7 +9,7 @@ variable "karpenter_namespace" {
 
 variable "karpenter_version" {
   description = "Karpenter Version"
-  default     = "0.5.2"
+  default     = "0.6.0"
   type        = string
 }
 
