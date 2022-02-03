@@ -34,8 +34,17 @@ resource "aws_ecr_repository" "sample-app" {
   }
 }
 
-resource "aws_ecr_repository" "karpenter" {
-  name                 = "karpenter"
+resource "aws_ecr_repository" "karpenter-webhook" {
+  name                 = "karpenter/webhook"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
+
+resource "aws_ecr_repository" "karpenter-controller" {
+  name                 = "karpenter/controller"
   image_tag_mutability = "MUTABLE"
 
   image_scanning_configuration {
