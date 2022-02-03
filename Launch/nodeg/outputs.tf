@@ -54,3 +54,8 @@ output "kubeconfig" {
   value = "local.kubeconfig"
 }
 
+
+output "ng1-name" {
+  value = aws_eks_node_group.ng1.node_group_name
+}
+
