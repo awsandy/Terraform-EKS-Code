@@ -19,7 +19,7 @@ resource "helm_release" "karpenter" {
       "${path.module}/templates/values.yaml.tpl",
       {
         "karpenter_iam_role"   = module.iam_assumable_role_karpenter.iam_role_arn,
-        "cluster_name"         = var.cluster_name,
+        "cluster_name"         = var.cluster-name,
         "cluster_endpoint"     = data.aws_eks_cluster.eks.endpoint,
         "karpenter_node_group" = var.karpenter_target_nodegroup,
       }
