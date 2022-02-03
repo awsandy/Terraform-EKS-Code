@@ -8,7 +8,6 @@ cd $cur
 buildok=1
 dirs="tfinit Launch/net Launch/iam Launch/c9net Launch/cluster Launch/nodeg Launch/lb2 Launch/cicd  Beginner/fargate Beginner/fargate/fargateapp Intermediate/Bottlerocket extra/nodeg2 extra/eks-cidr2 Intermediate/sampleapp extra/sampleapp2 Beginner/irsa"
 for i in `echo $dirs`;do
-    echo $i
     ./build-stage.sh $i 2>&1 | tee -a build.log
     grep Error: build.log
     if [[ $? -eq 0 ]];then

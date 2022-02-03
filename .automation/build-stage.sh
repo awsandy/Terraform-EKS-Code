@@ -60,7 +60,7 @@ for i in $dirs; do
 
     echo "PASSED: $i tests"
     cd $cur
-    date
+    
 done
 
 
