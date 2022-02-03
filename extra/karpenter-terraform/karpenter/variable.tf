@@ -1,11 +1,6 @@
 # Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 # SPDX-License-Identifier: Apache-2.0
 
-variable "cluster_name" {
-  description = "The name of the cluster"
-  type        = string
-}
-
 variable "karpenter_namespace" {
   description = "The K8S namespace to deploy Karpenter into"
   default     = "karpenter"
