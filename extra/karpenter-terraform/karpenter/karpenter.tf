@@ -22,7 +22,7 @@ resource "helm_release" "karpenter" {
         "cluster_name"         = var.cluster-name,
         "cluster_endpoint"     = data.aws_eks_cluster.eks.endpoint,
         #"karpenter_node_group" = var.karpenter_target_nodegroup,
-        "karpenter_node_group" = data.terraform_remote_state.nodeg.outputs.node_group_name
+        "karpenter_node_group" = data.terraform_remote_state.nodeg.outputs.ng1-name
       }
     )
   ]
