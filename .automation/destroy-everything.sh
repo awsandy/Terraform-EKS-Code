@@ -1,17 +1,17 @@
 date
 echo "Pre cli based actions ..."
-userid=$(aws iam list-service-specific-credentials --user-name git-user | jq -r .ServiceSpecificCredentials[0].ServiceSpecificCredentialId)
+userid=$(aws iam list-service-specific-credentials --user-name git-user | jq -r .ServiceSpecificCredentials[0].ServiceSpecificCredentialId) 
 if [ "$userid" != "null" ]; then
 echo "destroying git user credentails for $userid"
-aws iam delete-service-specific-credential --service-specific-credential-id $userid --user-name git-user
+aws iam delete-service-specific-credential --service-specific-credential-id $userid --user-name git-user 2> /dev/null
 fi
 # Empty codepipeline bucket ready for delete
-buck=$(aws s3 ls | grep codep-tfeks | awk '{print $3}')
+buck=$(aws s3 ls | grep codep-tfeks | awk '{print $3}' 2> /dev/null)
 echo "buck=$buck"
 if [ "$buck" != "" ]; then
 echo "Emptying bucket $buck"
 comm=$(printf "aws s3 rm s3://%s --recursive" $buck)
-eval $comm
+eval $comm 2> /dev/null
 fi
 #
 # lb, lb sg, launch template
