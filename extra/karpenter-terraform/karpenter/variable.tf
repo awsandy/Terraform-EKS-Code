@@ -16,6 +16,7 @@ variable "karpenter_version" {
 variable "karpenter_target_nodegroup" {
   description = "The node group to deploy Karpenter to"
   type        = string
+  default="ng1"
 }
 
 variable "bottlerocket_k8s_version" {
@@ -27,13 +28,21 @@ variable "bottlerocket_k8s_version" {
 variable "karpenter_ec2_instance_types" {
   description = "List of instance types that can be used by Karpenter"
   type        = list(string)
+  default = [
+  "t3.large",
+  "t3.medium",
+  "m5.large",
+  "m5a.large",
+  "m5.xlarge",
+  "m5a.xlarge",
+  "m5.2xlarge",
+  "m5a.2xlarge",
+  "m6g.large",
+  "m6g.xlarge",
+  "m6g.2xlarge",
+]
 }
 
-variable "karpenter_vpc_az" {
-  description = "List of availability zones for the Karpenter to provision resources"
-  type        = list(string)
-  default     = ["ap-southeast-1a", "ap-southeast-1b", "ap-southeast-1c"]
-}
 
 variable "karpenter_ec2_arch" {
   description = "List of CPU architecture for the EC2 instances provisioned by Karpenter"
@@ -51,9 +60,11 @@ variable "karpenter_ec2_capacity_type" {
 variable "karpenter_ttl_seconds_after_empty" {
   description = "Node lifetime after empty"
   type        = number
+  default = 300
 }
 
 variable "karpenter_ttl_seconds_until_expired" {
   description = "Node maximum lifetime"
   type        = number
+  default = 604800
 }

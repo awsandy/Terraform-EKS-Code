@@ -56,7 +56,7 @@ resource "local_file" "karpenter_provisioner" {
         {
           "key"      = "topology.kubernetes.io/zone"
           "operator" = "In"
-          "values"   = "${var.karpenter_vpc_az}"
+          "values"   = data.aws_availability_zones.az.names
         },
         {
           "key"      = "kubernetes.io/arch"
