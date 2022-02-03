@@ -14,6 +14,17 @@ resource "helm_release" "karpenter" {
   chart      = "./chart/karpenter"
   version    = var.karpenter_version
 
+  set {
+    name  = "controller.image"
+    value = format("%s.dkr.ecr.%s.amazonaws.com/karpenter/controller:v0.6.0",data.aws_caller_identity.current.account_id,data.aws_region.current.name)
+  }
+
+  set {
+    name  = "webhook.image"
+    value = format("%s.dkr.ecr.%s.amazonaws.com/karpenter/webhook:v0.6.0",data.aws_caller_identity.current.account_id,data.aws_region.current.name)
+  }
+
+
   values = [
     templatefile(
       "${path.module}/templates/values.yaml.tpl",
