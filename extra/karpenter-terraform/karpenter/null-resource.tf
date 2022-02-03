@@ -7,7 +7,7 @@
 resource "null_resource" "modify_aws_auth" {
   triggers = {
     iam_role_arn = aws_iam_role.karpenter_node.arn
-    cluster      = var.cluster_name
+    cluster      = var.cluster-name
   }
 
   depends_on = [

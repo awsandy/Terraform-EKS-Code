@@ -2,6 +2,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 data "aws_eks_cluster" "eks" {
-  name = var.cluster_name
+  name = var.cluster-name
 }
 

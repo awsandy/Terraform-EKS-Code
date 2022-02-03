@@ -7,7 +7,7 @@ data "aws_ssm_parameter" "bottlerocket_ami" {
 
 # Need to create custom Launch Template to use Bottlerocket - https://github.com/aws/karpenter/issues/923
 resource "aws_launch_template" "bottlerocket" {
-  name = "${var.cluster_name}-karpenter-bottlerocket"
+  name = "${var.cluster-name}-karpenter-bottlerocket"
 
   image_id = data.aws_ssm_parameter.bottlerocket_ami.value
 
@@ -30,7 +30,7 @@ resource "aws_launch_template" "bottlerocket" {
     {
       "cluster_endpoint"       = data.aws_eks_cluster.eks.endpoint,
       "cluster_ca_certificate" = data.aws_eks_cluster.eks.certificate_authority[0].data
-      "cluster_name"           = var.cluster_name,
+      "cluster_name"           = var.cluster-name,
     }
   ))
 }

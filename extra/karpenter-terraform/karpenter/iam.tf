@@ -6,14 +6,14 @@ module "iam_assumable_role_karpenter" {
   source                        = "terraform-aws-modules/iam/aws//modules/iam-assumable-role-with-oidc"
   version                       = "4.7.0"
   create_role                   = true
-  role_name                     = "karpenter-controller-${var.cluster_name}"
+  role_name                     = "karpenter-controller-${var.cluster-name}"
   provider_url                  = data.aws_eks_cluster.eks.identity[0].oidc[0].issuer
   oidc_fully_qualified_subjects = ["system:serviceaccount:${var.karpenter_namespace}:karpenter"]
 }
 
 # Based on https://karpenter.sh/docs/getting-started/cloudformation.yaml
 resource "aws_iam_role_policy" "karpenter_controller" {
-  name = "karpenter-policy-${var.cluster_name}"
+  name = "karpenter-policy-${var.cluster-name}"
   role = module.iam_assumable_role_karpenter.iam_role_name
 
   policy = jsonencode({
@@ -50,7 +50,7 @@ resource "aws_iam_role_policy" "karpenter_controller" {
 }
 
 resource "aws_iam_role" "karpenter_node" {
-  name = "karpenter-node-${var.cluster_name}"
+  name = "karpenter-node-${var.cluster-name}"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -75,6 +75,6 @@ resource "aws_iam_role" "karpenter_node" {
 }
 
 resource "aws_iam_instance_profile" "karpenter_node" {
-  name = "karpenter-node-${var.cluster_name}"
+  name = "karpenter-node-${var.cluster-name}"
   role = aws_iam_role.karpenter_node.name
 }
