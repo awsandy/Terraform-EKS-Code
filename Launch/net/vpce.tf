@@ -383,3 +383,64 @@ resource "aws_vpc_endpoint" "vpce-sts" {
 }
 
 
+resource "aws_vpc_endpoint" "vpce-rds" {
+  policy = jsonencode(
+    {
+      Statement = [
+        {
+          Action    = "*"
+          Effect    = "Allow"
+          Principal = "*"
+          Resource  = "*"
+        },
+      ]
+    }
+  )
+  private_dns_enabled = true
+  route_table_ids     = []
+  security_group_ids = [
+    aws_security_group.allnodes-sg.id,
+    aws_security_group.cluster-sg.id
+  ]
+  service_name = format("com.amazonaws.%s.rds", data.aws_region.current.name)
+  subnet_ids = concat(sort(data.aws_subnet_ids.isolated.ids))
+  tags              = {}
+  vpc_endpoint_type = "Interface"
+  vpc_id            = aws_vpc.cluster.id
+
+  timeouts {}
+}
+
+
+resource "aws_vpc_endpoint" "vpce-rds-data" {
+  policy = jsonencode(
+    {
+      Statement = [
+        {
+          Action    = "*"
+          Effect    = "Allow"
+          Principal = "*"
+          Resource  = "*"
+        },
+      ]
+    }
+  )
+  private_dns_enabled = true
+  route_table_ids     = []
+  security_group_ids = [
+    aws_security_group.allnodes-sg.id,
+    aws_security_group.cluster-sg.id
+  ]
+  service_name = format("com.amazonaws.%s.rds-data", data.aws_region.current.name)
+  subnet_ids = concat(sort(data.aws_subnet_ids.isolated.ids))
+  tags              = {}
+  vpc_endpoint_type = "Interface"
+  vpc_id            = aws_vpc.cluster.id
+
+  timeouts {}
+}
+
+
+
+
+
