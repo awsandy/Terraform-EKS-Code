@@ -52,5 +52,14 @@ resource "aws_ecr_repository" "karpenter-controller" {
   }
 }
 
+resource "aws_ecr_repository" "pause" {
+  name                 = "pause"
+  image_tag_mutability = "MUTABLE"
+
+  image_scanning_configuration {
+    scan_on_push = true
+  }
+}
+
 
 
